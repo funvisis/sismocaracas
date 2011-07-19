@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # Django settings for sismocaracas project.
 
-import os.path
+import os
 
-MY_PROJECT_PATH = '/home/jgomez/workspace/sismocaracas/sismocaracas/'
+MY_PROJECT_PATH = os.getcwd()
+# MY_PROJECT_PATH = '/home/jgomez/workspace/sismocaracas/sismocaracas/'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

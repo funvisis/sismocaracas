@@ -5,10 +5,11 @@ from django.db.models.signals import post_save
 
 import os
 import datetime
+import time
 
 def get_image_backup_path(instance, filename):
     filename_splitted = filename.rsplit('.', 1)
-    return os.path.join('sismocaracas/inspections/%Y/%m/%d/', '.'.join([filename_splitted[0], datetime.datetime.now().isoformat(), filename_splitted[1]]))
+    return time.strftime(os.path.join('sismocaracas/inspections/%Y/%m/%d/', '.'.join([filename_splitted[0], datetime.datetime.now().isoformat(), filename_splitted[1]])))
 
 # Information about extending auth.User:
 # https://docs.djangoproject.com/en/dev/topics/auth/#storing-additional-information-about-users
@@ -35,18 +36,18 @@ class Inspection(models.Model):
     date = models.DateField('1.1 fecha')
     init_time = models.DateTimeField('1.2 Hora inicio')
     end_time = models.DateTimeField('1.3 Hora culminación')
-    code = models.CharField('1.4 Código', max_length=20)
+    code = models.CharField('1.4 Código', max_length=20, blank=True)
 
     # 2. Participants
-    inspector = models.ForeignKey(User, null=True, related_name='inspector', verbose_name='2.1 Inspector')
-    reviewer = models.ForeignKey(User, null=True, related_name='reviewer', verbose_name='2.2 Revisor')
-    supervisor = models.ForeignKey(User, null=True, related_name='supervisor', verbose_name='2.3 Supervisor')
+    inspector = models.ForeignKey(User, related_name='inspector', verbose_name='2.1 Inspector')
+    reviewer = models.ForeignKey(User, related_name='reviewer', verbose_name='2.2 Revisor')
+    supervisor = models.ForeignKey(User, related_name='supervisor', verbose_name='2.3 Supervisor')
     
     # 3. Interviewee
     interviewee_building_relationship = models.CharField('3.1 Relación con la Edif.', max_length=50)
     interviewee_name_last_name = models.CharField('3.2 Nombre y apellido', max_length=50)
-    interviewee_phone_number = models.CharField('3.3 Teléfono', max_length=50)
-    interviewee_email = models.EmailField('3.4 Correo Electrónico')
+    interviewee_phone_number = models.CharField('3.3 Teléfono', max_length=50, blank=True)
+    interviewee_email = models.EmailField('3.4 Correo Electrónico', blank=True)
 
     # 4. Building identification and location
     name_or_number = models.CharField(max_length=50, verbose_name='4.1 Nombre o Nº')
@@ -58,12 +59,12 @@ class Inspection(models.Model):
     municipality = models.CharField(max_length=100, verbose_name='4.7 Municipio')
     parish = models.CharField(max_length=100, verbose_name='4.8 Parroquia')
     urbanization = models.CharField(max_length=100, verbose_name='4.9 Urb, Sector, Barrio')
-    street = models.CharField(max_length=100, verbose_name='4.10 Calle, Vereda, otro')
-    square = models.CharField(max_length=100, verbose_name='4.11 Manzana Nº')
-    plot = models.CharField(max_length=100, verbose_name='4.12 Nº Parcela')
-    coord_x = models.FloatField(verbose_name='4.13 Coord. X')
-    coord_y = models.FloatField(verbose_name='4.14 Coord. Y')
-    time_zone = models.FloatField(verbose_name='4.15 Huso')
+    street = models.CharField(max_length=100, verbose_name='4.10 Calle, Vereda, otro', blank=True)
+    square = models.CharField(max_length=100, verbose_name='4.11 Manzana Nº', blank=True)
+    plot = models.CharField(max_length=100, verbose_name='4.12 Nº Parcela', blank=True)
+    coord_x = models.FloatField(verbose_name='4.13 Coord. X', null=True, blank=True)
+    coord_y = models.FloatField(verbose_name='4.14 Coord. Y', null=True, blank=True)
+    time_zone = models.FloatField(verbose_name='4.15 Huso', null=True, blank=True)
 
     # 5. Building usage
     # building_usage = models.CharField(max_length=50, choices=(
@@ -126,6 +127,7 @@ class Inspection(models.Model):
             ('[1948, 1955]', 'Entre 1948 y 1955'),
             ('[1956, 1967]', 'Entre 1956 y 1967'),
             ('[1968, 1982]', 'Entre 1968 y 1982'),
+            ('[1983, 1998]', 'Entre 1983 y 1998'),
             ('[1999, 2001]', 'Entre 1999 y 2001'),
             ('>2001', 'Después de 2001'),
             ))
@@ -144,14 +146,16 @@ class Inspection(models.Model):
     ground_slope = models.FloatField(verbose_name='8.2 Pendiente del terreno', choices=(
             (32.5, '20º - 45º'),
             (67.5, 'Mayor a 45º'),
-            )
+            ),
+                                     null=True, blank=True
                               )
     ground_over = models.BooleanField(verbose_name='8.3 Localizada sobre la mitad superior de la ladera')
 
     talus_slope = models.FloatField(verbose_name='8.4 Pendiente del talud', choices=(
             (32.5, '20º - 45º'),
             (67.5, 'Mayor a 45º'),
-            )
+            ),
+                                    null=True, blank=True
                               )
     talus_separation_gt_H = models.BooleanField(verbose_name='8.5 Separación al talud', choices=((False, 'Menor a H del Talud'), (True, 'Mayor a H del Talud')))
     drainage = models.BooleanField(verbose_name='8.6 Drenajes')
@@ -177,9 +181,9 @@ class Inspection(models.Model):
             ('O', 'O'),
             ('U', 'U'),
             ('rectangular', u'\u25AD o \u25AB'),
-            ('esbeltez horizontal', 'esbeltez horizontal'),
-            ('ninguno', 'Ninguno'),
-            )
+            ('esbeltez horizontal', 'Esbeltez horizontal'),
+            ),
+                                    blank=True
                                     )
 
     # 11. Lifting scheme
@@ -191,14 +195,20 @@ class Inspection(models.Model):
             ('pirámide invertida', 'Pirámide invertida'),
             ('piramidal', 'Piramidal'),
             ('esveltez vertical', 'Esveltez, vertical'),
-            ('ninguno', 'Ninguno'),
-            )
+            ),
+                                      blank=True
                                       )
     # 12. Irregularities
 
-    strong_asymmetry_in_plant_mass_or_stiffness = models.BooleanField(verbose_name='Fuerte asimetría de masas o rigideces en planta')
-    no_high_beams_on_one_or_two_directions = models.BooleanField(verbose_name='Ausencia de vigías altas en una o dos direcciones')
-    presence_of_at_least_one_soft_or_weak_mezzanine = models.BooleanField(verbose_name='Presencia de al menos un entrepiso débil o blando')
+    no_high_beams_on_one_or_two_directions = models.BooleanField(verbose_name='12.1 Ausencia de vigías altas en una o dos direcciones')
+    presence_of_at_least_one_soft_or_weak_mezzanine = models.BooleanField(verbose_name='12.2 Presencia de al menos un entrepiso débil o blando')
+    presence_of_short_columns = models.BooleanField(verbose_name='12.3 Presencia de columnas cortas')
+    discontinuity_lines_of_columns = models.BooleanField(verbose_name='12.4 Discontinuidad de ejes de columnas')
+    significant_openings_in_slabs = models.BooleanField(verbose_name='12.5 Aberturas significativas en losas')
+    strong_asymmetry_in_plant_mass_or_stiffness = models.BooleanField(verbose_name='12.6 Fuerte asimetría de masas o rigideces en planta')
+    separation_between_buildings = models.IntegerField(verbose_name='12.7 Separación entre edificios (cm)')
+    attaching_slab_slab = models.BooleanField(verbose_name='12.8 Adosamiento: Losa contra losa')
+    attaching_slab_column = models.BooleanField(verbose_name='12.9 Adosamiento: Columna contra losa')
 
     # 13. Degree of degradation
     
@@ -236,11 +246,10 @@ class Inspection(models.Model):
                                           )
 
     # 14. Observations
-    observations = models.TextField()
+    observations = models.TextField(verbose_name='14. Observaciones')
 
     # 15 Image Backup
-    image_backup = models.ImageField(upload_to=get_image_backup_path)
+    image_backup = models.ImageField(verbose_name='15. Respaldo escaneado', upload_to=get_image_backup_path)
     
     def __unicode__(self):
         return "".format(self.code, self.date, self.inspector)
-
