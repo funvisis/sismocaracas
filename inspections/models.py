@@ -134,10 +134,10 @@ class Inspection(models.Model):
 
     # 8. Ground conditions
     building_at = models.CharField(max_length="10", verbose_name='8.1 Edificación en', choices=(
-            ('Planicie', 'Planicie'),
-            ('Ladera', 'Ladera'),
-            ('Base', 'Base'),
-            ('Cima', 'Cima'),
+            ('planicie', 'Planicie'),
+            ('ladera', 'Ladera'),
+            ('base', 'Base'),
+            ('cima', 'Cima'),
             )
                                    )
 
@@ -252,4 +252,14 @@ class Inspection(models.Model):
     image_backup = models.ImageField(verbose_name='15. Respaldo escaneado', upload_to=get_image_backup_path)
     
     def __unicode__(self):
-        return "".format(self.code, self.date, self.inspector)
+        return "{}:{}:{}".format(' '.join((self.inspector.first_name, self.inspector.last_name)).strip() or self.inspector, self.date, self.id)
+
+    def topographic_national_efects_level(self):
+        if self.is_in_caracas:
+            return ''
+        elif self.building_at == 'cima':
+            return 'si'
+        elif self.building_at == 'ladera' and self.ground_over:
+            return 'si'
+        else:
+            return 'no'
