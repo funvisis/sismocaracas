@@ -6,10 +6,10 @@
 * DONE Manipular el archivo de respaldo para que se llame igual que el ID del objeto (inspección)
 * DONE strtime no funciona con el callable de la opción upload_to en el campo de imagen.
 * TODO Cambiar el nombre de el modelo Inspection a Inspection_Form :DISCUTIBLE:
-* TODO Campo 8.1 en el admin oculta siempre los campos opcionales	:BUG:
+* DONE Campo 8.1 en el admin oculta siempre los campos opcionales	:BUG:
 * TODO Añadir al modelo los 4 campos de los supervisores
-* TODO Cambiar ground_slope a Char y a los valores colocarlos como rango
+* DONE Cambiar ground_slope a Char y a los valores colocarlos como rango
   - Para después de la puesta en produción
   - Procesamiento en lote para pasar los números a rangos en cadena
 
-* TODO Probar la función del módulo funvisis.utils relacionada con Django
+* DONE Probar la función del módulo funvisis.utils relacionada con Django

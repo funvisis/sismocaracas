@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.conf import settings
+from django.contrib.auth.models import User
+
+from funvisis.utils.djangorelated import get_path_to_app_repo_ as get_path_to_app_repo
 
 import os
 import datetime
@@ -133,7 +136,7 @@ class Inspection(models.Model):
             ))
 
     # 8. Ground conditions
-    building_at = models.CharField(max_length="10", verbose_name='8.1 Edificación en', choices=(
+    building_at = models.CharField(max_length='10', verbose_name='8.1 Edificación en', choices=(
             ('planicie', 'Planicie'),
             ('ladera', 'Ladera'),
             ('base', 'Base'),
@@ -143,11 +146,11 @@ class Inspection(models.Model):
 
     # 32.5 means (20º - 45º)
     # 67.5 means > 45º
-    ground_slope = models.FloatField(verbose_name='8.2 Pendiente del terreno', choices=(
-            (32.5, '20º - 45º'),
-            (67.5, 'Mayor a 45º'),
+    ground_slope = models.CharField(max_length='10', verbose_name='8.2 Pendiente del terreno', choices=(
+            ('[20, 45]', '20º - 45º'),
+            ('>45', 'Mayor a 45º'),
             ),
-                                     null=True, blank=True
+                                    blank=True
                               )
     ground_over = models.BooleanField(verbose_name='8.3 Localizada sobre la mitad superior de la ladera')
 
@@ -249,8 +252,9 @@ class Inspection(models.Model):
     observations = models.TextField(verbose_name='14. Observaciones')
 
     # 15 Image Backup
-    image_backup = models.ImageField(verbose_name='15. Respaldo escaneado', upload_to=get_image_backup_path)
-    
+    image_backup = models.ImageField(verbose_name='15. Respaldo escaneado', upload_to=get_path_to_app_repo(project_name=settings.SETTINGS_MODULE.split('.')[0], app_name=__name__.split('.')[-2]))
+    # project_name = 'sismocaracas.settings'[0]
+    # app_name = 'inspections.models'[-2]
     def __unicode__(self):
         return "{}:{}:{}".format(' '.join((self.inspector.first_name, self.inspector.last_name)).strip() or self.inspector, self.date, self.id)
 
