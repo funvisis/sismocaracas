@@ -21,7 +21,7 @@ class InspectionAdmin(admin.ModelAdmin):
                 'fields': ('name_or_number', 'floors', 'semi_basements', 'basements', 'state', 'city', 'municipality', 'parish', 'urbanization', 'street', 'square', 'plot', 'coord_x', 'coord_y', 'time_zone')
                 }),
         ('5. Uso de la edificación', {
-                'fields': ('governmental', 'firemen', 'civil_defense', 'police', 'military', 'popular_housing', 'single_family', 'multifamily')
+                'fields': ('governmental', 'firemen', 'civil_defense', 'police', 'military', 'popular_housing', 'single_family', 'multifamily', 'medical_care', 'educational', 'sports_recreational', 'cultural', 'industrial', 'commercial', 'office', 'religious', 'other')
                 }),
         ('6. Capacidad de ocupación', {
                 'fields': ('people', 'occupation_during')
@@ -43,7 +43,7 @@ class InspectionAdmin(admin.ModelAdmin):
                 }),
 
         ('12. Irregularidades', {
-                'fields': ('strong_asymmetry_in_plant_mass_or_stiffness', 'no_high_beams_on_one_or_two_directions', 'presence_of_at_least_one_soft_or_weak_mezzanine')
+                'fields': ('no_high_beams_on_one_or_two_directions', 'presence_of_at_least_one_soft_or_weak_mezzanine', 'presence_of_short_columns', 'discontinuity_lines_of_columns', 'significant_openings_in_slabs', 'strong_asymmetry_in_plant_mass_or_stiffness', 'separation_between_buildings', 'attaching_slab_slab', 'attaching_slab_column')
                 }),
         ('13. Grado de deterioro', {
                 'fields': ('condition_of_concrete', 'condition_of_steel', 'fill_cracks_in_walls', 'condition_of_upkeep')
@@ -53,6 +53,10 @@ class InspectionAdmin(admin.ModelAdmin):
                 }),
         ('15. Respaldo de la planilla', {
                 'fields': ('image_backup',)
+                }),
+        (u'_. Índice de amenaza (Solo para el revisor o el supervisor) ._', {
+                'fields': ('caracas', 'national_level_zonification', 'macrozone_ccs', 'microzone_ccs'),
+                'classes': ['collapse']
                 }),
         )
     
@@ -64,4 +68,5 @@ admin_site = AdminSite('admin_site')
 # admin.site.register(Inspection)
 # admin.site.register(Participant)
 admin_site.register(Inspection, InspectionAdmin)
+admin_site.register(Participant)
 # admin_site.register(Participant)
