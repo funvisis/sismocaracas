@@ -13,6 +13,8 @@
   - Producción es solo una PC en la oficina.
   - Explicación de primero en una máquina virtual y luego en
     producción.
+  - Se trata de una instalación desde un servidor con el SO recien
+    instalado.
   - Un solo apache porque a futuro se migrará a Rails.
 
 .. _sismocaracas: http://code.funvisis.gob.ve/sismocaracas/
@@ -41,7 +43,7 @@ nuestro proyecto.
 Podemos instalar las versiones del gestor de paquetes de *Fedora 14* de
 Apache, mod-wsgi y Postgres. Para ello, basta con::
 
-    $ yum install apache postgres mod-wsgi
+    # yum install apache postgres mod-wsgi
 
 *mod-wsgi* le da soporte a Apache del estandar wsgi_ de *Python*
 
@@ -51,11 +53,18 @@ Para instalar Django, prefiero usar el sistem de paquetes de Python
 que el del sistema operativo. El gestor de paquetes de Python que
 prefiero es *pip*, y para usarlo debemos instalar a través de *yum* el
 paquete *dist-utils* que nos da el comando *easy_intall* con el que
-instalaremos *pip*. Entonces, procedemos::
+instalaremos *pip*. Entonces, procedemos desde una cónsola como
+usuario *root*::
 
-    $ yum install python-dist-utils
-    $ easy_install pip
-    $ pip install django
+    # yum install python-dist-utils
+    # easy_install pip
+    # pip install django
+
+Y verificamos que *Django* se haya instala bien con::
+
+    # python -c "import django"
+
+Por último, se instala la aplicación
 
 Configuración inicial - web
 ---------------------------
@@ -132,16 +141,58 @@ configuración utilizada.
 Con esta configuración estamos declarando que:
 
 - el contenido estático será servido cuando la url de la petición
-  contenga a ``static.funvisis.gob.ve`` o a ``static`` como ``host``,
-  y la raíz del directorio desde donde se obtendrá el contenido
-  estático será ``/var/www/`` en el servidor.
+  contenga a ``static.funvisis.gob.ve`` o a ``static`` como
+  *host*, y la raíz del directorio desde donde se obtendrá el
+  contenido estático será ``/var/www/`` en el servidor.
 - el contenido dinámico será servido cuando la url de la petición
-  contenga a ``dyn.funvisis.gob.ve`` o ``dyn`` como host, y que por
-  ahora solo hay una aplicación ubicada en el servidor en
+  contenga a ``dyn.funvisis.gob.ve`` o ``dyn`` como *host*, y que
+  por ahora solo hay una aplicación ubicada en el servidor en
   ``/usr/lib/wsgi-scripts/sismocaracas.wsgi`` y que se activará si la
-  parte de la ruta del url empieza con ``/sismocaracas``
+  parte de la *ruta* del url empieza con ``/sismocaracas``
 
-Ahora, dedicaremos un directorio dentro de ``/var/www/`` por cada proyecto para que coloquen en él el contenido estático específico a él. Entonces::
+Ahora, dedicaremos un directorio dentro de ``/var/www/`` por cada
+proyecto para que coloquen en él el contenido estático específico a
+él. Entonces, creamos este directorio como el usuario www-data (el
+usuario del demonio apache, o del servidor web del sistema)::
 
-    $ mkdir /var/www/sismocaracas
+    # su -u www-data mkdir /var/www/sismocaracas
+
+Así como es sugerido tener un lugar diferente para los scripts cgi en
+el sistema de archivos totalmente aparte de la raíz del contenido
+estático (por ejemplo, ``/usr/lib/cgi-bin/`` en sistemas tipo
+*Debian*) se recomienda tener almacenados los scripts wsgi en un lugar
+similar; en nuestro caso, elegimos ``/usr/lib/wsgi-scripts/``. Por lo
+tanto, debemos crear este directorio::
+
+    # mkdir /usr/lib/wsgi-scripts
+    # chown www-data /usr/lib/wsgi-scripts
+
+En ese directorio colocaremos el script al que hacemos referencia en
+la configuración del host virtual *dyn* (i.e
+``sismocaracas.wsgi``). El contenido de este script es el siguiente::
+
+    import os
+    import sys
+    
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'sismocaracas.settings'
+    
+    import django.core.handlers.wsgi
+    application = django.core.handlers.wsgi.WSGIHandler()
+
+Para que este script funcione, el paquete ``sismocaracas`` que
+contiene el archivo ``settings.py`` debe estar en la ruta de búsqueda
+de Python. Entonces, primero hay que decidir en qué lugar se van a
+colocar los proyectos de *Django*. Ya que ellos son simplemente un
+paquete estandar de *Python*, bastaría con instalarlo como un paquete
+cualquiera, tal vez creandole un *setup.py*. Esto implicaría que al
+instalarlo con ``python setup.py install`` quedaría en el
+``dist-package`` o ``site-package`` como si fuera otro paquete de
+terceros que extiende la funcionalidad de Python. Para evitar esto, se
+puede cambiar al *setup.py* en su código o al momento de su ejecución
+con unos parámetros para que instale en un directorio específico. En
+nuestro caso, ese directorio es ``/usr/lib/wsgi-scripts/``.
+
+**EXPLICAR CÓMO CREAR ESTE setup.py específico y como hacer para
+cambiar la ruta de instalación**
+
 

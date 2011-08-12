@@ -19,3 +19,7 @@ Thumbs.db
 # Emacs bkfiles #
 #################
 *~
+
+# Generic bkfiles #
+###################
+\#*\#
