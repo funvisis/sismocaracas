@@ -1,40 +1,29 @@
-==================================================
- Un entorno de producción para un proyecto Django
-==================================================
+===================================================================
+Un entorno de producción estandar para un proyecto Django (FUVISIS)
+===================================================================
 
 :Autor:
 	"Jesús Gómez" <jgomez@funfisis.gob.ve>
 
-:Versión: 1.1 15/08/2011
+:Versión: 1.2 16/08/2011
 
 :Revisor:
 	"Daniel Ampuero" <danielmaxx@gmail.com>
 
-Este manuscrito servirá de guía para la instalación de cualquier
-proyecto Django en un servidor Apache en el entorno de producción de
-FUNVISIS.  A modo de ejemplo, se usará como nombre de proyecto
-*djangoproject*, el cual deberá ser modificado cada vez que se cree un
-nuevo proyecto con el nombre apropiado.
+Este documento servirá de guía para la instalación de cualquier
+proyecto *Django* [#]_ en un servidor Apache en el entorno de
+producción de FUNVISIS.  A modo de ejemplo, se usará como nombre de
+proyecto *djangoproject* [#]_, el cual deberá ser modificado cada vez
+que se cree un nuevo proyecto con el nombre apropiado.
 
-Todo proyecto Django debe seguir los liniemientos descritos en *BLAH*
-y *BLAHBLAH*.
+.. [#] Para saber más de *Django* visite http://www.djangoproject.com/
+
+.. [#] Asumiremos que *djangoproject* cumple con los lineamientos
+   descritos en el documento `Estandar para distribución de proyectos
+   Django en FUNVISIS <distro_django_funvisis.html>`_
 
 Empezaremos con instalar todo el software de terceros que necesita
 nuestro proyecto en este servidor.
-
-- Intorducción El proyecto *Django* específico usado en este texto es
-  djangoproject_
-  
-  - Producción es solo una PC en la oficina.
-  - Explicación de primero en una máquina virtual y luego en
-    producción.
-  - Se trata de una instalación desde un servidor con el SO recien
-    instalado.
-  - Un solo apache porque a futuro se migrará a Rails.
-
-.. _djangoproject: http://code.funvisis.gob.ve/djangoproject/
-
-
 
 Preparación
 ===========
@@ -48,7 +37,9 @@ Software
 - Apache 2
 - mod-wsgi
 
-*Python 2.7* ya viene instalado por omisión en *Fedora 14*.
+El entorno de producción considerado en este documento será un
+servidor dedicado con el sistema operativo *Fedora 14*. *Python 2.7*
+ya viene instalado por omisión en *Fedora 14*.
 
 Podemos instalar las versiones de *Apache* y mod-wsgi_ que ofrece el 
 gestor de paquetes de *Fedora 14* [#]_. Para ello, como *root*, 
@@ -95,10 +86,10 @@ de los directorios del ambiente de producción.
 Configuración inicial [web]
 ---------------------------
 
-*Django* no hace nada al especial cuando le hacen una petición que
+*Django* no hace nada especial cuando le hacen una petición que
 termine en algúna extención; es indiferente para él si termina en
 *.html*, en *.php* o en *.jpeg*. Para *Django* una petición es solo
-eso y la delega a la vista[#]_ adecuada. Por lo tanto, el conenido
+eso y la delega a la vista [#]_ adecuada. Por lo tanto, el conenido
 estático de un proyecto (páginas *html* estáticas, imágenes, videos,
 *css*, *javascrip*, etc) no es servido a través de *Django* sino de un
 servidor web separado dedicado a esta tarea.
@@ -108,22 +99,35 @@ servidor web separado dedicado a esta tarea.
    *url*. La palabra *vista* puede confundir por eso, ya que no es más
    que un *manejador*.
 
-Aunque lo ideal sería tener al menos dos servidores web serparados en
-máquinas distintas; por ejemplo, una máquina especializada en *I/O* 
-(entrada y salida) para servir el contenido estático, y otro
-especializado en *cómputo* para ejecutar el código Django. En esta guía
-se instalará y configurará un solo servidor web *Apache* para responder
-tanto a las peticiones de contenido estático como a las peticiones de
-contenido dinámico. Para lograr esto, le configuramos dos host
-virtules, uno que llamaremos *static*, y otro que llamaremos
-*djangoproject* [#]_.
+Una configuración típica del entorno de producción es contar con al
+menos dos servidores web serparados en máquinas distintas; por
+ejemplo, una máquina especializada en *I/O* (entrada y salida) para
+servir el contenido estático, y otro especializado en *cómputo* para
+ejecutar el código Django. Otra alternativa es la que se explica en
+este documento, donde se instala y configura un solo servidor web
+*Apache* para responder tanto a las peticiones de contenido estático
+como a las peticiones de contenido dinámico. Se decidió explicar esta
+alternativa ya que con esta información el lector será capaz de
+instalar un ambiente con dos servidores por ser más sencillo que
+instalarlo en un solo servidor.
+
+Para que *Apache* responda a ambos tipos de peticiones, configuraremos
+dos host virtules [#]_, uno que llamaremos *static*, que contendrá los
+recursos estáticos de todos los proyectos o sitios web, y otro que
+llamaremos *djangoproject* [#]_. 
+
+
+.. [#] *Host Virtual* es una técnica utilizada por *Apache* para
+   responder a peticiones web de manera diferente dependiendo del
+   nombre o la *IP* del *host* que hace la petición.
 
 .. [#] Por supuesto, habría que configurar los *DNS* o los archivos
    ``hosts`` de los clientes para que traduzcan estos *nombres* a
    direcciones *IP*.
 
-Esto se logra creando un archivo ``.conf`` por cada host virtual en el
-directorio ``/etc/httpd/vhost.d/``, los siguientes archivos:
+Para lograr todo lo mencionado anteriormente, se creará un archivo
+``.conf`` por cada host virtual en el directorio
+``/etc/httpd/vhost.d/``:
 
 - ``static.conf``::
 
@@ -167,9 +171,9 @@ directorio ``/etc/httpd/vhost.d/``, los siguientes archivos:
     	WSGIScriptAlias \
 	/ /usr/lib/wsgi-scripts/djangoproject.wsgi
     
-    	ErrorLog ${APACHE_LOG_DIR}/error_dyn.log
+    	ErrorLog ${APACHE_LOG_DIR}/djangoproject.error.log
     	LogLevel warn
-    	CustomLog ${APACHE_LOG_DIR}/access_dyn.log combined
+    	CustomLog ${APACHE_LOG_DIR}/djangoproject.access.log combined
     </VirtualHost>
 
 Con esta configuración estamos declarando que:
@@ -218,124 +222,36 @@ la configuración del host virtual *djangoproject* (i.e
     import django.core.handlers.wsgi
     application = django.core.handlers.wsgi.WSGIHandler()
 
-Para que este script funcione, el directorio ``djangoproject``, el cual
-se encuentra dentro del paquete de distribución del proyecto y contiene el
-archivo``settings.py``, debe estar en la ruta de búsqueda
-de Python. Entonces, primero hay que decidir en qué lugar se van a
-colocar los proyectos de *Django* [#]_. El directorio
-dedicado a los proyectos *Django* será
-``/usr/lib/django_projects``. Como detalle, colocaremos en ese
-directorio, además de los directorios de cada proyecto con sus
-respectivos settings.py, un directorio llamado ``base_templates``
-donde iran las plantillas que puedan ser reutilizadas por otras
-aplicaciones. Así que creamos estos directorios::
+Para que este script funcione, el directorio ``djangoproject``, el
+cual se encuentra dentro del paquete de distribución del proyecto y
+contiene el archivo``settings.py``, debe ser alcanzable por la ruta de
+búsqueda de módulos de Python. El directorio dedicado a los proyectos
+*Django* será ``/usr/lib/django_projects``. Como detalle, colocaremos
+en ese directorio un directorio llamado ``base_templates`` donde iran
+las plantillas que puedan ser reutilizadas por otras aplicaciones. Así
+que creamos estos directorios::
 
     # mkdir -p /usr/lib/django_projects/base_templates
 
-Y hacemos que este directorio esté en la ruta de búsqueda de
-*Python*. Hay dos estrategias:
-
-- Colocar un archivo ``.pth`` en ``/usr/lib/python2.7/site-packages/``
-  con el siguiente contenido: ``/usr/lib/django_projects``::
+Y hacemos que este directorio esté en la ruta de búsqueda de *Python*
+colocando un archivo ``.pth`` en ``/usr/lib/python2.7/site-packages/``
+con el siguiente contenido: ``/usr/lib/django_projects``::
 
     # echo "/usr/lib/django_projects" >> /usr/lib/python2.7/funvisis.pth
 
-.. [#] Esta decisión, y las otras que tienen que ver con la
-   distribución de los directorios de los proyectos, debería
-   establecerse en un documento interno. También, es importante
-   recordar que en próximas versiones de esta estandarización, se va a
-   establecer que las aplicaciones reutilizables deben instalarse como
-   paquetes del sistema y los proyectos junto con sus aplicaciones
-   específicas se instalen de la manera descrita en este documento, es
-   decir, colocando el paquete en el directorio elegido para los
-   proyectos *Django*.
+Hecho todo esto, reiniciamos el servidor ``Apache``::
 
-Instalación
-===========
+    # service httpd restart
 
-Ya que los proyectos *Django* son simplemente paquetes estandar de
-*Python*, bastaría con instalarlos como cualquier paquete *Python*,
-tal vez creandoles un *setup.py*. Esto implicaría que al instalarlos
-con ``python setup.py install`` quedarían en el ``dist-package`` o
-``site-package`` como si fueran otro paquete de terceros que extiende
-la funcionalidad de Python. Para evitar esto, se puede cambiar al
-*setup.py* en su código [#]_ o al momento de su ejecución con unos
-parámetros para que instale en un directorio específico.
-
-.. [#] Cómo hacer esto se escapa del ámbito de este texto. Puede
-    consultarse la `documentación de Python sobre distutils
-    <http://docs.python.org/distutils/setupscript.html>`_ o en el
-    artículo interno `setup.py para proyectos Django en FUNVISIS
-    <setup_py_4_django_fvis.html>`_
-
-Dicho esto, por ahora podemos aplicar una instalación más trivial;
-simplemente copiamos la carpeta del proyecto en
-``/usr/lib/django_projects/``. Haremos la instalación por ``setup.py``
-cuando el proyecto incluya dicho script.
-
-Suponiendo que bajamos el ``tar.gz`` en el home del ``root``, hacemos
-lo siguiente::
-
-    # cd
-    # tar -xvzf djangoproject.tar.gz -C /usr/lib/django_projects
-
-Si la carpeta ``templates`` hubiera tenido un contenido, se copiaría
-su contenido en ``/usr/lib/django_projects/base_templates``::
-
-   # cp -R /usr/lib/django_projects/djangoproject/templates/* \
-   /usr/lib/django_projects/templates
-
-Configuración final [``setup.py``]
-----------------------------------
-
-Por último, hay que configurar el proyecto. Todo proyecto *Django* se
-configura dandole valor a ciertas variables que almacenaremos en un
-archivo ``.py`` al cuál hacemos referencia desde el ``.wsgi``
-configurado en *Apache*. En nuestro caso, es el archivo
-``settings.py``. Éste ya tiene varios valores establecidos, pero
-debemos configurar las variables [MEDIA_ROOT]_, [MEDIA_URL]_,
-[STATICFILES_DIRS]_, [STATIC_URL]_, [ADMIN_MEDIA_PREFIX]_ y
-[TEMPLATE_DIRS]_::
-
-    MEDIA_ROOT = '/var/www/djangoproject'
-    MEDIA_URL = 'http://static.funvisis.gob.ve/djangoproject/'
-    STATICFILES_DIRS = (
-        '/usr/lib/django_projects/djangoproject/templates',)
-    STATIC_URL = 'http://static.funvisis.gob.ve/djangoproject/'
-    ADMIN_MEDIA_PREFIX = 'http://static.funvisis.gob.ve/admin/'
-    TEMPLATE_DIRS = (
-        '/usr/lib/django_projects/djangoproject/templates',
-	'/usr/lib/django_projects/templates')
-
-.. [MEDIA_ROOT] Directorio donde se va a guardar el contenido subido
-   por los usuarios del proyecto.
-.. [MEDIA_URL] La URL con el que se accesa al directorio
-   ``MEDIA_ROOT``.
-.. [STATICFILES_DIRS] Lista de directorio donde está almacenado el
-   contenido estático que define la aplicación, no el que suben los
-   usuarios. Hay unos ``.js`` en la aplicación ``inspection``, que
-   pudiera pensarse en sacar de ahí y colocarlo en alguno de estos
-   directorios.
-
-.. [STATIC_URL] La URL con el que se accesa a los directorios
-   ``STATICFILES_DIRS``.
-
-.. [ADMIN_MEDIA_PREFIX] Prefijo *URL* utilizado para los archivos
-   estáticos de la aplicación *admin* (*CSS*, *JavaScript* e
-   imágenes).
-
-.. [TEMPLATE_DIRS] Lista de directorios en los cuales *Django* busca
-   una plantilla específica. Como busca en orden, colocamos de primero
-   en la lista los directorios que contienen plantillas que
-   substituyen a sus versiones en los otros directorios. Es decir, si
-   dos plantillas con el mismo nombre están en directorios contenidos
-   en esta lista, se usará la plantilla del directorio que esté
-   primero en la lista.
+Configuración final [Base de datos]
+-----------------------------------
 
 Por último, configuramos el acceso a la base de datos (en caso de que
-sea pertinente). En esta prueba, creamos una base de datos
-*PostgreSQL* en el mismo servidor llamada ``djangoproject``, cuyo dueño
-es el usuario ``djangoproject`` y su contraseña es
+sea pertinente). El siguiente ejemplo supone una base de datos llamada
+``djangoproject`` en un servidor de base de datos *PostgreSQL* en el
+host ``bd.funvisis.gob.ve`` accesible a través del puerto ``5432``,
+con un usuario llamado ``djangoproject`` con suficientes privilegios
+para utilizar todo el proyecto y su contraseña es
 ``jojoto``. Traducido a *Python* en el ``settings.py``::
 
     DATABASES = {
@@ -344,19 +260,43 @@ es el usuario ``djangoproject`` y su contraseña es
             'NAME': 'djangoproject',
             'USER': 'djangoproject',
             'PASSWORD': 'jojoto',
-            'HOST': '',
-            'PORT': '',
+            'HOST': 'bd.funvisis.gob.ve',
+            'PORT': '5432',
         }
     }
+
+
+Instalación
+===========
+
+Ya que los proyectos *Django* que instalaremos en este entorno
+entienden el estandar descrito en este documento y el descrito en el
+documento [2]_, en teoría debería bastar con ejecutar el script
+``setup.py`` del proyecto adecuadamente.
+
+Primero, debemos obtener el paquete del proyecto. Una manera
+hipotética es que encontrandose en un servidor de archivos de la
+fundación llamado ``code.funvisis.gob.ve``, lo obtendríamos, por
+ejemplo, de la siguiente manera::
+
+    # wget -cb http://code.funvisis.gob.ve/djangoproject/lastest
+
+Y por último, descomprimimos el paquete y lo instalamos con::
+
+    # tar -xzf djangoproject-0.1.tar.gz
+    # cd djangoproject
+    # python setup.py install
 
 FIN
 ===
 
-Ya está instalado el proyecto en el entorno de producción. Ahora solo
-basta con visitar el proyecto en:
+Ya está instalado el proyecto en el entorno de producción. Para
+ponerlo a prueba, solo basta con visitar el proyecto en:
 ``http://djangoproject.funvisis.gob.ve/``
 
-Finalmente, cambiamos en los archivos de configuración la línea::
+Cuando finalmente estemos conforme con los resultados, cambiamos los
+archivos de configuración de apache para que los *logs* no afecten
+tanto el rendimientola las líneas que contengan::
 
     LogLevel warn
 

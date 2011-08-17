@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # Django settings for sismocaracas project.
 
+# IDEA Un diccionario con cada ambiente descrito como llave y el
+# import adecuado como valor.
+
 import os
 
 MY_PROJECT_PATH = os.getcwd()
