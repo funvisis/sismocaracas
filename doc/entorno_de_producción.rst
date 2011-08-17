@@ -1,5 +1,5 @@
 ===================================================================
-Un entorno de producción estandar para un proyecto Django (FUVISIS)
+Un entorno de producción estándar para un proyecto Django (FUVISIS)
 ===================================================================
 
 :Autor:
@@ -10,16 +10,16 @@ Un entorno de producción estandar para un proyecto Django (FUVISIS)
 :Revisor:
 	"Daniel Ampuero" <danielmaxx@gmail.com>
 
-Este documento servirá de guía para la instalación de cualquier
-proyecto *Django* [#]_ en un servidor Apache en el entorno de
-producción de FUNVISIS.  A modo de ejemplo, se usará como nombre de
-proyecto *djangoproject* [#]_, el cual deberá ser modificado cada vez
-que se cree un nuevo proyecto con el nombre apropiado.
+Este documento servirá de guía para la instalación y configuración de
+un ambiente de producción en FUNVISIS para instalar cualquier proyecto
+*Django* [#]_.  A modo de ejemplo, se usará como nombre de proyecto
+*djangoproject* [#]_, el cual deberá ser modificado cada vez que se
+cree un nuevo proyecto con el nombre apropiado.
 
 .. [#] Para saber más de *Django* visite http://www.djangoproject.com/
 
 .. [#] Asumiremos que *djangoproject* cumple con los lineamientos
-   descritos en el documento `Estandar para distribución de proyectos
+   descritos en el documento `Estándar para distribución de proyectos
    Django en FUNVISIS <distro_django_funvisis.html>`_
 
 Empezaremos con instalar todo el software de terceros que necesita
@@ -58,17 +58,17 @@ escribimos::
        http_proxy=http://linuxfire:3128
        export http_proxy
 
-.. _mod-wsgi: *mod-wsgi* le da soporte a Apache del estandar WSGI_ de
+.. _mod-wsgi: *mod-wsgi* le da soporte a Apache del estándar WSGI_ de
    *Python*
 
 .. _WSGI: http://www.python.org/dev/peps/pep-0333/
 
-Para instalar *Django*, es preferible usar el sistem de paquetes de
+Para instalar *Django*, es preferible usar el sistema de paquetes de
 Python que el del sistema operativo. El gestor de paquetes de Python
 de preferencia es *pip*, y para usarlo debemos instalar a través de
 *yum* el paquete *python-setuptols* que otorga el comando
 *easy_intall* con el que instalaremos *pip*. Entonces, procedemos
-desde una cónsola como usuario *root*::
+desde una consola como usuario *root*::
 
     # yum install python-setuptools
     # easy_install pip
@@ -87,9 +87,9 @@ Configuración inicial [web]
 ---------------------------
 
 *Django* no hace nada especial cuando le hacen una petición que
-termine en algúna extención; es indiferente para él si termina en
+termine en alguna extensión; es indiferente para él si termina en
 *.html*, en *.php* o en *.jpeg*. Para *Django* una petición es solo
-eso y la delega a la vista [#]_ adecuada. Por lo tanto, el conenido
+eso y la delega a la vista [#]_ adecuada. Por lo tanto, el contenido
 estático de un proyecto (páginas *html* estáticas, imágenes, videos,
 *css*, *javascrip*, etc) no es servido a través de *Django* sino de un
 servidor web separado dedicado a esta tarea.
@@ -100,7 +100,7 @@ servidor web separado dedicado a esta tarea.
    que un *manejador*.
 
 Una configuración típica del entorno de producción es contar con al
-menos dos servidores web serparados en máquinas distintas; por
+menos dos servidores web separados en máquinas distintas; por
 ejemplo, una máquina especializada en *I/O* (entrada y salida) para
 servir el contenido estático, y otro especializado en *cómputo* para
 ejecutar el código Django. Otra alternativa es la que se explica en
@@ -112,7 +112,7 @@ instalar un ambiente con dos servidores por ser más sencillo que
 instalarlo en un solo servidor.
 
 Para que *Apache* responda a ambos tipos de peticiones, configuraremos
-dos host virtules [#]_, uno que llamaremos *static*, que contendrá los
+dos host virtuales [#]_, uno que llamaremos *static*, que contendrá los
 recursos estáticos de todos los proyectos o sitios web, y otro que
 llamaremos *djangoproject* [#]_. 
 
@@ -227,7 +227,7 @@ cual se encuentra dentro del paquete de distribución del proyecto y
 contiene el archivo``settings.py``, debe ser alcanzable por la ruta de
 búsqueda de módulos de Python. El directorio dedicado a los proyectos
 *Django* será ``/usr/lib/django_projects``. Como detalle, colocaremos
-en ese directorio un directorio llamado ``base_templates`` donde iran
+en ese directorio un directorio llamado ``base_templates`` donde irán
 las plantillas que puedan ser reutilizadas por otras aplicaciones. Así
 que creamos estos directorios::
 
@@ -265,17 +265,21 @@ para utilizar todo el proyecto y su contraseña es
         }
     }
 
+Si la base de datos está recien creada, se inicializa con el siguiente
+comando::
+
+    #python /usr/lib/django_projects/sismocaracas/manage.py syncdb
 
 Instalación
 ===========
 
 Ya que los proyectos *Django* que instalaremos en este entorno
-entienden el estandar descrito en este documento y el descrito en el
+entienden el estándar descrito en este documento y el descrito en el
 documento [2]_, en teoría debería bastar con ejecutar el script
 ``setup.py`` del proyecto adecuadamente.
 
 Primero, debemos obtener el paquete del proyecto. Una manera
-hipotética es que encontrandose en un servidor de archivos de la
+hipotética es que encontrándose en un servidor de archivos de la
 fundación llamado ``code.funvisis.gob.ve``, lo obtendríamos, por
 ejemplo, de la siguiente manera::
 
@@ -295,8 +299,9 @@ ponerlo a prueba, solo basta con visitar el proyecto en:
 ``http://djangoproject.funvisis.gob.ve/``
 
 Cuando finalmente estemos conforme con los resultados, cambiamos los
-archivos de configuración de apache para que los *logs* no afecten
-tanto el rendimientola las líneas que contengan::
+archivos de configuración de apache para que las *bitácoras* no
+afecten tanto el rendimiento. Cambiamos entonces las líneas que
+contengan::
 
     LogLevel warn
 
