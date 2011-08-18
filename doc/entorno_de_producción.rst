@@ -125,9 +125,18 @@ llamaremos *djangoproject* [#]_.
    ``hosts`` de los clientes para que traduzcan estos *nombres* a
    direcciones *IP*.
 
-Para lograr todo lo mencionado anteriormente, se creará un archivo
-``.conf`` por cada host virtual en el directorio
-``/etc/httpd/vhost.d/``:
+Para lograr todo lo mencionado anteriormente, primero, en el archivo
+``/etc/httpd/conf/httpd.conf`` se activa la drectiva
+``NameVirtualHost`` y se incluye la directiva ``Include
+vhost_d/*.conf`` (si es que ya no está) con la cuál establecemos el
+convenio de crear un archivo .conf por cada host virtual. Las líneas
+pertinentes en el archivo ``http.conf`` serían las siguientes::
+
+	NameVirtualHost *:80
+	Include vhost_d/*.conf
+
+Luego se creará un archivo ``.conf`` por cada host virtual en el
+directorio ``/etc/httpd/vhost.d/``:
 
 - ``static.conf``::
 
@@ -152,7 +161,7 @@ Para lograr todo lo mencionado anteriormente, se creará un archivo
     	</Directory>
     
     	ErrorLog ${APACHE_LOG_DIR}/static.error.log
-    	LogLevel warn
+    	LogLevel crit
     	CustomLog ${APACHE_LOG_DIR}/static.access.log combined
     
     </VirtualHost>
@@ -172,7 +181,7 @@ Para lograr todo lo mencionado anteriormente, se creará un archivo
 	/ /usr/lib/wsgi-scripts/djangoproject.wsgi
     
     	ErrorLog ${APACHE_LOG_DIR}/djangoproject.error.log
-    	LogLevel warn
+    	LogLevel crit
     	CustomLog ${APACHE_LOG_DIR}/djangoproject.access.log combined
     </VirtualHost>
 
@@ -200,44 +209,30 @@ contenido estático que dedica *Django* a esta aplicación::
     /usr/lib/python2.7/site-packages/django/contrib/admin/media/* \
     /var/www/admin
 
-Así como es sugerido tener un lugar diferente para los scripts *CGI*
-en el sistema de archivos totalmente aparte de la raíz del contenido
-estático (por ejemplo, ``/usr/lib/cgi-bin/`` en sistemas tipo
-*Debian*) se recomienda tener almacenados los scripts *WSGI* en un
-lugar similar; en nuestro caso, elegimos
-``/usr/lib/wsgi-scripts/``. Por lo tanto, debemos crear este
-directorio::
+El punto de entrada de los proyectos *Django* cuando los sirve
+*Apache* con *WSGI* es un pequeño script ``.wsgi``. Así como es
+sugerido tener un lugar diferente para los scripts *CGI* en el sistema
+de archivos totalmente aparte de la raíz del contenido estático (por
+ejemplo, ``/usr/lib/cgi-bin/`` en sistemas tipo *Debian*) se
+recomienda tener almacenados los scripts *WSGI* en un lugar similar;
+en nuestro caso, elegimos ``/usr/lib/wsgi-scripts/``. Por lo tanto,
+debemos crear este directorio::
 
     # mkdir /usr/lib/wsgi-scripts
 
-En ese directorio colocaremos el script al que hacemos referencia en
-la configuración del host virtual *djangoproject* (i.e
-``djangoproject.wsgi``). El contenido de este script es el siguiente::
+El directorio dedicado a los proyectos *Django* será
+``/usr/lib/django-projects``. Como detalle, colocaremos en ese
+directorio un directorio llamado ``base-templates`` donde irán las
+plantillas que puedan ser reutilizadas por otras aplicaciones. Así que
+creamos estos directorios::
 
-    import os
-    import sys
-    
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'djangoproject.settings'
-    
-    import django.core.handlers.wsgi
-    application = django.core.handlers.wsgi.WSGIHandler()
-
-Para que este script funcione, el directorio ``djangoproject``, el
-cual se encuentra dentro del paquete de distribución del proyecto y
-contiene el archivo``settings.py``, debe ser alcanzable por la ruta de
-búsqueda de módulos de Python. El directorio dedicado a los proyectos
-*Django* será ``/usr/lib/django_projects``. Como detalle, colocaremos
-en ese directorio un directorio llamado ``base_templates`` donde irán
-las plantillas que puedan ser reutilizadas por otras aplicaciones. Así
-que creamos estos directorios::
-
-    # mkdir -p /usr/lib/django_projects/base_templates
+    # mkdir -p /usr/lib/django-projects/base-templates
 
 Y hacemos que este directorio esté en la ruta de búsqueda de *Python*
 colocando un archivo ``.pth`` en ``/usr/lib/python2.7/site-packages/``
-con el siguiente contenido: ``/usr/lib/django_projects``::
+con el siguiente contenido: ``/usr/lib/django-projects``::
 
-    # echo "/usr/lib/django_projects" >> /usr/lib/python2.7/funvisis.pth
+    # echo "/usr/lib/django-projects" >> /usr/lib/python2.7/funvisis.pth
 
 Hecho todo esto, reiniciamos el servidor ``Apache``::
 
@@ -269,7 +264,7 @@ Y por último, descomprimimos el paquete y lo instalamos con::
    oficialmente producido y mantenido por la fundación.
 
 Completar
-~~~~~~~~~
+---------
 
 Explicar:
 
@@ -283,7 +278,7 @@ Configuración final [Base de datos]
 Por último, configuramos el acceso a la base de datos (en caso de que
 sea pertinente) editando el archivo ``settings.py`` que luego de la
 instalación por omisión se encuentra en el directorio
-``/usr/lib/django_projects/djangoproject/``. El siguiente ejemplo
+``/usr/lib/django-projects/djangoproject/``. El siguiente ejemplo
 supone una base de datos llamada ``djangoproject`` en un servidor de
 base de datos *PostgreSQL* en el host ``bd.funvisis.gob.ve`` accesible
 a través del puerto ``5432``, con un usuario llamado ``djangoproject``
@@ -305,7 +300,7 @@ Si la base de datos está recien creada, se inicializa con el siguiente
 comando (si se hizo una instalación personalizada, entonces hay que
 ajustar la ruta del comando ``manage.py``)::
 
-    #python /usr/lib/django_projects/sismocaracas/manage.py syncdb
+    #python /usr/lib/django-projects/sismocaracas/manage.py syncdb
 
 FIN
 ===
@@ -313,14 +308,3 @@ FIN
 Ya está instalado el proyecto en el entorno de producción. Para
 ponerlo a prueba, solo basta con visitar el proyecto en:
 ``http://djangoproject.funvisis.gob.ve/``
-
-Cuando finalmente estemos conforme con los resultados, cambiamos los
-archivos de configuración de apache para que las *bitácoras* no
-afecten tanto el rendimiento. Cambiamos entonces las líneas que
-contengan::
-
-    LogLevel warn
-
-por la línea::
-
-    LogLevel critical
