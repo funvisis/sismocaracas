@@ -1,32 +1,33 @@
 # -*- coding: utf-8 -*-
 # Django settings for sismocaracas project.
 
-# IDEA Un diccionario con cada ambiente descrito como llave y el
-# import adecuado como valor.
+from settings import *
 
 import os
 
-MY_PROJECT_PATH = os.getcwd()
-# MY_PROJECT_PATH = '/home/jgomez/workspace/sismocaracas/sismocaracas/'
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+PROJECT_NAME = 'sismocaracas'
+DEBUG = False
+TEMPLATE_DEBUG = False
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
-    ('Jesús Gómez', 'jgomo3@gmail.com'),
+    ('annonymous', 'annonymous@funvisis.gob.ve'),
 )
 
-MANAGERS = ADMINS
+MANAGERS = (
+    # ('Your Name', 'your_email@example.com'),
+    ('annonymous', 'annonymous@funvisis.gob.ve'),
+)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'db.sqlite3',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sismocaracas',
+        'USER': 'sismocaracas',
+        'PASSWORD': 'sismocaracas',
+        'HOST': 'db.funvisis.gob.ve',
+        'PORT': '5432',
     }
 }
 
@@ -55,33 +56,34 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, 'media/sismocaracas/')
+MEDIA_ROOT = os.path.join('/', 'var', 'www', PROJECT_NAME, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = 'http://static.funvisis.gob.ve/sismocaracas/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/jgomez/workspace/sismocaracas/sismocaracas/static/'
+STATIC_ROOT = '/var/www/sismocaracas/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = 'http://static.funvisis.gob.ve/sismocaracas/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = 'http://static.funvisis.gob.ve/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join('/', 'var', 'www', PROJECT_NAME),
 )
 
 # List of finder classes that know how to find static files in
@@ -89,7 +91,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -113,10 +115,8 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'sismocaracas.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    "/home/jgomez/workspace/sismocaracas/sismocaracas/templates",
+    '/usr/lib/django_projects/sismocaracas/sismocaracas/templates/',
+    '/usr/lib/django_projects/base_templates/',
 )
 
 INSTALLED_APPS = (

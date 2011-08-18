@@ -5,7 +5,7 @@ Un entorno de producción estándar para un proyecto Django (FUVISIS)
 :Autor:
 	"Jesús Gómez" <jgomez@funfisis.gob.ve>
 
-:Versión: 1.2 16/08/2011
+:Versión: 1.3 18/08/2011
 
 :Revisor:
 	"Daniel Ampuero" <danielmaxx@gmail.com>
@@ -243,16 +243,52 @@ Hecho todo esto, reiniciamos el servidor ``Apache``::
 
     # service httpd restart
 
+Instalación
+===========
+
+Ya que los proyectos *Django* que instalaremos en este entorno
+entienden el estándar descrito en este documento y el descrito en el
+documento [2]_, en teoría debería bastar con ejecutar el script
+``setup.py`` del proyecto adecuadamente.
+
+Primero, debemos obtener el paquete del proyecto. Una manera
+hipotética es que encontrándose en un servidor de archivos de la
+fundación llamado ``code.funvisis.gob.ve`` [#]_, lo obtendríamos, por
+ejemplo, de la siguiente manera::
+
+    # wget -cb http://code.funvisis.gob.ve/djangoproject/lastest
+
+Y por último, descomprimimos el paquete y lo instalamos con::
+
+    # tar -xzf djangoproject-0.1.tar.gz
+    # cd djangoproject
+    # python setup.py install
+
+.. [#] Con esto queda abierta la sugerencia de establecer un servidor
+   de código donde se mantendría un repositorio de software
+   oficialmente producido y mantenido por la fundación.
+
+Completar
+~~~~~~~~~
+
+Explicar:
+
+- ¿Qué hace el ``setup.py``?¿dónde coloca qué?
+- las opciones de instalación para cambiar la conducta por omisión de
+  ``setup.py``
+
 Configuración final [Base de datos]
 -----------------------------------
 
 Por último, configuramos el acceso a la base de datos (en caso de que
-sea pertinente). El siguiente ejemplo supone una base de datos llamada
-``djangoproject`` en un servidor de base de datos *PostgreSQL* en el
-host ``bd.funvisis.gob.ve`` accesible a través del puerto ``5432``,
-con un usuario llamado ``djangoproject`` con suficientes privilegios
-para utilizar todo el proyecto y su contraseña es
-``jojoto``. Traducido a *Python* en el ``settings.py``::
+sea pertinente) editando el archivo ``settings.py`` que luego de la
+instalación por omisión se encuentra en el directorio
+``/usr/lib/django_projects/djangoproject/``. El siguiente ejemplo
+supone una base de datos llamada ``djangoproject`` en un servidor de
+base de datos *PostgreSQL* en el host ``bd.funvisis.gob.ve`` accesible
+a través del puerto ``5432``, con un usuario llamado ``djangoproject``
+con suficientes privilegios para utilizar todo el proyecto y su
+contraseña es ``jojoto``. Traducido a *Python* en el ``settings.py``::
 
     DATABASES = {
         'default': {
@@ -266,30 +302,10 @@ para utilizar todo el proyecto y su contraseña es
     }
 
 Si la base de datos está recien creada, se inicializa con el siguiente
-comando::
+comando (si se hizo una instalación personalizada, entonces hay que
+ajustar la ruta del comando ``manage.py``)::
 
     #python /usr/lib/django_projects/sismocaracas/manage.py syncdb
-
-Instalación
-===========
-
-Ya que los proyectos *Django* que instalaremos en este entorno
-entienden el estándar descrito en este documento y el descrito en el
-documento [2]_, en teoría debería bastar con ejecutar el script
-``setup.py`` del proyecto adecuadamente.
-
-Primero, debemos obtener el paquete del proyecto. Una manera
-hipotética es que encontrándose en un servidor de archivos de la
-fundación llamado ``code.funvisis.gob.ve``, lo obtendríamos, por
-ejemplo, de la siguiente manera::
-
-    # wget -cb http://code.funvisis.gob.ve/djangoproject/lastest
-
-Y por último, descomprimimos el paquete y lo instalamos con::
-
-    # tar -xzf djangoproject-0.1.tar.gz
-    # cd djangoproject
-    # python setup.py install
 
 FIN
 ===
