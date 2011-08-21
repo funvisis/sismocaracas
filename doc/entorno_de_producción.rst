@@ -128,12 +128,12 @@ llamaremos *djangoproject* [#]_.
 Para lograr todo lo mencionado anteriormente, primero, en el archivo
 ``/etc/httpd/conf/httpd.conf`` se activa la drectiva
 ``NameVirtualHost`` y se incluye la directiva ``Include
-vhost_d/*.conf`` (si es que ya no está) con la cuál establecemos el
+vhost.d/*.conf`` (si es que ya no está) con la cuál establecemos el
 convenio de crear un archivo .conf por cada host virtual. Las líneas
 pertinentes en el archivo ``http.conf`` serían las siguientes::
 
 	NameVirtualHost *:80
-	Include vhost_d/*.conf
+	Include vhost.d/*.conf
 
 Luego se creará un archivo ``.conf`` por cada host virtual en el
 directorio ``/etc/httpd/vhost.d/``:
@@ -160,9 +160,9 @@ directorio ``/etc/httpd/vhost.d/``:
     		allow from all
     	</Directory>
     
-    	ErrorLog ${APACHE_LOG_DIR}/static.error.log
+    	ErrorLog logs/static.error.log
     	LogLevel crit
-    	CustomLog ${APACHE_LOG_DIR}/static.access.log combined
+    	CustomLog logs/static.access.log combined
     
     </VirtualHost>
 
@@ -180,9 +180,9 @@ directorio ``/etc/httpd/vhost.d/``:
     	WSGIScriptAlias \
 	/ /usr/lib/wsgi-scripts/djangoproject.wsgi
     
-    	ErrorLog ${APACHE_LOG_DIR}/djangoproject.error.log
+    	ErrorLog logs/djangoproject.error.log
     	LogLevel crit
-    	CustomLog ${APACHE_LOG_DIR}/djangoproject.access.log combined
+    	CustomLog logs/djangoproject.access.log combined
     </VirtualHost>
 
 Con esta configuración estamos declarando que:
@@ -232,7 +232,8 @@ Y hacemos que este directorio esté en la ruta de búsqueda de *Python*
 colocando un archivo ``.pth`` en ``/usr/lib/python2.7/site-packages/``
 con el siguiente contenido: ``/usr/lib/django-projects``::
 
-    # echo "/usr/lib/django-projects" >> /usr/lib/python2.7/funvisis.pth
+    # echo "/usr/lib/django-projects" >> \
+    /usr/lib/python2.7/site-packages/funvisis.pth
 
 Hecho todo esto, reiniciamos el servidor ``Apache``::
 
@@ -263,14 +264,11 @@ Y por último, descomprimimos el paquete y lo instalamos con::
    de código donde se mantendría un repositorio de software
    oficialmente producido y mantenido por la fundación.
 
-Completar
----------
+.. Explicar:
 
-Explicar:
-
-- ¿Qué hace el ``setup.py``?¿dónde coloca qué?
-- las opciones de instalación para cambiar la conducta por omisión de
-  ``setup.py``
+.. - ¿Qué hace el ``setup.py``?¿dónde coloca qué?
+.. - las opciones de instalación para cambiar la conducta por omisión de
+..   ``setup.py``
 
 Configuración final [Base de datos]
 -----------------------------------
