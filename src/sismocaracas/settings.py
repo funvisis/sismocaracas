@@ -61,36 +61,27 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join('/var/www', PROJECT_NAME, 'media')
+MEDIA_ROOT = os.path.join('/', 'var', 'www', PROJECT_NAME, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://static.funvisis.gob.ve/sismocaracas/media/'
+MEDIA_URL = 'http://static.funvisis.gob.ve/' + PROJECT_NAME + '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-#STATIC_ROOT = os.path.join('/var/www/', PROJECT_NAME)
-STATIC_ROOT = os.path.join('/var/www/', PROJECT_NAME) # Porque debería
-                                                      # prefijarse
-                                                      # todo por su
-                                                      # nombre de
-                                                      # proyecto y/o
-                                                      # aplicación Tal
-                                                      # vez debería
-                                                      # ser
-                                                      # var/www/django-projects/PROJECT_NAME
+STATIC_ROOT = os.path.join('/var/www/', PROJECT_NAME)
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'http://static.funvisis.gob.ve/' + PROJECT_NAME
+STATIC_URL = 'http://static.funvisis.gob.ve/' + PROJECT_NAME + '/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = 'http://static.funvisis.gob.ve/admin/'
+ADMIN_MEDIA_PREFIX = 'http://static.funvisis.gob.ve/' + PROJECT_NAME + '/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -129,8 +120,10 @@ ROOT_URLCONF = 'sismocaracas.urls'
 
 
 TEMPLATE_DIRS = (
-    os.path.join(DJANGO_PROJECTS_PATH, PROJECT_NAME, 'templates'),
-    os.path.join(DJANGO_PROJECTS_PATH, 'base-templates'),
+    #os.path.join(MY_PROJECT_PATH, 'templates'),
+    #os.path.join('/usr/lib/django-projects/sismocaracas', 'templates')
+    os.path.join(DJANGO_PROJECTS_PATH, PROJECT_NAME, 'templates')
+    #os.path.join(DJANGO_PROJECTS_PATH, 'base-templates'),
 )
 
 INSTALLED_APPS = (
