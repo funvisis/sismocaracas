@@ -36,6 +36,7 @@ Software
 - Django 1.3
 - Apache 2
 - mod-wsgi
+- Varios paquetes *Python* (opcional)
 
 El entorno de producción considerado en este documento será un
 servidor dedicado con el sistema operativo *Fedora 14*. *Python 2.7*
@@ -45,7 +46,7 @@ Podemos instalar las versiones de *Apache* y mod-wsgi_ que ofrece el
 gestor de paquetes de *Fedora 14* [#]_. Para ello, como *root*, 
 escribimos::
 
-    # yum install httpd.i686 mod-wsgi
+    # yum install httpd mod-wsgi
 
 .. [#] Para que *yum* funcione sin problemas dentro de las
    instalaciones de *FUNVISIS*, es necesario configurarle el
@@ -78,6 +79,61 @@ Y verificamos que *Django* se haya instalado bien observando que no
 haya errores con el siguiente comando::
 
     # python -c "import django"
+
+
+Opcional - preparación
+~~~~~~~~~~~~~~~~~~~~~~
+
+Para instalar algunos de los paquetes opcionales de Python, es posible
+que se necesiten herramientas de desarrollo. Para prepararnos para
+esto, instalamos *gcc* y los archivos de cabecera de *Python*::
+
+    # yum install gcc python-devel
+
+
+Opcional - Sistma de bases de datos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Dependiendo del *sistema de base de datos* que vaya a utilizar el
+proyecto (si es que lo necesita), habrá que instalar el soporte
+adecuado para Python. Django soporta los siguientes *sistemas de base
+de datos*:
+
+ - PostgreSQL
+ - MySQL
+ - Sqlite
+ - Oracle
+
+Para cada uno de estos sistemas de base de datos, *Python* debe estar
+preparado.
+
+*Sqlite* ya tiene soporte por *Python*.
+
+*PostgreSQL* tiene soporte por medio del paquete *psycopg* (versiones
+ 1 o 2). Para instalarlo, ejecutamos::
+
+     # pip install psycopg2 # Para la versión 2
+     # pip install psycopg # Para la versión 1
+
+*MySQL* tiene soporte por medio del paquete *mysql-python*. Para
+instalarlo, ejecutamos::
+
+    # pip install mysql-python
+
+Opcional - PIL (Python Imaging Library)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si algun campo de algún modelo [#]_ es de tipo imágen
+(``ImageField``), entonces es necesario instalar el paquete
+*PIL*. Para instalarlo, ejecutamos::
+
+    # pip install pil
+
+.. [#] El uso de la palabra *modelo* en la jerga de *Django* se
+   refiere a una clase asociada a una tabla de la base de datos. Se
+   puede confundir con el concepto de *modelo* en general y más aún
+   con el enfatizado por el patrón de diseño MVC (Model View
+   Controller)
 
 Con esto, ya tenemos el software necesario para instalar nuestro
 proyecto, pero antes debemos configurar *Apache* y decidir el esquema
@@ -278,14 +334,15 @@ sea pertinente) editando el archivo ``settings.py`` que luego de la
 instalación por omisión se encuentra en el directorio
 ``/usr/lib/django-projects/djangoproject/``. El siguiente ejemplo
 supone una base de datos llamada ``djangoproject`` en un servidor de
-base de datos *PostgreSQL* en el host ``bd.funvisis.gob.ve`` accesible
-a través del puerto ``5432``, con un usuario llamado ``djangoproject``
-con suficientes privilegios para utilizar todo el proyecto y su
-contraseña es ``jojoto``. Traducido a *Python* en el ``settings.py``::
+base de datos *PostgreSQL* (soportado por *Python* a través de
+*psycop2*) en el host ``bd.funvisis.gob.ve`` accesible a través del
+puerto ``5432``, con un usuario llamado ``djangoproject`` con
+suficientes privilegios para utilizar todo el proyecto y su contraseña
+es ``jojoto``. Traducido a *Python* en el ``settings.py``::
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'djangoproject',
             'USER': 'djangoproject',
             'PASSWORD': 'jojoto',

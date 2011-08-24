@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from models import Participant
-from models import Inspection
+from .models import Participant
+from .models import Inspection
 
 from django.contrib import admin
 from django.contrib.admin.sites import AdminSite

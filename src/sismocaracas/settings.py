@@ -4,10 +4,16 @@
 from settings import *
 
 import os
+import sys
+import logging
+
+DJANGO_PROJECTS_PATH = '/usr/lib/django-projects'
 
 PROJECT_NAME = 'sismocaracas'
-DEBUG = False
-TEMPLATE_DEBUG = False
+MY_PROJECT_PATH = os.path.join(DJANGO_PROJECTS_PATH, PROJECT_NAME)
+
+DEBUG = True
+TEMPLATE_DEBUG = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -21,12 +27,12 @@ MANAGERS = (
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'sismocaracas',
         'USER': 'sismocaracas',
-        'PASSWORD': 'sismocaracas',
-        'HOST': 'db.funvisis.gob.ve',
-        'PORT': '5432',
+        'PASSWORD': 'jojoto',
+        # 'HOST': 'db.funvisis.gob.ve',
+        # 'PORT': '5432',
     }
 }
 
@@ -55,7 +61,7 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join('/', 'var', 'www', PROJECT_NAME, 'media')
+MEDIA_ROOT = os.path.join('/var/www', PROJECT_NAME, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -66,11 +72,20 @@ MEDIA_URL = 'http://static.funvisis.gob.ve/sismocaracas/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+#STATIC_ROOT = os.path.join('/var/www/', PROJECT_NAME)
+STATIC_ROOT = os.path.join('/var/www/', PROJECT_NAME) # Porque debería
+                                                      # prefijarse
+                                                      # todo por su
+                                                      # nombre de
+                                                      # proyecto y/o
+                                                      # aplicación Tal
+                                                      # vez debería
+                                                      # ser
+                                                      # var/www/django-projects/PROJECT_NAME
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'http://static.funvisis.gob.ve/sismocaracas/'
+STATIC_URL = 'http://static.funvisis.gob.ve/' + PROJECT_NAME
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -82,7 +97,6 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join('/', 'var', 'www', PROJECT_NAME),
 )
 
 # List of finder classes that know how to find static files in
@@ -113,9 +127,10 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'sismocaracas.urls'
 
+
 TEMPLATE_DIRS = (
-    '/usr/lib/django_projects/sismocaracas/sismocaracas/templates/',
-    '/usr/lib/django_projects/base_templates/',
+    os.path.join(DJANGO_PROJECTS_PATH, PROJECT_NAME, 'templates'),
+    os.path.join(DJANGO_PROJECTS_PATH, 'base-templates'),
 )
 
 INSTALLED_APPS = (
@@ -125,7 +140,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inspections',
+    'sismocaracas.inspections',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -155,4 +170,4 @@ LOGGING = {
     }
 }
 
-AUTH_PROFILE_MODULE = 'inspections.Participant'
+AUTH_PROFILE_MODULE = 'sismocaracas.inspections.Participant'
