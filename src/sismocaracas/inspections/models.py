@@ -340,7 +340,7 @@ class Inspection(models.Model):
 
     def threat_index(self):
         '''[0.23, 1.0]'''
-        from inspections.analysis import \
+        from analysis import \
             threat_index_by_macro_zones_caracas, \
             threat_index_by_macro_zones_national
         macro_zone_table = \
