@@ -14,6 +14,7 @@
 * DONE Campo 6.2 debe ser selección múltiple.
 
 * TODO Cambiar el nombre de la aplicación Inspections a Buildings (o como se escriba) y el proyecto a Inspections
+
 * TODO Averiguar por qué utilicé el modelo User en vez de Participant en los roles de una Inspection (futuro modelo Building)
   - Como resultado se debe colocar Participant como rol o explicar las razones.
 * TODO Reestructurar los permisos de la aplicación Buildings

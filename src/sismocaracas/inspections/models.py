@@ -13,20 +13,20 @@ import time
 
 # Information about extending auth.User:
 # https://docs.djangoproject.com/en/dev/topics/auth/#storing-additional-information-about-users
-class Participant(models.Model):
-    user = models.OneToOneField(User)
-    phone = models.CharField('teléfono', max_length=100)
+# class Participant(models.Model):
+#     user = models.OneToOneField(User)
+#     phone = models.CharField('teléfono', max_length=100)
 
-    def __unicode__(self):
-        return '{}'.format(self.user)
+#     def __unicode__(self):
+#         return '{}'.format(self.user)
 
-def create_participant(sender, instance, created, **kwargs):
-    if created:
-        Participant.objects.create(user=instance)
+# def create_participant(sender, instance, created, **kwargs):
+#     if created:
+#         Participant.objects.create(user=instance)
 
-post_save.connect(create_participant, sender=User)
+# post_save.connect(create_participant, sender=User)
 
-class Inspection(models.Model):
+class Building(models.Model):
     # Think about geolocalization
     # Maybe Djangogeo
 
