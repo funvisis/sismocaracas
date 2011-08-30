@@ -111,7 +111,7 @@ class Inspection(models.Model):
     occupation_during = models.CharField(
         max_length=10, verbose_name='6.2 Ocupación durante',
         choices=(
-            (u'mañana', 'mañana'),
+            (u'mañana', u'mañana'),
             ('tarde', 'tarde'),
             ('noche', 'noche'),),)
 
