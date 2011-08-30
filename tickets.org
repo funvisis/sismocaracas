@@ -1,12 +1,5 @@
-* TODO Colocar los índices en la lista de inspecciones
-  - Índices:
-    - Amenaza
-    - Vulnerabilidad
-** TODO Definir los métdos para los índices.
-*** DONE Añadir al modelo los 4 campos de los supervisores
 * DONE Manipular el archivo de respaldo para que se llame igual que el ID del objeto (inspección)
 * DONE strtime no funciona con el callable de la opción upload_to en el campo de imagen.
-* TODO Cambiar el nombre de el modelo Inspection a Inspection_Form :DISCUTIBLE:
 * DONE Campo 8.1 en el admin oculta siempre los campos opcionales	:BUG:
 
 * DONE Cambiar ground_slope a Char y a los valores colocarlos como rango
@@ -14,4 +7,43 @@
   - Procesamiento en lote para pasar los números a rangos en cadena
 
 * DONE Probar la función del módulo funvisis.utils relacionada con Django
+* DONE Campos 10 y 11 obligatorios y añadir la opción "ninguno".
+
+* DONE Sí o No para la pregunta "¿Es Caracas?"
+* DONE Campos 12.{8,9} Uno de dos.
+* DONE Campo 6.2 debe ser selección múltiple.
+
+* TODO Cambiar el nombre de la aplicación Inspections a Buildings (o como se escriba) y el proyecto a Inspections
+* TODO Averiguar por qué utilicé el modelo User en vez de Participant en los roles de una Inspection (futuro modelo Building)
+  - Como resultado se debe colocar Participant como rol o explicar las razones.
+* TODO Reestructurar los permisos de la aplicación Buildings
+** TODO Definir tres grupos con sus permisologías:
+   - Inspectores, Revisores y Supervisores
+** TODO Hacer unas urls específicas para los grupos:
+   - Un Inspector solo ve la vista de inspectores
+   - Un Revisor ve las vistas de revisores y de inspectores
+   - Un Supervisor ve las vistas de supervisores, revisores e
+     inspectores
+** TODO En los campos de los roles, filtrar por grupos.
+** TODO Vista de inspecciones restringida por usuario
+** TODO Ocultar campos del supervisor y cuando resuelva el tema, mostrarlo solo a los super.
+** TODO Lista de planillas con campo de validación solo para los revisores y/o supervisores.
+   - Workflow de editorial. Luego del vistobueno, no puede modificarlo nadie (solo el ente)
+** TODO Desactivar el autodiscover del admin y crear un admin para Participant
+
+* TODO Implementar galería de fotos con etiquetas
+  - Nota: que el workflow deje para después la subida y clasificación
+    de las imágenes.
 * TODO Pedir confirmación de correo electrónico
+* TODO Condicionar las zonas por ¿Caracas?
+- Para octubre 1 la segunda versión:
+  - Workflow de editorial 100% relacionada con auth.
+* TODO Ubicar la carpeta admin estática en un solo sitio.
+  - Que quede en /var/www/admin y que el comando collectsatic no
+    trabaje sobre la aplicación admin.
+* TODO Colocar los índices en la lista de inspecciones
+  - Índices:
+    - Amenaza
+    - Vulnerabilidad
+** TODO Definir los métdos para los índices.
+*** DONE Añadir al modelo los 4 campos de los supervisores
