@@ -4,8 +4,9 @@ from django.conf.urls.defaults import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 
-from sismocaracas.inspections.admin import admin_site
-
+import sismocaracas.inspections as inspections
+import sismocaracas.bridges as bridges
+ 
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'sismocaracas.views.home', name='home'),
@@ -16,5 +17,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^inspections/', include(admin_site.urls)),
+    url(r'^inspecciones/', include(inspections.admin.admin_site.urls)),
+	url(r'^puentes/', include(bridges.admin.admin_site.urls)),
 )
