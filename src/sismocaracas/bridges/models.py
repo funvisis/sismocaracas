@@ -59,7 +59,7 @@ class Bridge(models.Model):
     state = models.CharField(
 		max_length=25, verbose_name='3.3 Estado',  blank=True)
     city = models.CharField(
-		max_lenght=25, verbose_name='3.4 Ciudad',  blank=True)
+		max_length=25, verbose_name='3.4 Ciudad',  blank=True)
     municipality = models.CharField(
         max_length=100, verbose_name='3.5 Municipio')
     parish = models.CharField(
@@ -72,19 +72,19 @@ class Bridge(models.Model):
         max_length=50, 
 		verbose_name=u'4.1 Nombre o identificación de sentidos')
     name_of_road_on_bridge = models.CharField(
-		max_lenght=40,
+		max_length=40,
 		verbose_name=u'4.2.1 Nombre de vía sobre el puente')
     road_type = models.CharField(
-		max_lenght = 40, verbose_name='4.2.2 Tipo',
+		max_length = 40, verbose_name='4.2.2 Tipo',
 		choices=(
 			('autopista', 'Autopista'),
 			('calle_o_avenida', 'Calle o Avenida'),),)
-	under_bridge_element_name = models.CharField(
-		max_lenght=50, 
+    under_bridge_element_name = models.CharField(
+		max_length=50, 
 		verbose_name=u'4.3.1 Nombres de vías, ríos u otros elementos bajo el puente')
     under_bridge_element_type = models.CharField(
-		max_lenght=30, 
-		verbose_name='4.3.2 Tipos de elementos bajo el puente'),
+		max_length=30, 
+		verbose_name='4.3.2 Tipos de elementos bajo el puente',
 		choices=(
 			('autopista', 'Autopista'),
 			('calle_o_avenida', 'Calle o Avenida'),
@@ -113,7 +113,7 @@ class Bridge(models.Model):
     year = models.IntegerField(
         verbose_name=u'5.1 Año', null=True, blank=True)
 	source = models.CharField(
-		max_lenght='50', verbose_name='5.2 Fuente')
+		max_length=50, verbose_name='5.2 Fuente')
     year_range = models.CharField(
         max_length=20, verbose_name = '5.3 Rango del año de construcción',
         choices=(
@@ -124,30 +124,33 @@ class Bridge(models.Model):
 
     # 6. Ground conditions
     location = models.CharField(
-        max_length='40', verbose_name=u'6.1 Ubicación',
+        max_length=40, verbose_name=u'6.1 Ubicación',
         choices=(
             ('planicie_o_ladera_inferior', u'En Planicie o la mitad superior de una ladera'),
             ('ladera_superior_o_cima', u'En la mitad superior de una ladera o en la cima de una ladera'),),)
 
-    # 32.5 means (20º - 45º)
-    # 67.5 means > 45º
-    maximum?ground_slope = models.CharField(
-        max_length='10', verbose_name=u'6.2 Pendiente máxima de la ladera',
+    maximum_ground_slope = models.CharField(
+        max_length=10, verbose_name=u'6.2 Pendiente máxima de la ladera',
         choices=(
             ('<20', 'Menor a 20°(36%))'),
             ('>20', 'Mayor a 20°(36%))'),),
         blank=True)
-	    
+	soil_weakness = models.CharField(
+		max_length=20, 
+		verbose_name=u'Susceptibilidad de licuación del suelo'),
+		choices=(
+			('baja', 'Baja'),
+			('moderada', 'Moderada'),
+			('alta', 'Alta'),
+			('desconocida', 'No se conoce'),),)
 
-    # 9. Structural type
-    gates_of_concrete = models.BooleanField(
-        verbose_name='Pórticos de concreto armado')
-    gates_of_concrete_block_walls_filled_with_clay_concrete = \
-        models.BooleanField(
-        verbose_name='Pórticos de concreto armado rellenos con paredes' \
-            ' de bloques de arcilla de concreto')
-    diagonalized_steel_frames = models.BooleanField(
-        verbose_name='Pórticos diagonalizados')
+    # 7. Geometric and Structural Characteristics
+    bridge_length = models.FloatField(
+        verbose_name='7.1 Longitud del puente')
+    bridge_width = models.FloatField(
+        verbose_name='7.2 Ancho del puente')
+    segment_number = models.FloatField(
+        verbose_name=u'7.3 Número de tramos')
     gates_of_steel_trusses = models.BooleanField(
         verbose_name='Pórticos de acero con cerchas')
     reinforced_concrete_walls_in_two_horizontal_directions = \
