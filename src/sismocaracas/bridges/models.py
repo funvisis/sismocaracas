@@ -13,18 +13,20 @@ import time
 
 # Information about extending auth.User:
 # https://docs.djangoproject.com/en/dev/topics/auth/#storing-additional-information-about-users
-class Participant(models.Model):
-    user = models.OneToOneField(User)
-    phone = models.CharField('teléfono', max_length=100)
+#class Participant(models.Model):
+#    user = models.OneToOneField(User)
+#    phone = models.CharField('teléfono', max_length=100)
 
-    def __unicode__(self):
-        return '{}'.format(self.user)
+#    def __unicode__(self):
+#        return '{}'.format(self.user)
 
-def create_participant(sender, instance, created, **kwargs):
-    if created:
-        Participant.objects.create(user=instance)
+#def create_participant(sender, instance, created, **kwargs):
+#    if created:
+#        Participant.objects.create(user=instance)
 
-post_save.connect(create_participant, sender=User)
+#post_save.connect(create_participant, sender=User)
+
+#VERIFICAR campos null y blank
 
 class Bridge(models.Model):
     # Think about geolocalization
@@ -40,11 +42,11 @@ class Bridge(models.Model):
 
     # 2. Participants
     inspector = models.ForeignKey(
-        User, related_name='inspector', verbose_name='2.1 Inspector')
+        User, related_name='bridge_inspector', verbose_name='2.1 Inspector')
     reviewer = models.ForeignKey(
-        User, related_name='reviewer', verbose_name='2.2 Revisor')
+        User, related_name='bridge_reviewer', verbose_name='2.2 Revisor')
     supervisor = models.ForeignKey(
-        User, related_name='supervisor', verbose_name='2.3 Supervisor')
+        User, related_name='bridge_supervisor', verbose_name='2.3 Supervisor')
 
     # 3. General data and set location
     bridge_distributor_highway_name = models.CharField(
@@ -93,18 +95,18 @@ class Bridge(models.Model):
 			('instalacion_importante', u'Instalación importante'),
 			('otros', 'Otros'),),)
     access_to_important_facility = models.BooleanField(
-			verbose_name=u'4.4.1 ¿El puente da acceso a inst. importante?'),
+			verbose_name=u'4.4.1 ¿El puente da acceso a inst. importante?',
 			choices=(
-			(True, 'Sí'),
-			(False, 'No'),),)
+			    (True, 'Sí'),
+			    (False, 'No'),),)
     name_of_important_facility = models.CharField(
 		max_length=100, 
 		verbose_name='4.4.2 Nombre de la inst. importante')
-	coord_pins = models.FloatField(
+    coord_pins = models.FloatField(
         verbose_name='4.5.1 Coord. P.I. N-S', null=True, blank=True)
     coord_pieo = models.FloatField(
         verbose_name='4.5.2 Coord. P.I. E-O', null=True, blank=True)
-	coord_pfns = models.FloatField(
+    coord_pfns = models.FloatField(
         verbose_name='4.6.1 Coord. P.F. N-S', null=True, blank=True)
     coord_pfeo = models.FloatField(
         verbose_name='4.6.2 Coord. P.F. E-O', null=True, blank=True)
@@ -112,7 +114,7 @@ class Bridge(models.Model):
    	# 5. Bridge age
     year = models.IntegerField(
         verbose_name=u'5.1 Año', null=True, blank=True)
-	source = models.CharField(
+    source = models.CharField(
 		max_length=50, verbose_name='5.2 Fuente')
     year_range = models.CharField(
         max_length=20, verbose_name = '5.3 Rango del año de construcción',
@@ -135,10 +137,10 @@ class Bridge(models.Model):
             ('<20', 'Menor a 20°(36%))'),
             ('>20', 'Mayor a 20°(36%))'),),
         blank=True)
-	soil_weakness = models.CharField(
+    soil_weakness = models.CharField(
 		max_length=20, 
-		verbose_name=u'Susceptibilidad de licuación del suelo'),
-		choices=(
+		verbose_name=u'Susceptibilidad de licuación del suelo',
+        choices=(
 			('baja', 'Baja'),
 			('moderada', 'Moderada'),
 			('alta', 'Alta'),
@@ -151,28 +153,29 @@ class Bridge(models.Model):
         verbose_name='7.2 Ancho del puente')
     segment_number = models.FloatField(
         verbose_name=u'7.3 Número de tramos')
-    gates_of_steel_trusses = models.BooleanField(
-        verbose_name='Pórticos de acero con cerchas')
-    reinforced_concrete_walls_in_two_horizontal_directions = \
-        models.BooleanField(
-        verbose_name='Muros de concreto armado en dos direcciones horizontales')
-    systems_with_reinforced_concrete_walls_in_one_direction = \
-        models.BooleanField(
-        verbose_name='Sistemas con muros de concreto' \
-            ' armado en una sola dirección',
-        help_text='como algunos sistemas del tipo túnel')
-    pre_built_systems_based_on_large_panels_or_frames = models.BooleanField(
-        verbose_name='Sistemas pre-fabricados a base de' \
-            ' grandes paneles o de pórticos')
-    confined_load_bearing_mosonry = models.BooleanField(
-        verbose_name='Sistemas cuyos elementos portantes' \
-            'sean mampostería confinada')
-    not_confined_load_bearing_masonry = models.BooleanField(
-        verbose_name='Sistemas cuyos elementos portantos' \
-            ' sean mampostería no confinada')
-    steel_frames = models.BooleanField(verbose_name='Pórticos de acero')
-    steel_frames_with_hollow = models.BooleanField(
-        verbose_name='Pórticos de acero con perfiles tabulares')
+    maximum_distance_between_columns = models.FloatField(
+        verbose_name=u'7.4 Luz máxima')
+    maximum_column_height = models.FloatField(
+        verbose_name=u'7.5 Altura máxima de pilas')
+    joint_number_on_road = models.FloatField(
+        verbose_name=u'7.6 Número de juntas en la losa del tablero')
+    L_relation_between_close_segments = models.CharField(
+        max_length=4,
+        verbose_name=u'7.7 Relación L en tramos adyacentes',
+        choices=(
+            ('<2', '<2.0'),
+            ('>2', '>2.0'),),)
+    H_relation_between_close_columns = models.CharField(
+        max_length=4,
+        verbose_name=u'7.8 Relación H en pilas adyacentes',
+        choices=(
+            ('<2', '<2.0'),
+            ('>2', '>2.0'),),)
+    straight_bridge = models.BooleanField(
+        verbose_name='Alineamiento del puente',
+        choices=(
+		    (True, 'Recto'),
+		    (False, 'Curvo'),),)
 
     # 10. Floor scheme
     floor_scheme = models.CharField(

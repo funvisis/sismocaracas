@@ -40,11 +40,11 @@ class Building(models.Model):
 
     # 2. Participants
     inspector = models.ForeignKey(
-        User, related_name='inspector', verbose_name='2.1 Inspector')
+        User, related_name='building_inspector', verbose_name='2.1 Inspector')
     reviewer = models.ForeignKey(
-        User, related_name='reviewer', verbose_name='2.2 Revisor')
+        User, related_name='building_reviewer', verbose_name='2.2 Revisor')
     supervisor = models.ForeignKey(
-        User, related_name='supervisor', verbose_name='2.3 Supervisor')
+        User, related_name='building_supervisor', verbose_name='2.3 Supervisor')
 
     # 3. Interviewee
     interviewee_building_relationship = models.CharField(
