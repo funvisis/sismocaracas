@@ -133,7 +133,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sismocaracas.inspections',
+    'sismocaracas.buildings',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -163,4 +163,4 @@ LOGGING = {
     }
 }
 
-AUTH_PROFILE_MODULE = 'sismocaracas.inspections.Participant'
+#AUTH_PROFILE_MODULE = 'sismocaracas.inspections.Participant'
