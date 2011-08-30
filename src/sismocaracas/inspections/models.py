@@ -108,12 +108,15 @@ class Inspection(models.Model):
     # 6. Carrying Capacity
     people = models.IntegerField(
         verbose_name='6.1 Número de personas que ocupan el inmueble')
-    occupation_during = models.CharField(
-        max_length=10, verbose_name='6.2 Ocupación durante',
-        choices=(
-            (u'mañana', 'mañana'),
-            ('tarde', 'tarde'),
-            ('noche', 'noche'),),)
+    # occupation_during = models.CharField(
+    #     max_length=10, verbose_name='6.2 Ocupación durante',
+    #     choices=(
+    #         (u'mañana', 'mañana'),
+    #         ('tarde', 'tarde'),
+    #         ('noche', 'noche'),),)
+    occupation_during_morning = models.BooleanField(verbose_name='mañana')
+    occupation_during_afternoon = models.BooleanField(verbose_name='tarde')
+    occupation_during_evening = models.BooleanField(verbose_name='noche')
 
     # 7. Building age
     year = models.IntegerField(
@@ -204,8 +207,9 @@ class Inspection(models.Model):
             ('O', 'O'),
             ('U', 'U'),
             ('rectangular', u'\u25AD o \u25AB'),
-            ('esbeltez horizontal', 'Esbeltez horizontal'),),
-        blank=True)
+            ('esbeltez horizontal', 'Esbeltez horizontal'),
+            ('', 'Ninguno'),),
+        blank=False)
 
     # 11. Lifting scheme
     lifting_scheme = models.CharField(
@@ -217,8 +221,9 @@ class Inspection(models.Model):
             ('rectangular', u'\u25AF'),
             ('pirámide invertida', 'Pirámide invertida'),
             ('piramidal', 'Piramidal'),
-            ('esveltez vertical', 'Esveltez, vertical'),),
-        blank=True)
+            ('esveltez vertical', 'Esveltez, vertical'),
+            ('', 'Ninguno'),),
+        blank=False)
     # 12. Irregularities
 
     no_high_beams_on_one_or_two_directions = models.BooleanField(
@@ -235,11 +240,17 @@ class Inspection(models.Model):
         verbose_name='12.6 Fuerte asimetría de masas o rigideces en planta')
     separation_between_buildings = models.IntegerField(
         verbose_name='12.7 Separación entre edificios (cm)',
-        null=True, blank=True)
-    attaching_slab_slab = models.BooleanField(
-        verbose_name='12.8 Adosamiento: Losa contra losa')
-    attaching_slab_column = models.BooleanField(
-        verbose_name='12.9 Adosamiento: Columna contra losa')
+        help_text='Colocar algun valor, así sea cero (0)',
+        null=False, blank=False)
+    # attaching_slab_slab = models.BooleanField(
+    #     verbose_name='12.8 Adosamiento: Losa contra losa')
+    # attaching_slab_column = models.BooleanField(
+    #     verbose_name='12.9 Adosamiento: Columna contra losa')
+    attaching_slab_slab_column = models.BooleanField(
+        verbose_name=u'12.8 Tipo de adosamiento',
+        choices=(
+            ('slab_slab', 'Losa contra losa'),
+            ('column_slab', 'Columna contra losa'),))
 
     # 13. Degree of degradation
 
@@ -291,7 +302,10 @@ class Inspection(models.Model):
     # __. Threat Index
     caracas = models.BooleanField(
         verbose_name=u'¿Es en Caracas?',
-        help_text='Solo para el revisor o el supervisor')
+        help_text='Solo para el revisor o el supervisor',
+        choices=(
+            (True, 'Sí'),
+            (False, 'No'),))
     national_level_zonification = models.IntegerField(
         verbose_name=u'Nivel nacional_zonificación',
         null=True, blank=True,
