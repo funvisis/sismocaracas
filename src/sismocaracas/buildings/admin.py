@@ -2,13 +2,13 @@
 
 #from .models import Participant
 #from .models import Inspection
-from .models import Buildings
+from .models import Building
 
 from django.contrib import admin
 from django.contrib.admin.sites import AdminSite
 
 #class InspectionAdmin(admin.ModelAdmin):
-class BuildingsAdmin(admin.ModelAdmin):
+class BuildingAdmin(admin.ModelAdmin):
     fieldsets = (
         (u'1. Datos Generales', {
                 'fields': ('date', 'init_time', 'end_time', 'code')
@@ -76,6 +76,6 @@ admin_site = AdminSite('admin_site')
 # admin.site.register(Inspection)
 # admin.site.register(Participant)
 # admin_site.register(Inspection, InspectionAdmin)
-admin_site.register(Buildings, BuildingsAdmin)
+admin_site.register(Building, BuildingAdmin)
 # admin_site.register(Participant)
 # admin_site.register(Participant)
