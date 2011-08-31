@@ -9,7 +9,7 @@ admin.site.register(auth.models.User)
 
 urlpatterns = patterns(
     '',
-    url(r'^inspecciones/', include('sismocaracas.buildings.urls')),
+    url(r'^inspecciones/', include('sismocaracas.structuralinspections.urls')),
 #    url(r'^puentes/', include('sismocaracas.bridges.urls')),
     (r'^admin/', include(admin.site.urls)),
     )
