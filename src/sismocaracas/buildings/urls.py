@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
-from .admin.supervisor import admin_site as supervisor_admin_site
-# from .admin.revisor import admin_site as revisor_admin_site
-# from .admin.inspector import admin_site as inspector_admin_site
+from .admin import supervisor_admin_site
+# from .admin.revisor import  revisor_admin_site
+# from .admin.inspector import  inspector_admin_site
 
 urlpatterns = patterns(
     '',

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .models import Building
+from ..models import Building
 
 from django.contrib import admin
 

@@ -19,11 +19,11 @@
 
 
 * TODO Reestructurar los permisos de la aplicación Buildings
+** DONE Definir tres grupos con sus permisologías:
+   - Inspectores, Revisores y Supervisores
 ** TODO Crear aplicación independiente para las permisologías
 ** TODO Averiguar por qué utilicé el modelo User en vez de Participant en los roles de una Inspection (futuro modelo Building)
   - Como resultado se debe colocar Participant como rol o explicar las razones.
-** TODO Definir tres grupos con sus permisologías:
-   - Inspectores, Revisores y Supervisores
 ** TODO Hacer unas urls específicas para los grupos:
    - Un Inspector solo ve la vista de inspectores
    - Un Revisor ve las vistas de revisores y de inspectores
