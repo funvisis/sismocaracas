@@ -15,8 +15,8 @@
 
 * DONE Cambiar el nombre de la aplicación Inspections a Buildings (o como se escriba) y el proyecto a Inspections
 
+* DONE Usar el urls.py propio de cada aplicación.
 
-* TODO Usar el urls.py propio de cada aplicación.
 
 * TODO Reestructurar los permisos de la aplicación Buildings
 ** TODO Crear aplicación independiente para las permisologías
@@ -56,3 +56,15 @@
 *** DONE Añadir al modelo los 4 campos de los supervisores
 
 * TODO Averiguar como evitar que lo que se cree en ./objects del repositorio remoto sea de un solo usuario.
+* TODO Averiguar por qué al registrar a mano auth al admin.site se elimina el workflo especial.
+  - El workflow especial al que se hace referencia es aquel dónde la
+    planilla para crear un usuario solo muestra tres campos y luego de
+    "salvar" se presentan el resto de los campos.
+* TODO Decidir si preparar una versión 3 con formularios en vez del admin para las planillas.
+* TODO Reportar bug a Django de "help dumpdata"
+  - Parece ser que manage.py help dumpdata verifica el settings.py y
+    la configuración de la base de datos, y si Python no tiene soporte
+    para la base de datos (en mi caso, no tengo instalado psycopg2)
+    lanza un error.
+  - También afecta la autocompletación de las opciones de manage.py en
+    Ubuntu 11.04.
