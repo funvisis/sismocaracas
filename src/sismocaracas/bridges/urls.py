@@ -3,5 +3,5 @@ from .admin import admin_site
 
 urlpatterns = patterns(
     '',
-    url(r'^$', include(admin_site.urls)),
+    url(r'', include(admin_site.urls)),
     )
