@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from .models import Bridge
+
+from ..models.bridges import Bridge
 
 from django.contrib import admin
 from django.contrib.admin.sites import AdminSite
