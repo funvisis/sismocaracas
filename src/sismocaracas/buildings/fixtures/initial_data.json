@@ -1,0 +1,59 @@
+[
+    {
+        "pk": 1, 
+        "model": "auth.group", 
+        "fields": {
+            "name": "Base", 
+            "permissions": [
+                25, 
+                26, 
+                27, 
+                22, 
+                23, 
+                24
+            ]
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "auth.group", 
+        "fields": {
+            "name": "inspectores", 
+            "permissions": []
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "auth.group", 
+        "fields": {
+            "name": "revisores", 
+            "permissions": []
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "auth.group", 
+        "fields": {
+            "name": "supervisores", 
+            "permissions": []
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "admin", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": true, 
+            "is_staff": true, 
+            "last_login": "2011-08-31 11:14:21", 
+            "groups": [], 
+            "user_permissions": [], 
+            "password": "sha1$7b80d$6f12c800401c1b34abfa357baf01d0f2620b6d8a", 
+            "email": "admin@funvisis.gob.ve", 
+            "date_joined": "2011-08-31 11:14:03"
+        }
+    }
+]
