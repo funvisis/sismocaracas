@@ -23,3 +23,9 @@ Thumbs.db
 # Generic bkfiles #
 ###################
 \#*\#
+
+# Other compiled #
+##################
+*.pdf
+*.ps
+*.dvi

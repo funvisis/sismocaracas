@@ -13,11 +13,15 @@
 * DONE Campos 12.{8,9} Uno de dos.
 * DONE Campo 6.2 debe ser selección múltiple.
 
-* TODO Cambiar el nombre de la aplicación Inspections a Buildings (o como se escriba) y el proyecto a Inspections
+* DONE Cambiar el nombre de la aplicación Inspections a Buildings (o como se escriba) y el proyecto a Inspections
 
-* TODO Averiguar por qué utilicé el modelo User en vez de Participant en los roles de una Inspection (futuro modelo Building)
-  - Como resultado se debe colocar Participant como rol o explicar las razones.
+
+* TODO Usar el urls.py propio de cada aplicación.
+
 * TODO Reestructurar los permisos de la aplicación Buildings
+** TODO Crear aplicación independiente para las permisologías
+** TODO Averiguar por qué utilicé el modelo User en vez de Participant en los roles de una Inspection (futuro modelo Building)
+  - Como resultado se debe colocar Participant como rol o explicar las razones.
 ** TODO Definir tres grupos con sus permisologías:
    - Inspectores, Revisores y Supervisores
 ** TODO Hacer unas urls específicas para los grupos:
@@ -32,7 +36,9 @@
    - Workflow de editorial. Luego del vistobueno, no puede modificarlo nadie (solo el ente)
 ** TODO Desactivar el autodiscover del admin y crear un admin para Participant
 
+
 * TODO Implementar galería de fotos con etiquetas
+** TODO Previo, colocar un campo para montar un .zip
   - Nota: que el workflow deje para después la subida y clasificación
     de las imágenes.
 * TODO Pedir confirmación de correo electrónico
@@ -48,3 +54,5 @@
     - Vulnerabilidad
 ** TODO Definir los métdos para los índices.
 *** DONE Añadir al modelo los 4 campos de los supervisores
+
+* TODO Averiguar como evitar que lo que se cree en ./objects del repositorio remoto sea de un solo usuario.
