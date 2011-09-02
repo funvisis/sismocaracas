@@ -27,16 +27,13 @@ import time
 # post_save.connect(create_participant, sender=User)
 
 class Building(models.Model):
-    # Think about geolocalization
-    # Maybe Djangogeo
 
     # 1. General
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    date = models.DateField('1.1 fecha')
-    init_time = models.DateTimeField('1.2 Hora inicio')
-    end_time = models.DateTimeField('1.3 Hora culminación')
-    code = models.CharField('1.4 Código', max_length=20, blank=True)
+    init_time = models.DateTimeField('1.1 Hora inicio')
+    end_time = models.DateTimeField('1.2 Hora culminación')
+    code = models.CharField('1.3 Código', max_length=20, blank=True)
 
     # 2. Participants
     inspector = models.ForeignKey(
@@ -393,10 +390,9 @@ class Bridge(models.Model):
     # 1. General
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    date = models.DateField('1.1 Fecha')
-    init_time = models.DateTimeField('1.2 Hora inicio')
-    end_time = models.DateTimeField(u'1.3 Hora culminación')
-    code = models.CharField(u'1.4 Código', max_length=20, blank=True)
+    init_time = models.DateTimeField('1.1 Hora inicio')
+    end_time = models.DateTimeField(u'1.2 Hora culminación')
+    code = models.CharField(u'1.3 Código', max_length=20, blank=True)
 
     # 2. Participants
     inspector = models.ForeignKey(
