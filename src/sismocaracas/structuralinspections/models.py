@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.db.models.signals import post_save
 from django.conf import settings
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from funvisis.django.fvisusers.models import FVISUser
 
 from funvisis.utils.djangorelated \
     import get_path_to_app_repo_ as get_path_to_app_repo
@@ -10,21 +10,6 @@ from funvisis.utils.djangorelated \
 import os
 import datetime
 import time
-
-# Information about extending auth.User:
-# https://docs.djangoproject.com/en/dev/topics/auth/#storing-additional-information-about-users
-# class Participant(models.Model):
-#     user = models.OneToOneField(User)
-#     phone = models.CharField('teléfono', max_length=100)
-
-#     def __unicode__(self):
-#         return '{}'.format(self.user)
-
-# def create_participant(sender, instance, created, **kwargs):
-#     if created:
-#         Participant.objects.create(user=instance)
-
-# post_save.connect(create_participant, sender=User)
 
 class Building(models.Model):
 
@@ -37,11 +22,11 @@ class Building(models.Model):
 
     # 2. Participants
     inspector = models.ForeignKey(
-        User, related_name='building_inspector', verbose_name='2.1 Inspector')
+        FVISUser, related_name='building_inspector', verbose_name='2.1 Inspector')
     reviewer = models.ForeignKey(
-        User, related_name='building_reviewer', verbose_name='2.2 Revisor')
+        FVISUser, related_name='building_reviewer', verbose_name='2.2 Revisor')
     supervisor = models.ForeignKey(
-        User, related_name='building_supervisor', verbose_name='2.3 Supervisor')
+        FVISUser, related_name='building_supervisor', verbose_name='2.3 Supervisor')
 
     # 3. Interviewee
     interviewee_building_relationship = models.CharField(
@@ -396,11 +381,11 @@ class Bridge(models.Model):
 
     # 2. Participants
     inspector = models.ForeignKey(
-        User, related_name='bridge_inspector', verbose_name='2.1 Inspector')
+        FVISUser, related_name='bridge_inspector', verbose_name='2.1 Inspector')
     reviewer = models.ForeignKey(
-        User, related_name='bridge_reviewer', verbose_name='2.2 Revisor')
+        FVISUser, related_name='bridge_reviewer', verbose_name='2.2 Revisor')
     supervisor = models.ForeignKey(
-        User, related_name='bridge_supervisor', verbose_name='2.3 Supervisor')
+        FVISUser, related_name='bridge_supervisor', verbose_name='2.3 Supervisor')
 
     # 3. General data and set location
     bridge_distributor_highway_name = models.CharField(

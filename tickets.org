@@ -22,6 +22,7 @@
 ** DONE Definir tres grupos con sus permisologías:
    - Inspectores, Revisores y Supervisores
 
+** TODO Crear los usuarios de prueba
 ** TODO Crear aplicación independiente para las permisologías
 ** TODO Averiguar por qué utilicé el modelo User en vez de Participant en los roles de una Inspection (futuro modelo Building)
   - Como resultado se debe colocar Participant como rol o explicar las razones.
@@ -69,3 +70,4 @@
     lanza un error.
   - También afecta la autocompletación de las opciones de manage.py en
     Ubuntu 11.04.
+* TODO Unificar los índices de amenaza en una aplicación aparte.
