@@ -201,7 +201,7 @@ class Building(models.Model):
             ('U', 'U'),
             ('L', 'L'),
             ('rectangular', u'\u25AF'),
-            ('pirámide invertida', 'Pirámide invertida'),
+            (u'pirámide invertida', u'Pirámide invertida'),
             ('piramidal', 'Piramidal'),
             ('esveltez vertical', 'Esveltez, vertical'),
             ('', 'Ninguno'),),
@@ -228,7 +228,8 @@ class Building(models.Model):
     #     verbose_name='12.8 Adosamiento: Losa contra losa')
     # attaching_slab_column = models.BooleanField(
     #     verbose_name='12.9 Adosamiento: Columna contra losa')
-    attaching_slab_slab_column = models.BooleanField(
+    attaching_slab_slab_column = models.CharField(
+        max_length=15,
         verbose_name=u'12.8 Tipo de adosamiento',
         choices=(
             ('slab_slab', 'Losa contra losa'),
@@ -324,9 +325,9 @@ class Building(models.Model):
     def __unicode__(self):
         return "{}:{}:{}".format(
             ' '.join(
-                (self.inspector.first_name, self.inspector.last_name)).strip()
+                (self.inspector.user.first_name, self.inspector.user.last_name)).strip()
             or
-            self.inspector, self.date, self.id)
+            self.inspector, self.init_time, self.id)
 
     def has_topographic_effects(self):
         return \

@@ -6,7 +6,7 @@ from django.contrib import admin
 from funvisis.django.fvisusers.models import FVISUser
 
 
-#admin.site.register(FVISUser)
+admin.site.register(FVISUser)
 admin.autodiscover()
 
 

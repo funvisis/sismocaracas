@@ -17,7 +17,7 @@ class BuildingAdmin(admin.ModelAdmin):
             u'2. Datos de los participantes',
             {
                 'fields': (
-                    'inspector',
+                    # 'inspector',
                     'reviewer',
                     'supervisor')}),
         (
@@ -165,7 +165,7 @@ class BuildingAdmin(admin.ModelAdmin):
                                                       # to be the
                                                       # inspector
         if not change: # Only adding sets the inspector
-            obj.inspector = request.user
+            obj.inspector = request.user.fvisuser
         obj.save()
 
     class Media:

@@ -82,7 +82,7 @@ for record in reader:
     u.set_password(password)
 
     u.save()
-    print u.first_name, u.last_name, u.email, password, u.password
+    print u.first_name, u.last_name, u.email, u.username, password
 
     for group_name in (
         pluralize(_.strip()).lower() for _ in
