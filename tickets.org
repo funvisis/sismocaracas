@@ -83,3 +83,5 @@
    Si por ejemplo se optó por usar atributos personalizados, pudiera
    entonces definirse una clase especializada de ModelAdmin que maneje
    estos atributos especiales.
+
+* TODO Establecer en el settings qué modelos registrar para el admin site.

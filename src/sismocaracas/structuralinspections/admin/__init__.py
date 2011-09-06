@@ -33,4 +33,4 @@ from .building import BuildingAdmin
 supervisor_admin_site = AdminSite('admin_site')
 
 supervisor_admin_site.register(Building, BuildingAdmin)
-supervisor_admin_site.register(Bridge)
+#supervisor_admin_site.register(Bridge)

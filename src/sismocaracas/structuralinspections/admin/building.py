@@ -183,6 +183,7 @@ class BuildingAdmin(admin.ModelAdmin):
                                                  # remove the fields.
 
         if obj and not (
+            request.user.is_superuser or
             request.user.groups.filter(name="supervisores") or
             request.user.groups.filter(name="revisores")):
 

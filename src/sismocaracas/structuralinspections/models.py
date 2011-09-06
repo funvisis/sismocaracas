@@ -326,6 +326,10 @@ class Building(models.Model):
             ('6', '6'),
             ('7-1', '7-1')))
 
+    class Meta:
+        verbose_name = u"Edificación"
+        verbose_name_plural = u"Edificaciones"
+
     def __unicode__(self):
         return "{}:{}:{}".format(
             ' '.join(
