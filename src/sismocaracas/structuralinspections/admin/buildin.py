@@ -160,6 +160,36 @@ class BuildingAdmin(admin.ModelAdmin):
                     'macrozone_ccs',
                     'microzone_ccs'),}),)
 
+
+    def get_form(self, request, obj=None, **kwargs):
+        """
+        Exclude some fields based on the request.user.
+        """
+        
+        if not (
+            request.user.groups.filter(name="supervisores") or
+            request.user.groups.filter(name="revisores")):
+
+            self.fieldsets = self.fieldsets[:-1] # FIXME: use some
+                                                 # argument or custom
+                                                 # ModelAdmin field to
+                                                 # mark the fields to
+                                                 # remove. Later, make
+                                                 # a custom ModelAdmin
+                                                 # classdefine that
+                                                 # field, and others
+                                                 # like the condition
+                                                 # to evaluate to
+                                                 # remove the fields.
+
+        if obj and not (
+            request.user.groups.filter(name="supervisores") or
+            request.user.groups.filter(name="revisores")):
+
+            self.readonly_fields = ('supervisor', 'reviewer')
+
+        return super(BuildingAdmin, self).get_form(request, obj=obj, **kwargs)
+
     def save_model(self, request, obj, form, change): # The logged
                                                       # user is going
                                                       # to be the

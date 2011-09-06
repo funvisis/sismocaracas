@@ -28,7 +28,7 @@ from django.contrib.admin.sites import AdminSite
 from ..models import Building
 from ..models import Bridge
 
-from .supervisor import BuildingAdmin
+from .building import BuildingAdmin
 
 supervisor_admin_site = AdminSite('admin_site')
 

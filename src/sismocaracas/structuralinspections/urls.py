@@ -5,5 +5,5 @@ from .admin import supervisor_admin_site
 
 urlpatterns = patterns(
     '',
-    url(r'^supervisor/', include(supervisor_admin_site.urls)),
+    url(r'^inspecciones/', include(supervisor_admin_site.urls)),
     )

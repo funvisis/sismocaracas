@@ -71,3 +71,15 @@
   - También afecta la autocompletación de las opciones de manage.py en
     Ubuntu 11.04.
 * TODO Unificar los índices de amenaza en una aplicación aparte.
+* TODO [BUG] El script filldb falla si no se tiene instalada la aplicación structuralinspections
+* TODO Mejorar la metodología para esconder campos en el sitio admin:
+** TODO [función get_form de building.BuildingAdmin]
+   no debería quetarse los campos invisibles de manera tan brusca. Tal
+   vez parametrizando cuáles campos eliminar en caso de cumplirse una
+   función también parametrizada, o por argumento de la función
+   get_form, o a través de atributos personalizados de la clase
+   BuildingAdmin.
+** TODO [Encapsular la solución anterior]
+   Si por ejemplo se optó por usar atributos personalizados, pudiera
+   entonces definirse una clase especializada de ModelAdmin que maneje
+   estos atributos especiales.
