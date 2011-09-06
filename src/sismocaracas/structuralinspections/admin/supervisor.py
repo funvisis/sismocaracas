@@ -168,5 +168,14 @@ class BuildingAdmin(admin.ModelAdmin):
             obj.inspector = request.user.fvisuser
         obj.save()
 
+    def queryset(self, request):
+
+        if request.user.groups.filter(name='supervisores') or \
+                request.user.is_superuser:
+            return Building.objects.all()
+
+        return Building.objects.filter(inspector=request.user.fvisuser)
+
+
     class Media:
         js = ('js/admin/custom.js', )

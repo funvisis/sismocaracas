@@ -24,9 +24,13 @@ class Building(models.Model):
     inspector = models.ForeignKey(
         FVISUser, related_name='building_inspector', verbose_name='2.1 Inspector')
     reviewer = models.ForeignKey(
-        FVISUser, related_name='building_reviewer', verbose_name='2.2 Revisor')
+        FVISUser,
+        related_name='building_reviewer',
+        verbose_name='2.2 Revisor',
+        limit_choices_to={'user__groups__name': 'revisores'})
     supervisor = models.ForeignKey(
-        FVISUser, related_name='building_supervisor', verbose_name='2.3 Supervisor')
+        FVISUser, related_name='building_supervisor', verbose_name='2.3 Supervisor',
+                limit_choices_to={'user__groups__name': 'supervisores'})
 
     # 3. Interviewee
     interviewee_building_relationship = models.CharField(
