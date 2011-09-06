@@ -23,20 +23,20 @@
    - Inspectores, Revisores y Supervisores
 
 ** TODO Crear los usuarios de prueba
-** TODO Crear aplicación independiente para las permisologías
-** TODO Averiguar por qué utilicé el modelo User en vez de Participant en los roles de una Inspection (futuro modelo Building)
+** DONE Crear aplicación independiente para las permisologías
+** Averiguar por qué utilicé el modelo User en vez de Participant en los roles de una Inspection (futuro modelo Building)
   - Como resultado se debe colocar Participant como rol o explicar las razones.
-** TODO Hacer unas urls específicas para los grupos:
+** Hacer unas urls específicas para los grupos:
    - Un Inspector solo ve la vista de inspectores
    - Un Revisor ve las vistas de revisores y de inspectores
    - Un Supervisor ve las vistas de supervisores, revisores e
      inspectores
-** TODO En los campos de los roles, filtrar por grupos.
-** TODO Vista de inspecciones restringida por usuario
-** TODO Ocultar campos del supervisor y cuando resuelva el tema, mostrarlo solo a los super.
+** DONE En los campos de los roles, filtrar por grupos.
+** DONE Vista de inspecciones restringida por usuario
+** Ocultar campos del supervisor y cuando resuelva el tema, mostrarlo solo a los super.
 ** TODO Lista de planillas con campo de validación solo para los revisores y/o supervisores.
    - Workflow de editorial. Luego del vistobueno, no puede modificarlo nadie (solo el ente)
-** TODO Desactivar el autodiscover del admin y crear un admin para Participant
+** Desactivar el autodiscover del admin y crear un admin para Participant
 
 
 * TODO Implementar galería de fotos con etiquetas
