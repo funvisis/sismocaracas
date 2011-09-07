@@ -5,7 +5,7 @@ from ..models import Building
 from django.contrib import admin
 
 class BuildingAdmin(admin.ModelAdmin):
-    fieldsets = (
+    fieldsets_infra = (
         (
             u'1. Datos Generales',
             {
@@ -150,7 +150,9 @@ class BuildingAdmin(admin.ModelAdmin):
             u'16. Respaldo de la planilla',
             {
                 'fields': (
-                    'image_backup',)}),
+                    'image_backup',)}),)
+
+    fieldsets_super = (
         (
             u'Índice de amenaza',
             {
@@ -160,29 +162,35 @@ class BuildingAdmin(admin.ModelAdmin):
                     'macrozone_ccs',
                     'microzone_ccs'),}),)
 
-
     def get_form(self, request, obj=None, **kwargs):
         """
         Exclude some fields based on the request.user.
         """
-        
-        if not (
+
+        self.fieldsets = self.fieldsets_infra
+
+        if (
+            request.user.is_superuser or
             request.user.groups.filter(name="supervisores") or
             request.user.groups.filter(name="revisores")):
 
-            self.fieldsets = self.fieldsets[:-1] # FIXME: use some
-                                                 # argument or custom
-                                                 # ModelAdmin field to
-                                                 # mark the fields to
-                                                 # remove. Later, make
-                                                 # a custom ModelAdmin
-                                                 # classdefine that
-                                                 # field, and others
-                                                 # like the condition
-                                                 # to evaluate to
-                                                 # remove the fields.
+            self.fieldsets += self.fieldsets_super # FIXME: use some
+                                                   # argument or
+                                                   # custom ModelAdmin
+                                                   # field to mark the
+                                                   # fields to
+                                                   # remove. Later,
+                                                   # make a custom
+                                                   # ModelAdmin
+                                                   # classdefine that
+                                                   # field, and others
+                                                   # like the
+                                                   # condition to
+                                                   # evaluate to
+                                                   # remove the
+                                                   # fields.
 
-        if obj and not (
+        if obj != None and not (
             request.user.is_superuser or
             request.user.groups.filter(name="supervisores") or
             request.user.groups.filter(name="revisores")):

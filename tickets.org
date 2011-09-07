@@ -18,6 +18,9 @@
 * DONE Usar el urls.py propio de cada aplicación.
 
 
+* TODO [FIX-BUG] Mostrar todos los campos para los superusuarios
+
+
 * TODO Reestructurar los permisos de la aplicación Buildings
 ** DONE Definir tres grupos con sus permisologías:
    - Inspectores, Revisores y Supervisores
@@ -85,3 +88,9 @@
    estos atributos especiales.
 
 * TODO Establecer en el settings qué modelos registrar para el admin site.
+* TODO Gestión de imágenes en el proyecto
+** TODO Estandarizar nombre y disposición de las carpetas para almacenar las imágenes
+   Esto sería algo provisional mientras se desarrolla la "gestión de
+   imágenes", para facilitar la carga por lotes de las imágenes de las
+   inspecciones guardadas hasta el momento de poner en producción esta
+   "gestión".
