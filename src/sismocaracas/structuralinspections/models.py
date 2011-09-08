@@ -201,7 +201,7 @@ class Building(models.Model):
             ('U', 'U'),
             ('rectangular', u'\u25AD o \u25AB'),
             ('esbeltez horizontal', 'Esbeltez horizontal'),
-            ('', 'Ninguno'),),
+            ('ninguno', 'Ninguno'),),
         blank=False)
 
     # 11. Lifting scheme
@@ -215,7 +215,7 @@ class Building(models.Model):
             (u'pirámide invertida', u'Pirámide invertida'),
             ('piramidal', 'Piramidal'),
             ('esveltez vertical', 'Esveltez, vertical'),
-            ('', 'Ninguno'),),
+            ('ninguno', 'Ninguno'),),
         blank=False)
     # 12. Irregularities
 
@@ -547,7 +547,8 @@ class Bridge(models.Model):
             ('O', 'O'),
             ('U', 'U'),
             ('rectangular', u'\u25AD o \u25AB'),
-            ('esbeltez horizontal', 'Esbeltez horizontal'),),
+            ('esbeltez horizontal', 'Esbeltez horizontal'),
+            ('ninguno', 'Ninguno'),),
         blank=True)
 
     # 11. Lifting scheme
@@ -560,7 +561,8 @@ class Bridge(models.Model):
             ('rectangular', u'\u25AF'),
             ('pirámide invertida', 'Pirámide invertida'),
             ('piramidal', 'Piramidal'),
-            ('esveltez vertical', 'Esveltez, vertical'),),
+            ('esveltez vertical', 'Esveltez, vertical'),
+            ('ninguno', 'Ninguno'),),
         blank=True)
     # 12. Irregularities
 

@@ -1,47 +1,29 @@
 * DONE Manipular el archivo de respaldo para que se llame igual que el ID del objeto (inspección)
 * DONE strtime no funciona con el callable de la opción upload_to en el campo de imagen.
 * DONE Campo 8.1 en el admin oculta siempre los campos opcionales	:BUG:
-
 * DONE Cambiar ground_slope a Char y a los valores colocarlos como rango
   - Para después de la puesta en produción
   - Procesamiento en lote para pasar los números a rangos en cadena
-
 * DONE Probar la función del módulo funvisis.utils relacionada con Django
 * DONE Campos 10 y 11 obligatorios y añadir la opción "ninguno".
-
 * DONE Sí o No para la pregunta "¿Es Caracas?"
 * DONE Campos 12.{8,9} Uno de dos.
 * DONE Campo 6.2 debe ser selección múltiple.
-
 * DONE Cambiar el nombre de la aplicación Inspections a Buildings (o como se escriba) y el proyecto a Inspections
-
 * DONE Usar el urls.py propio de cada aplicación.
-
-
------
-
-
 * DONE [#A] Añadir opción «ninguno» al campo 12.8		  :Buildings:
-* TODO [#A] Quitar obligatoriedad del campo 15			  :Buildings:
+* DONE [#A] Quitar obligatoriedad del campo 15			  :Buildings:
 ** DONE Quitarlo del models.py
-** TODO Quitarlo de la base de datos de producción
+** DONE Quitarlo de la base de datos de producción
 * DONE [#A] Cambiar el checkbox de los campos 8.3 y 8.6 a «sí o no» :Buildings:
-* TODO [#A] Quitar obligatoriedad del campo 12.7		  :Builsings:
+* DONE [#A] Quitar obligatoriedad del campo 12.7		  :Builsings:
 ** DONE Quitarlo del models.py
-** TODO Quitarlo de la base de datos de producción
-* TODO [#B] Hacer al campo 12.7 dependiente del 12.8		  :Buildings:
-* TODO [#B] Establecer 4.1 y 4.6 como campos de la lista de edificaciones :Buildings:
-  y dejar la fecha
-* TODO [#C] Fusionar campos 6 y 7 				  :Buildings:
-* TODO [#C] Modificar el tamaño de los «div» de los nombres de los campos :Buildings:
-
-* TODO [FIX-BUG] Mostrar todos los campos para los superusuarios
-
-* TODO Reestructurar los permisos de la aplicación Buildings
+** DONE Quitarlo de la base de datos de producción
+* DONE [FIX-BUG] Mostrar todos los campos para los superusuarios
+* DONE Reestructurar los permisos de la aplicación Buildings
 ** DONE Definir tres grupos con sus permisologías:
    - Inspectores, Revisores y Supervisores
-
-** TODO Crear los usuarios de prueba
+** Crear los usuarios de prueba
 ** DONE Crear aplicación independiente para las permisologías
 ** Averiguar por qué utilicé el modelo User en vez de Participant en los roles de una Inspection (futuro modelo Building)
   - Como resultado se debe colocar Participant como rol o explicar las razones.
@@ -53,16 +35,28 @@
 ** DONE En los campos de los roles, filtrar por grupos.
 ** DONE Vista de inspecciones restringida por usuario
 ** Ocultar campos del supervisor y cuando resuelva el tema, mostrarlo solo a los super.
-** TODO Lista de planillas con campo de validación solo para los revisores y/o supervisores.
-   - Workflow de editorial. Luego del vistobueno, no puede modificarlo nadie (solo el ente)
 ** Desactivar el autodiscover del admin y crear un admin para Participant
-
-
-* TODO Implementar galería de fotos con etiquetas
+* TODO [#A] El campo 11 (el de los cuadritos) no permite la opción Ninguno :Buildings:BUG:
+* TODO [#B] El javascript deberís ser independiente de la versión de Firefox :Buildings:BUG:
+* TODO [#A] El campo backup no permite pdfs.		      :Buildings:BUG:
+* TODO [#B] Hacer al campo 12.7 dependiente del 12.8		  :Buildings:
+* TODO [#B] Españolizar la vista del nombre de las aplicaciones
+* TODO [#B] Establecer 4.1 y 4.6 como campos de la lista de edificaciones :Buildings:
+  y dejar la fecha
+* TODO [#C] Unificar la numeración de los campos y los grupos de campos  :Buildings:
+** TODO [#C] Fusionar campos 6 y 7				  :Buildings:
+* TODO [#C] Modificar el tamaño de los «div» de los nombres de los campos :Buildings:
+* TODO [#C] Lista de planillas con campo de validación solo para los revisores y/o supervisores.
+  - Workflow de editorial. Luego del vistobueno, no puede modificarlo nadie (solo el ente)
+* TODO [#C] Filtrar la vista por ya revisadas, pendientes, etc
+  - Por ejemplo, Un supervisor (o como se llame) puede tener
+    inspecciones pendientes por revisar, y debería verlas; pero lo que
+    no quiere es ver todas las inspecciones que tiene (las ya
+    revisadas y las que no ha revisado).
+* TODO [#C] Implementar galería de fotos con etiquetas
 ** TODO Previo, colocar un campo para montar un .zip
   - Nota: que el workflow deje para después la subida y clasificación
     de las imágenes.
-* TODO Pedir confirmación de correo electrónico
 * TODO Condicionar las zonas por ¿Caracas?
 - Para octubre 1 la segunda versión:
   - Workflow de editorial 100% relacionada con auth.
@@ -75,7 +69,6 @@
     - Vulnerabilidad
 ** TODO Definir los métdos para los índices.
 *** DONE Añadir al modelo los 4 campos de los supervisores
-
 * TODO Averiguar como evitar que lo que se cree en ./objects del repositorio remoto sea de un solo usuario.
 * TODO Averiguar por qué al registrar a mano auth al admin.site se elimina el workflo especial.
   - El workflow especial al que se hace referencia es aquel dónde la
@@ -102,7 +95,6 @@
    Si por ejemplo se optó por usar atributos personalizados, pudiera
    entonces definirse una clase especializada de ModelAdmin que maneje
    estos atributos especiales.
-
 * TODO Establecer en el settings qué modelos registrar para el admin site.
 * TODO Gestión de imágenes en el proyecto
 ** TODO Estandarizar nombre y disposición de las carpetas para almacenar las imágenes
@@ -110,3 +102,4 @@
    imágenes", para facilitar la carga por lotes de las imágenes de las
    inspecciones guardadas hasta el momento de poner en producción esta
    "gestión".
+* Pedir confirmación de correo electrónico
