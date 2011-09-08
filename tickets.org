@@ -18,8 +18,24 @@
 * DONE Usar el urls.py propio de cada aplicación.
 
 
-* TODO [FIX-BUG] Mostrar todos los campos para los superusuarios
+-----
 
+
+* DONE [#A] Añadir opción «ninguno» al campo 12.8		  :Buildings:
+* TODO [#A] Quitar obligatoriedad del campo 15			  :Buildings:
+** DONE Quitarlo del models.py
+** TODO Quitarlo de la base de datos de producción
+* DONE [#A] Cambiar el checkbox de los campos 8.3 y 8.6 a «sí o no» :Buildings:
+* TODO [#A] Quitar obligatoriedad del campo 12.7		  :Builsings:
+** DONE Quitarlo del models.py
+** TODO Quitarlo de la base de datos de producción
+* TODO [#B] Hacer al campo 12.7 dependiente del 12.8		  :Buildings:
+* TODO [#B] Establecer 4.1 y 4.6 como campos de la lista de edificaciones :Buildings:
+  y dejar la fecha
+* TODO [#C] Fusionar campos 6 y 7 				  :Buildings:
+* TODO [#C] Modificar el tamaño de los «div» de los nombres de los campos :Buildings:
+
+* TODO [FIX-BUG] Mostrar todos los campos para los superusuarios
 
 * TODO Reestructurar los permisos de la aplicación Buildings
 ** DONE Definir tres grupos con sus permisologías:

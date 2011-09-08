@@ -137,7 +137,10 @@ class Building(models.Model):
             ('>45', 'Mayor a 45º'),),
         blank=True)
     ground_over = models.BooleanField(
-        verbose_name='8.3 Localizada sobre la mitad superior de la ladera')
+        verbose_name='8.3 Localizada sobre la mitad superior de la ladera',
+        choices=(
+            (True, u'Sí'),
+            (False, u'No')))
     talus_slope = models.FloatField(
         verbose_name='8.4 Pendiente del talud',
         choices=(
@@ -149,7 +152,11 @@ class Building(models.Model):
         choices=(
             (False, 'Menor a H del Talud'),
             (True, 'Mayor a H del Talud')))
-    drainage = models.BooleanField(verbose_name='8.6 Drenajes')
+    drainage = models.BooleanField(
+        verbose_name='8.6 Drenajes',
+        choices=(
+            (True, u'Sí'),
+            (False, u'No')))
 
     # 9. Structural type
     gates_of_concrete = models.BooleanField(
@@ -227,7 +234,9 @@ class Building(models.Model):
     separation_between_buildings = models.IntegerField(
         verbose_name='12.7 Separación entre edificios (cm)',
         help_text='Colocar algun valor, así sea cero (0)',
-        null=False, blank=False)
+        null=True,
+        blank=True
+        )
     # attaching_slab_slab = models.BooleanField(
     #     verbose_name='12.8 Adosamiento: Losa contra losa')
     # attaching_slab_column = models.BooleanField(
@@ -236,6 +245,7 @@ class Building(models.Model):
         max_length=15,
         verbose_name=u'12.8 Tipo de adosamiento',
         choices=(
+            ('ninguno', 'Ninguno'),
             ('slab_slab', 'Losa contra losa'),
             ('column_slab', 'Columna contra losa'),))
 
@@ -284,7 +294,9 @@ class Building(models.Model):
         upload_to=get_path_to_app_repo(
             project_name=settings.SETTINGS_MODULE.split('.')[0],
             app_name=__name__.split('.')[-2],
-            model_name='Inspection'))
+            model_name='Inspection'),
+        null=True,
+        blank=True)
 
     # __. Threat Index
     caracas = models.BooleanField(
