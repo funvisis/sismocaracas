@@ -167,6 +167,8 @@ class BuildingAdmin(admin.ModelAdmin):
         Exclude some fields based on the request.user.
         """
 
+        print "hola", obj
+
         self.fieldsets = self.fieldsets_infra
 
         if (
@@ -190,12 +192,16 @@ class BuildingAdmin(admin.ModelAdmin):
                                                    # remove the
                                                    # fields.
 
-        if obj != None and not (
-            request.user.is_superuser or
-            request.user.groups.filter(name="supervisores") or
-            request.user.groups.filter(name="revisores")):
-
+        if obj is not None and not(
+                    request.user.is_superuser or
+                    request.user.groups.filter(name="supervisores") or
+                    request.user.groups.filter(name="revisores")):
             self.readonly_fields = ('supervisor', 'reviewer')
+        else:
+            try:
+                del self.readonly_fields
+            except AttributeError:
+                pass
 
         return super(BuildingAdmin, self).get_form(request, obj=obj, **kwargs)
 

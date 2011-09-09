@@ -38,7 +38,10 @@
 ** Desactivar el autodiscover del admin y crear un admin para Participant
 * DONE [#A] El campo 11 (el de los cuadritos) no permite la opción Ninguno :Buildings:BUG:
 * DONE [#A] El campo backup no permite pdfs.		      :Buildings:BUG:
-* TODO [#B] Hacer al campo 12.7 dependiente del 12.8		  :Buildings:
+* DONE [#B] Hacer al campo 12.7 dependiente del 12.8		  :Buildings:
+* DONE [#A] Los campos supervisor e inspectores			  :Buildings:
+  - Luego de salvar una inspección, al darle "crear nuevo", los campos
+    "supervisor" e "inspector" salen de solo lectura.
 * TODO [#B] Españolizar la vista del nombre de las aplicaciones
 * TODO [#B] Establecer 4.1 y 4.6 como campos de la lista de edificaciones :Buildings:
   y dejar la fecha
