@@ -38,7 +38,6 @@
 ** Desactivar el autodiscover del admin y crear un admin para Participant
 * DONE [#A] El campo 11 (el de los cuadritos) no permite la opción Ninguno :Buildings:BUG:
 * DONE [#A] El campo backup no permite pdfs.		      :Buildings:BUG:
-* TODO [#B] El javascript deberís ser independiente de la versión de Firefox :Buildings:BUG:
 * TODO [#B] Hacer al campo 12.7 dependiente del 12.8		  :Buildings:
 * TODO [#B] Españolizar la vista del nombre de las aplicaciones
 * TODO [#B] Establecer 4.1 y 4.6 como campos de la lista de edificaciones :Buildings:
@@ -104,4 +103,6 @@
    imágenes", para facilitar la carga por lotes de las imágenes de las
    inspecciones guardadas hasta el momento de poner en producción esta
    "gestión".
+* TODO [#C] El javascript deberís ser independiente de la versión de Firefox :Buildings:BUG:
+  Por ahora con instalar FireBug se resuelve el problema en firefox 3.
 * Pedir confirmación de correo electrónico

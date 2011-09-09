@@ -7,8 +7,6 @@ function set_visibility(d, v)
 
 (function($) {
     $(document).ready(function($) {
-	console.log('HOLA');
-	alert("HOLA");
 	d = {};
 	d['planicie'] = [
 	    [$('.ground_slope'), 'hide'],
@@ -38,5 +36,24 @@ function set_visibility(d, v)
 	    v = $(this).val();
 	    set_visibility(d, v);
 	});
+
+	d = {};
+	d[''] = [
+	    [$('.separation_between_buildings'), 'hide']
+	];
+	d['ninguno'] = d[''];
+	d['slab_slab'] = [
+	    [$('.separation_between_buildings'), 'show']
+	];
+	d['column_slab'] = d['slab_slab']
+
+	v = $('#id_attaching_slab_slab_column').val();
+	set_visibility(d, v);
+
+	$('#id_attaching_slab_slab_column').change(function(event){
+	    v = $(this).val();
+	    set_visibility(d, v);
+	});
+	
     });
 })(django.jQuery);
