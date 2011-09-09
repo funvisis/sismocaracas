@@ -1,12 +1,14 @@
 function set_visibility(d, v)
 {
-    console.log(v);
+    // console.log(v);
     for each(var f in d[v])
 	f[0][f[1]]('slow');
 }
 
 (function($) {
     $(document).ready(function($) {
+	console.log('HOLA');
+	alert("HOLA");
 	d = {};
 	d['planicie'] = [
 	    [$('.ground_slope'), 'hide'],

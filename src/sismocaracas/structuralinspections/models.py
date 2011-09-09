@@ -289,7 +289,7 @@ class Building(models.Model):
         verbose_name='14. Observaciones', blank=True)
 
     # 15 Image Backup
-    image_backup = models.ImageField(
+    image_backup = models.FileField(
         verbose_name='15. Respaldo escaneado',
         upload_to=get_path_to_app_repo(
             project_name=settings.SETTINGS_MODULE.split('.')[0],

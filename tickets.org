@@ -36,9 +36,9 @@
 ** DONE Vista de inspecciones restringida por usuario
 ** Ocultar campos del supervisor y cuando resuelva el tema, mostrarlo solo a los super.
 ** Desactivar el autodiscover del admin y crear un admin para Participant
-* TODO [#A] El campo 11 (el de los cuadritos) no permite la opción Ninguno :Buildings:BUG:
+* DONE [#A] El campo 11 (el de los cuadritos) no permite la opción Ninguno :Buildings:BUG:
+* DONE [#A] El campo backup no permite pdfs.		      :Buildings:BUG:
 * TODO [#B] El javascript deberís ser independiente de la versión de Firefox :Buildings:BUG:
-* TODO [#A] El campo backup no permite pdfs.		      :Buildings:BUG:
 * TODO [#B] Hacer al campo 12.7 dependiente del 12.8		  :Buildings:
 * TODO [#B] Españolizar la vista del nombre de las aplicaciones
 * TODO [#B] Establecer 4.1 y 4.6 como campos de la lista de edificaciones :Buildings:
@@ -57,6 +57,8 @@
 ** TODO Previo, colocar un campo para montar un .zip
   - Nota: que el workflow deje para después la subida y clasificación
     de las imágenes.
+* TODO [#C] Verificar que el archivo montado sea un PDF
+  Tal vez hacer un PDFField -> FileField
 * TODO Condicionar las zonas por ¿Caracas?
 - Para octubre 1 la segunda versión:
   - Workflow de editorial 100% relacionada con auth.
