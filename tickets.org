@@ -42,6 +42,8 @@
 * DONE [#A] Los campos supervisor e inspectores			  :Buildings:
   - Luego de salvar una inspección, al darle "crear nuevo", los campos
     "supervisor" e "inspector" salen de solo lectura.
+* DONE [#A] No sobreescribir el settings.py			  :Buildings:
+* TODO [#A] Revisar el comportamiento del upload de los archivos  :Buildings:
 * TODO [#B] Españolizar la vista del nombre de las aplicaciones
 * TODO [#B] Establecer 4.1 y 4.6 como campos de la lista de edificaciones :Buildings:
   y dejar la fecha

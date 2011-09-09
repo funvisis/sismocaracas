@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from settings import *
+from settings_base import *
 
 DEBUG = True
 TEMPLATE_DEBUG = True
