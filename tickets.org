@@ -52,9 +52,7 @@
   - Luego de salvar una inspección, al darle "crear nuevo", los campos
     "supervisor" e "inspector" salen de solo lectura.
 * DONE [#A] No sobreescribir el settings.py			  :Buildings:
-* TODO [#A] buildings no puede crear las carpetas en media a pesar de tener 777 :BUG:Buildings:
-  - Revisar esto en la máquina virtual
-* TODO [#A] El .js funciona para unos campos y no para otros   :BUG:Building:
+* DONE [#A] El .js funciona para unos campos y no para otros   :BUG:Building:
   Los campos condicionales de Ubicación no funcionan pero los de
   adosamiento sí.
 * DONE [#A] Personalizar la página de la lista de edificaciones	     :Cambio:
@@ -64,6 +62,8 @@
   - Ciudad
   - Uso. Una especie de combinación.
   - Urbanización, Sector o Barrio.
+* TODO [#A] buildings no puede crear las carpetas en media a pesar de tener 777 :BUG:Buildings:
+  - Revisar esto en la máquina virtual
 * TODO [#A] Lista de planillas con campo de validación solo para los revisores y/o supervisores.
   - Workflow de editorial. Luego del vistobueno, no puede modificarlo nadie (solo el ente)
 * TODO [#A] conditional_fieldsets				   :funvisis:
