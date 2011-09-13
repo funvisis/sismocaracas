@@ -22,15 +22,17 @@ class Building(models.Model):
 
     # 2. Participants
     inspector = models.ForeignKey(
-        FVISUser, related_name='building_inspector', verbose_name='2.1 Inspector')
+        FVISUser, related_name=u'building_inspector',
+        verbose_name=u'2.1 Inspector')
     reviewer = models.ForeignKey(
         FVISUser,
-        related_name='building_reviewer',
-        verbose_name='2.2 Revisor',
-        limit_choices_to={'user__groups__name': 'revisores'})
+        related_name=u'building_reviewer',
+        verbose_name=u'2.2 Revisor',
+        limit_choices_to={'user__groups__name': u'revisores'})
     supervisor = models.ForeignKey(
-        FVISUser, related_name='building_supervisor', verbose_name='2.3 Supervisor',
-                limit_choices_to={'user__groups__name': 'supervisores'})
+        FVISUser, related_name=u'building_supervisor',
+        verbose_name=u'2.3 Supervisor',
+                limit_choices_to={'user__groups__name': u'supervisores'})
 
     # 3. Interviewee
     interviewee_building_relationship = models.CharField(
@@ -68,28 +70,28 @@ class Building(models.Model):
         verbose_name='4.15 Huso', null=True, blank=True)
 
     # 5. Building usage
-    governmental = models.BooleanField(verbose_name='Gubernamental')
-    firemen = models.BooleanField(verbose_name='Bomberos')
-    civil_defense = models.BooleanField(verbose_name='Protección Civil')
-    police = models.BooleanField(verbose_name='Policial')
-    military = models.BooleanField(verbose_name='Military')
-    popular_housing = models.BooleanField(verbose_name='Vivienda Popular')
-    single_family = models.BooleanField(verbose_name='Vivienda Unifamiliar')
-    multifamily = models.BooleanField(verbose_name='Vivienda Multifamiliar')
+    governmental = models.BooleanField(verbose_name=u'Gubernamental')
+    firemen = models.BooleanField(verbose_name=u'Bomberos')
+    civil_defense = models.BooleanField(verbose_name=u'Protección Civil')
+    police = models.BooleanField(verbose_name=u'Policial')
+    military = models.BooleanField(verbose_name=u'Military')
+    popular_housing = models.BooleanField(verbose_name=u'Vivienda Popular')
+    single_family = models.BooleanField(verbose_name=u'Vivienda Unifamiliar')
+    multifamily = models.BooleanField(verbose_name=u'Vivienda Multifamiliar')
 
-    medical_care = models.BooleanField(verbose_name='Médico-Asistencial')
-    educational = models.BooleanField(verbose_name='Educativo')
+    medical_care = models.BooleanField(verbose_name=u'Médico-Asistencial')
+    educational = models.BooleanField(verbose_name=u'Educativo')
     sports_recreational = models.BooleanField(
-        verbose_name='Deportivo-Recreativo')
-    cultural = models.BooleanField(verbose_name='Cultural')
+        verbose_name=u'Deportivo-Recreativo')
+    cultural = models.BooleanField(verbose_name=u'Cultural')
 
-    industrial = models.BooleanField(verbose_name='Industrial')
-    commercial = models.BooleanField(verbose_name='Comercial')
-    office = models.BooleanField(verbose_name='Oficina')
-    religious = models.BooleanField(verbose_name='Religioso')
+    industrial = models.BooleanField(verbose_name=u'Industrial')
+    commercial = models.BooleanField(verbose_name=u'Comercial')
+    office = models.BooleanField(verbose_name=u'Oficina')
+    religious = models.BooleanField(verbose_name=u'Religioso')
 
     other = models.CharField(
-        verbose_name='Otro (Especifique)', max_length='50', blank=True)
+        verbose_name=u'Otro (Especifique)', max_length='50', blank=True)
 
     # 6. Carrying Capacity
     people = models.IntegerField(
@@ -343,9 +345,11 @@ class Building(models.Model):
         verbose_name_plural = u"Edificaciones"
 
     def __unicode__(self):
-        return "{}:{}:{}".format(
-            ' '.join(
-                (self.inspector.user.first_name, self.inspector.user.last_name)).strip()
+        return u"{}:{}:{}".format(
+            u' '.join(
+                (
+                    self.inspector.user.first_name,
+                    self.inspector.user.last_name)).strip()
             or
             self.inspector, self.init_time, self.id)
 

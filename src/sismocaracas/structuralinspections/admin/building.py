@@ -162,12 +162,58 @@ class BuildingAdmin(admin.ModelAdmin):
                     'macrozone_ccs',
                     'microzone_ccs'),}),)
 
+    date_hierarchy = 'init_time'
+
+    def usage_list_display(self, obj):
+        text_length = 50
+        usage_fields = [
+            'governmental',
+            'firemen',
+            'civil_defense',
+            'police',
+            'military',
+            'popular_housing',
+            'single_family',
+            'multifamily',
+            'medical_care',
+            'educational',
+            'sports_recreational',
+            'cultural',
+            'industrial',
+            'commercial',
+            'office',
+            'religious',]
+        result = ', '.join(
+            [
+                Building._meta.get_field(_).verbose_name
+                for _ in usage_fields
+                if getattr(obj, _)] + [obj.other])
+
+        return result
+
+    list_display = (
+        'inspector',
+        'init_time',
+        'city',
+        'usage_list_display',
+        'urbanization')
+
+    # list_filter = (
+    #      'inspector',
+    #     'city',)
+
+    search_fields = [
+        '^inspector__user__username',
+        '^inspector__user__first_name',
+        '^inspector__user__last_name',
+        '=city',
+        'urbanization']
+
+
     def get_form(self, request, obj=None, **kwargs):
         """
         Exclude some fields based on the request.user.
         """
-
-        print "hola", obj
 
         self.fieldsets = self.fieldsets_infra
 

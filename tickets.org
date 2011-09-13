@@ -1,3 +1,12 @@
+* Ideas
+  - Filtrar las listas por aquellos dónde el usuario participa. Por
+    ejemplo, una persona quiere ver solo aquellas dónde él es
+    supervisor, revisor o inspector
+  - Al eliminar el campo fieldsets dentro de get_form, ya no se corre
+    el riesgo de acumular, por lo que la advertencia de "no definir
+    fieldsets" en caso de usar el decorador conditional_fieldsets es
+    innecesaria.
+
 * DONE Manipular el archivo de respaldo para que se llame igual que el ID del objeto (inspección)
 * DONE strtime no funciona con el callable de la opción upload_to en el campo de imagen.
 * DONE Campo 8.1 en el admin oculta siempre los campos opcionales	:BUG:
@@ -43,15 +52,26 @@
   - Luego de salvar una inspección, al darle "crear nuevo", los campos
     "supervisor" e "inspector" salen de solo lectura.
 * DONE [#A] No sobreescribir el settings.py			  :Buildings:
-* TODO [#A] Revisar el comportamiento del upload de los archivos  :Buildings:
-* TODO [#B] Españolizar la vista del nombre de las aplicaciones
+* TODO [#A] buildings no puede crear las carpetas en media a pesar de tener 777 :BUG:Buildings:
+  - Revisar esto en la máquina virtual
+* TODO [#A] El .js funciona para unos campos y no para otros   :BUG:Building:
+  Los campos condicionales de Ubicación no funcionan pero los de
+  adosamiento sí.
+* DONE [#A] Personalizar la página de la lista de edificaciones	     :Cambio:
+  Mostra los siguientes campos:
+  - Inspector
+  - Fecha
+  - Ciudad
+  - Uso. Una especie de combinación.
+  - Urbanización, Sector o Barrio.
+* TODO [#A] Lista de planillas con campo de validación solo para los revisores y/o supervisores.
+  - Workflow de editorial. Luego del vistobueno, no puede modificarlo nadie (solo el ente)
+* TODO [#A] conditional_fieldsets				   :funvisis:
 * TODO [#B] Establecer 4.1 y 4.6 como campos de la lista de edificaciones :Buildings:
   y dejar la fecha
 * TODO [#C] Unificar la numeración de los campos y los grupos de campos  :Buildings:
 ** TODO [#C] Fusionar campos 6 y 7				  :Buildings:
 * TODO [#C] Modificar el tamaño de los «div» de los nombres de los campos :Buildings:
-* TODO [#C] Lista de planillas con campo de validación solo para los revisores y/o supervisores.
-  - Workflow de editorial. Luego del vistobueno, no puede modificarlo nadie (solo el ente)
 * TODO [#C] Filtrar la vista por ya revisadas, pendientes, etc
   - Por ejemplo, Un supervisor (o como se llame) puede tener
     inspecciones pendientes por revisar, y debería verlas; pero lo que
@@ -63,7 +83,10 @@
     de las imágenes.
 * TODO [#C] Verificar que el archivo montado sea un PDF
   Tal vez hacer un PDFField -> FileField
-* TODO Condicionar las zonas por ¿Caracas?
+* TODO [#C] Revisar el comportamiento del upload de los archivos  :Buildings:
+* TODO [#C] Españolizar la vista del nombre de las aplicaciones
+* TODO Mejorar la búsqueda de informes
+** TODO Condicionar las zonas por ¿Caracas?
 - Para octubre 1 la segunda versión:
   - Workflow de editorial 100% relacionada con auth.
 * TODO Ubicar la carpeta admin estática en un solo sitio.
@@ -110,4 +133,5 @@
    "gestión".
 * TODO [#C] El javascript deberís ser independiente de la versión de Firefox :Buildings:BUG:
   Por ahora con instalar FireBug se resuelve el problema en firefox 3.
+* TODO [#C] Quitar el documento y dejarlo en su propio sitio. :doc:sismocaracas:
 * Pedir confirmación de correo electrónico
