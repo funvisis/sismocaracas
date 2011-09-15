@@ -1,11 +1,8 @@
 * Ideas
+  - Transformar en Mixin el decorador conditional_fieldsets
   - Filtrar las listas por aquellos dónde el usuario participa. Por
     ejemplo, una persona quiere ver solo aquellas dónde él es
     supervisor, revisor o inspector
-  - Al eliminar el campo fieldsets dentro de get_form, ya no se corre
-    el riesgo de acumular, por lo que la advertencia de "no definir
-    fieldsets" en caso de usar el decorador conditional_fieldsets es
-    innecesaria.
 
 * DONE Manipular el archivo de respaldo para que se llame igual que el ID del objeto (inspección)
 * DONE strtime no funciona con el callable de la opción upload_to en el campo de imagen.

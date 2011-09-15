@@ -548,22 +548,22 @@ class Bridge(models.Model):
         null=True, blank=True)
     structure_continuity = models.CharField(
         max_length=40,
-        verbose_name=u'7.12 Continuidad de la estructura'),
+        verbose_name=u'7.12 Continuidad de la estructura',
         choices=(
             ('apoyados', 'Tableros simplemente apoyados'),
             ('continuos', u'Tableros contínuos'),
             ('totalmente_continuo', 'Estructura totalmente contínua'),),)
     superstructure_type = models.CharField(
         max_length=40,
-        verbose_name=u'7.13 Tipo de superestructura'),
+        verbose_name=u'7.13 Tipo de superestructura',
         choices=(
             ('MACIZ', 'Losa maciza de concreto (MACIZ)'),
             ('VCON', 'Losa sobre viga de concreto (VCON)'),
             ('VPRE', 'Losa sobre vigas prefabricadas de concreto (VPRE)'),
-            ('VCAJC', 'Losa sobre viga cajón de concreto (VCAJC)')
+            ('VCAJC', 'Losa sobre viga cajón de concreto (VCAJC)'),
             ('ACA', 'Arco de concreto (ACA)'),
             ('PMET', 'Losa sobre perfiles metálicos (PMET)'),
-            ('VARM', 'Losa sobre vigas de acero armadas (VARM)')
+            ('VARM', 'Losa sobre vigas de acero armadas (VARM)'),
             ('VCAJM', 'Losa sobre viga cajón metálica (VCAJM)'),
             ('AMI', 'Armadura metálica con arriostramiento inferior (AMI)'),
             ('AMS', 'Armadura metálica con arriostramiento superior (AMS)'),
@@ -588,11 +588,11 @@ class Bridge(models.Model):
         null=True, blank=True)
     column_geometry_type = models.CharField(
         max_length=40,
-        verbose_name=u'7.14.2 Tipo de pilas. Geometría'),
+        verbose_name=u'7.14.2 Tipo de pilas. Geometría',
         choices=(
-            ('monocolumnas', 'Pilas monocolumnas')
-            ('multicolumnas', 'Pilas multicolumnas')
-            ('muros', 'Pilas de muros')
+            ('monocolumnas', 'Pilas monocolumnas'),
+            ('multicolumnas', 'Pilas multicolumnas'),
+            ('muros', 'Pilas de muros'),
             ('estribos', 'Solo estribos'),),)
     column_geometry_type_other = models.CharField(
         max_length=100,
@@ -630,7 +630,7 @@ class Bridge(models.Model):
         verbose_name=u'7.20.1 ¿La estructura del puente esta vinculada horizontalmente a otras estructuras?',
             choices=(
 		    (True, 'Sí'),
-		    (False, 'No'),),))
+		    (False, 'No'),))
     horizontally_linked_structures_names = models.CharField (
         max_length=100,
         verbose_name='7.20.2 Nombre de estructuras vinculadas horizontalmente:',
@@ -639,7 +639,7 @@ class Bridge(models.Model):
         verbose_name=u'7.21.1 ¿La estructura del puente esta vinculada verticalmente a otras estructuras?',
             choices=(
 		    (True, 'Sí'),
-		    (False, 'No'),),))
+		    (False, 'No'),))
     verticallyy_linked_structures_names = models.CharField (
         max_length=100,
         verbose_name='7.21.2 Nombre de estructuras vinculadas verticalmente:',
@@ -678,85 +678,3 @@ class Bridge(models.Model):
             project_name=settings.SETTINGS_MODULE.split('.')[0],
             app_name=__name__.split('.')[-2],
             model_name='Bridge'))
-
-#    # __. Threat Index
-#    caracas = models.BooleanField(
-#        verbose_name=u'¿Es en Caracas?',
-#        help_text='Solo para el revisor o el supervisor')
-#    national_level_zonification = models.IntegerField(
-#        verbose_name=u'Nivel nacional_zonificación',
-#        null=True, blank=True,
-#        help_text='Solo para el revisor o el supervisor',
-#        choices=((1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7)))
-
-#    macrozone_ccs = models.CharField(
-#        max_length=20, blank=True,
-#        verbose_name=u'CCS_Macrozona',
-#        help_text='Solo para el revisor o el supervisor',
-#        choices=(
-#            ('sur', 'Sur'),
-#            ('centro_sur', 'Centro Sur'),
-#            ('centro_norte', 'Centro Norte'),
-#            ('norte', 'Norte')))
-#    microzone_ccs = models.CharField(
-#        max_length=3, blank=True,
-#        verbose_name=u'CCS_Microzona',
-#        help_text='Solo para el revisor o el supervisor',
-#        choices=(
-#            ('1-1', '1-1'),
-#            ('1-2', '1-2'),
-#            ('2-1', '2-1'),
-#            ('2-2', '2-2'),
-#            ('3-1', '3-1'),
-#            ('3-2', '3-2'),
-#            ('3-3', '3-3'),
-#            ('4-1', '4-1'),
-#            ('4-2', '4-2'),
-#            ('5', '5'),
-#            ('6', '6'),
-#            ('7-1', '7-1')))
-
-#    def __unicode__(self):
-#        return "{}:{}:{}".format(
-#            ' '.join(
-#                (self.inspector.first_name, self.inspector.last_name)).strip()
-#            or
-#            self.inspector, self.date, self.id)
-
-#    def has_topographic_effects(self):
-#        return \
-#            self.building_at == 'cima' \
-#            or \
-#            self.building_at == 'ladera' and self.ground_over
-
-#    def threat_index(self):
-#        '''[0.23, 1.0]'''
-#        from .analysis import \
-#            threat_index_by_macro_zones_caracas, \
-#            threat_index_by_macro_zones_national
-#        macro_zone_table = \
-#            threat_index_by_macro_zones_caracas \
-#            if self.caracas \
-#            else threat_index_by_macro_zones_national
-#        macro_zone_self_value = \
-#            self.macrozone_ccs \
-#            if self.caracas \
-#            else self.national_level_zonification
-
-#        try:
-#            return macro_zone_table[macro_zone_self_value][
-#                0 if not self.has_topographic_effects() else 1]
-#        except KeyError:
-#            return None
-
-#    def vulnerability_index(self):
-#        '''[6.5, 100.0]'''
-#        return 6.5
-
-#    def importance_index(self):
-#        '''[0.8, 1.0]'''
-#        return 0.8
-
-#    def priorization_index(self):
-#        return self.threat_index() * self.vulnerability_index() * \
-#            importance_index()

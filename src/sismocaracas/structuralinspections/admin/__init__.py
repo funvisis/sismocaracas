@@ -29,8 +29,10 @@ from ..models import Building
 from ..models import Bridge
 
 from .building import BuildingAdmin
+from .bridge import BridgeAdmin
 
-supervisor_admin_site = AdminSite('admin_site')
+admin_site = AdminSite('admin_site')
 
-supervisor_admin_site.register(Building, BuildingAdmin)
-#supervisor_admin_site.register(Bridge)
+#admin_site.register(Building, BuildingAdmin)
+admin_site.register(Bridge, BridgeAdmin)
+
