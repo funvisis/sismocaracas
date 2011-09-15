@@ -195,8 +195,9 @@ class BuildingAdmin(admin.ModelAdmin):
         'inspector',
         'init_time',
         'city',
+        'urbanization',
         'usage_list_display',
-        'urbanization')
+        )
 
     # list_filter = (
     #      'inspector',
