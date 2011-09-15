@@ -536,106 +536,148 @@ class Bridge(models.Model):
             ('<2', '<2.0'),
             ('>2', '>2.0'),),)
     straight_bridge = models.BooleanField(
-        verbose_name='Alineamiento del puente',
+        verbose_name='7.9 Alineamiento del puente',
         choices=(
 		    (True, 'Recto'),
 		    (False, 'Curvo'),),)
-
-    # 10. Floor scheme
-    floor_scheme = models.CharField(
-        verbose_name='', max_length='20',
-        choices=(
-            ('H', 'H'),
-            ('L', 'L'),
-            ('T', 'T'),
-            ('O', 'O'),
-            ('U', 'U'),
-            ('rectangular', u'\u25AD o \u25AB'),
-            ('esbeltez horizontal', 'Esbeltez horizontal'),
-            ('ninguno', 'Ninguno'),),
-        blank=True)
-
-    # 11. Lifting scheme
-    lifting_scheme = models.CharField(
-        verbose_name='', max_length=20,
-        choices=(
-            ('T', 'T'),
-            ('U', 'U'),
-            ('L', 'L'),
-            ('rectangular', u'\u25AF'),
-            ('pirámide invertida', 'Pirámide invertida'),
-            ('piramidal', 'Piramidal'),
-            ('esveltez vertical', 'Esveltez, vertical'),
-            ('ninguno', 'Ninguno'),),
-        blank=True)
-    # 12. Irregularities
-
-    no_high_beams_on_one_or_two_directions = models.BooleanField(
-        verbose_name='12.1 Ausencia de vigías altas en una o dos direcciones')
-    presence_of_at_least_one_soft_or_weak_mezzanine = models.BooleanField(
-        verbose_name='12.2 Presencia de al menos un entrepiso débil o blando')
-    presence_of_short_columns = models.BooleanField(
-        verbose_name='12.3 Presencia de columnas cortas')
-    discontinuity_lines_of_columns = models.BooleanField(
-        verbose_name='12.4 Discontinuidad de ejes de columnas')
-    significant_openings_in_slabs = models.BooleanField(
-        verbose_name='12.5 Aberturas significativas en losas')
-    strong_asymmetry_in_plant_mass_or_stiffness = models.BooleanField(
-        verbose_name='12.6 Fuerte asimetría de masas o rigideces en planta')
-    separation_between_buildings = models.IntegerField(
-        verbose_name='12.7 Separación entre edificios (cm)',
+    subtended_angle = models.IntegerField(
+        verbose_name=u'7.10 Ángulo Subtendido',
         null=True, blank=True)
-    attaching_slab_slab = models.BooleanField(
-        verbose_name='12.8 Adosamiento: Losa contra losa')
-    attaching_slab_column = models.BooleanField(
-        verbose_name='12.9 Adosamiento: Columna contra losa')
+    bridge_deviation = models.IntegerField(
+        verbose_name=u'7.11 Esviaje del puente',
+        null=True, blank=True)
+    structure_continuity = models.CharField(
+        max_length=40,
+        verbose_name=u'7.12 Continuidad de la estructura'),
+        choices=(
+            ('apoyados', 'Tableros simplemente apoyados'),
+            ('continuos', u'Tableros contínuos'),
+            ('totalmente_continuo', 'Estructura totalmente contínua'),),)
+    superstructure_type = models.CharField(
+        max_length=40,
+        verbose_name=u'7.13 Tipo de superestructura'),
+        choices=(
+            ('MACIZ', 'Losa maciza de concreto (MACIZ)'),
+            ('VCON', 'Losa sobre viga de concreto (VCON)'),
+            ('VPRE', 'Losa sobre vigas prefabricadas de concreto (VPRE)'),
+            ('VCAJC', 'Losa sobre viga cajón de concreto (VCAJC)')
+            ('ACA', 'Arco de concreto (ACA)'),
+            ('PMET', 'Losa sobre perfiles metálicos (PMET)'),
+            ('VARM', 'Losa sobre vigas de acero armadas (VARM)')
+            ('VCAJM', 'Losa sobre viga cajón metálica (VCAJM)'),
+            ('AMI', 'Armadura metálica con arriostramiento inferior (AMI)'),
+            ('AMS', 'Armadura metálica con arriostramiento superior (AMS)'),
+            ('AAC', 'Arco de acero (ACC)'),
+            ('COLG', 'Puente colgante (COLG)'),
+            ('ATIR', 'Puente atirantado (ATIR)'),
+            ('MAMP', 'Puente de mamposteria (MAMP)'),
+            ('MAD', 'Puente de madera (MAD)'),),)
+    superstructural_type_other = models.CharField(
+        max_length=40,
+        verbose_name='OTRO - Otro, indique', 
+        null=True, blank=True)
+    column_material_type = models.CharField(
+        max_length=40,
+        verbose_name=u'7.14.1 Tipo de pilas. Material',
+        choices=(
+            ('concreto', 'Concreto'),
+            ('acero', 'Acero'),),)
+    column_material_type_other = models.CharField(
+        max_length=100,
+        verbose_name=u'Otro. Indique',
+        null=True, blank=True)
+    column_geometry_type = models.CharField(
+        max_length=40,
+        verbose_name=u'7.14.2 Tipo de pilas. Geometría'),
+        choices=(
+            ('monocolumnas', 'Pilas monocolumnas')
+            ('multicolumnas', 'Pilas multicolumnas')
+            ('muros', 'Pilas de muros')
+            ('estribos', 'Solo estribos'),),)
+    column_geometry_type_other = models.CharField(
+        max_length=100,
+        verbose_name='Otro. Indique',
+        null=True, blank=True)
+    is_any_column_a_pergola = models.BooleanField(
+        verbose_name=u'7.14.3 ¿Alguna de las pilas es de tipo pérgola?',
+        choices=(
+		    (True, 'Sí'),
+		    (False, 'No'),),)
+    does_columns_had_side_capitals_tops = models.CharField(
+        max_length=40,
+        verbose_name=u'7.15 ¿Las pilas tienen topes laterales en el capitel?',
+        choices=(
+            ('si', 'Sí'),
+            ('no', 'No'),
+            ('algunas', 'Sólo algunas') ,),)
+    does_board_has_individuals_beams = models.BooleanField(
+        verbose_name=u'7.16 ¿El tablero posee vigas individuales y esta soportado por columnas o pedestales individuales sin capitel?',
+        choices=(
+		    (True, 'Sí'),
+		    (False, 'No'),),)
+    does_board_has_two_or_tree_beams = models.BooleanField(
+        verbose_name=u'7.17 ¿El tablero posee 2 ó 3 vigas individuales y la viga exterior esta cerca del borde lateral del apoyo?',
+        choices=(
+		    (True, 'Sí'),
+		    (False, 'No'),),)
+    superstructure_number_of_discontinuities = models.IntegerField(
+        verbose_name='7.18 Nro. de discontinuidades en la superestructura',
+        null=True, blank=True)
+    typical_joint_length = models.FloatField(
+        verbose_name=u'7.19 Longitud de apoyo típica en las juntas',
+        null=True, blank=True)
+    does_bridge_horizontally_linked_to_others_structures = models.BooleanField(
+        verbose_name=u'7.20.1 ¿La estructura del puente esta vinculada horizontalmente a otras estructuras?',
+            choices=(
+		    (True, 'Sí'),
+		    (False, 'No'),),))
+    horizontally_linked_structures_names = models.CharField (
+        max_length=100,
+        verbose_name='7.20.2 Nombre de estructuras vinculadas horizontalmente:',
+        blank=True,)
+    does_bridge_vertically_linked_to_others_structures = models.BooleanField(
+        verbose_name=u'7.21.1 ¿La estructura del puente esta vinculada verticalmente a otras estructuras?',
+            choices=(
+		    (True, 'Sí'),
+		    (False, 'No'),),))
+    verticallyy_linked_structures_names = models.CharField (
+        max_length=100,
+        verbose_name='7.21.2 Nombre de estructuras vinculadas verticalmente:',
+        blank=True,)
 
-    # 13. Degree of degradation
-
-    condition_of_concrete = models.CharField(
-        verbose_name='13.1 Est. de Concreto',
-        help_text='Agrietamiento en elementos estructurales' \
-            ' y/o corrosión en acero de refuerzo',
-        max_length=10,
-        choices=(
-            ('ninguno', 'Ninguno'),
-            ('moderado', 'Moderado'),
-            ('severo', 'Severo'),))
-    condition_of_steel = models.CharField(
-        verbose_name='13.2 Est. de Acero',
-        help_text='Corrosión en elementos de acero y/o' \
-            'deterioro de conexiones y/o pandeo',
-        max_length=10,
-        choices=(
-            ('ninguno', 'Ninguno'),
-            ('moderado', 'Moderado'),
-            ('severo', 'Severo'),))
-    fill_cracks_in_walls = models.CharField(
-        verbose_name='13.3 Agrietamiento en paredes de relleno',
-        max_length=10,
-        choices=(
-            ('ninguno', 'Ninguno'),
-            ('moderado', 'Moderado'),
-            ('severo', 'Severo'),))
-    condition_of_upkeep = models.CharField(
-        verbose_name='13.4 Estado general de mantenimiento ',
-        max_length=10,
-        choices=(
-            ('bueno', 'Bueno'),
-            ('regular', 'Regular'),
-            ('bajo', 'Bajo'),))
-
-    # 14. Observations
+    # 8. Damage Observed and Mantainment state of the bridge
     observations = models.TextField(
-        verbose_name='14. Observaciones', blank=True)
+        verbose_name='8. Daños Observados y Estado General de Mantenimiento del Puente',
+        blank=True)
 
-    # 15 Image Backup
-    image_backup = models.ImageField(
-        verbose_name='15. Respaldo escaneado',
+    # 9. Additional Observations
+    observations = models.TextField(
+        verbose_name='9. Observaciones Adicionales',
+        blank=True)
+
+    # 10. Sketch - Typical transversal sections of Columns and Boards
+    typical_transversal_sections_sketch = models.FileField(
+        verbose_name='10. Croquis - Secciones Transversales Típicas de Pilas y Tableros',
         upload_to=get_path_to_app_repo(
             project_name=settings.SETTINGS_MODULE.split('.')[0],
             app_name=__name__.split('.')[-2],
-            model_name='Inspection'))
+            model_name='Bridge'))
+
+    # 11. Sketch - Location of bridge's base
+    brige_base_location_sketch = models.FileField(
+        verbose_name='11. Croquis - Planta de Ubicación del Puente',
+        upload_to=get_path_to_app_repo(
+            project_name=settings.SETTINGS_MODULE.split('.')[0],
+            app_name=__name__.split('.')[-2],
+            model_name='Bridge'))
+
+    # 12. Sketch - Bridge longitudinal profile
+    bridge_longitudinal_profile = models.FileField(
+        verbose_name='12. Croquis - Perfil Longitudinal del Puente',
+        upload_to=get_path_to_app_repo(
+            project_name=settings.SETTINGS_MODULE.split('.')[0],
+            app_name=__name__.split('.')[-2],
+            model_name='Bridge'))
 
     # __. Threat Index
     caracas = models.BooleanField(
