@@ -33,6 +33,6 @@ from .bridge import BridgeAdmin
 
 admin_site = AdminSite('admin_site')
 
-#admin_site.register(Building, BuildingAdmin)
+admin_site.register(Building, BuildingAdmin)
 admin_site.register(Bridge, BridgeAdmin)
 

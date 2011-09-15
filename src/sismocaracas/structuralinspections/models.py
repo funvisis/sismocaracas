@@ -678,3 +678,7 @@ class Bridge(models.Model):
             project_name=settings.SETTINGS_MODULE.split('.')[0],
             app_name=__name__.split('.')[-2],
             model_name='Bridge'))
+
+    class Meta:
+        verbose_name = u"Puente"
+        verbose_name_plural = u"Puentes"
