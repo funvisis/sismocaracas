@@ -4,8 +4,12 @@ from ..models import Building
 
 from django.contrib import admin
 
+from funvisis.django.decorators import conditional_fieldsets
+
+@conditional_fieldsets
 class BuildingAdmin(admin.ModelAdmin):
-    fieldsets_infra = (
+
+    fieldsets_base = (
         (
             u'1. Datos Generales',
             {
@@ -162,6 +166,21 @@ class BuildingAdmin(admin.ModelAdmin):
                     'macrozone_ccs',
                     'microzone_ccs'),}),)
 
+    conditioned_fieldsets = [
+        (
+            lambda request: True,
+            fieldsets_base),
+
+        (
+            lambda request: \
+                request.user.is_superuser or \
+                request.user.groups.filter(name="supervisores") or \
+                request.user.groups.filter(name="revisores"),
+            fieldsets_super),
+        ]
+
+
+
     date_hierarchy = 'init_time'
 
     def usage_list_display(self, obj):
@@ -211,46 +230,46 @@ class BuildingAdmin(admin.ModelAdmin):
         'urbanization']
 
 
-    def get_form(self, request, obj=None, **kwargs):
-        """
-        Exclude some fields based on the request.user.
-        """
+    # def get_form(self, request, obj=None, **kwargs):
+    #     """
+    #     Exclude some fields based on the request.user.
+    #     """
 
-        self.fieldsets = self.fieldsets_infra
+    #     self.fieldsets = self.fieldsets_infra
 
-        if (
-            request.user.is_superuser or
-            request.user.groups.filter(name="supervisores") or
-            request.user.groups.filter(name="revisores")):
+    #     if (
+    #         request.user.is_superuser or
+    #         request.user.groups.filter(name="supervisores") or
+    #         request.user.groups.filter(name="revisores")):
 
-            self.fieldsets += self.fieldsets_super # FIXME: use some
-                                                   # argument or
-                                                   # custom ModelAdmin
-                                                   # field to mark the
-                                                   # fields to
-                                                   # remove. Later,
-                                                   # make a custom
-                                                   # ModelAdmin
-                                                   # classdefine that
-                                                   # field, and others
-                                                   # like the
-                                                   # condition to
-                                                   # evaluate to
-                                                   # remove the
-                                                   # fields.
+    #         self.fieldsets += self.fieldsets_super # FIXME: use some
+    #                                                # argument or
+    #                                                # custom ModelAdmin
+    #                                                # field to mark the
+    #                                                # fields to
+    #                                                # remove. Later,
+    #                                                # make a custom
+    #                                                # ModelAdmin
+    #                                                # classdefine that
+    #                                                # field, and others
+    #                                                # like the
+    #                                                # condition to
+    #                                                # evaluate to
+    #                                                # remove the
+    #                                                # fields.
 
-        if obj is not None and not(
-                    request.user.is_superuser or
-                    request.user.groups.filter(name="supervisores") or
-                    request.user.groups.filter(name="revisores")):
-            self.readonly_fields = ('supervisor', 'reviewer')
-        else:
-            try:
-                del self.readonly_fields
-            except AttributeError:
-                pass
+    #     if obj is not None and not(
+    #                 request.user.is_superuser or
+    #                 request.user.groups.filter(name="supervisores") or
+    #                 request.user.groups.filter(name="revisores")):
+    #         self.readonly_fields = ('supervisor', 'reviewer')
+    #     else:
+    #         try:
+    #             del self.readonly_fields
+    #         except AttributeError:
+    #             pass
 
-        return super(BuildingAdmin, self).get_form(request, obj=obj, **kwargs)
+    #     return super(BuildingAdmin, self).get_form(request, obj=obj, **kwargs)
 
     def save_model(self, request, obj, form, change): # The logged
                                                       # user is going

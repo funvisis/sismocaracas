@@ -131,4 +131,6 @@
 * TODO [#C] El javascript deberís ser independiente de la versión de Firefox :Buildings:BUG:
   Por ahora con instalar FireBug se resuelve el problema en firefox 3.
 * TODO [#C] Quitar el documento y dejarlo en su propio sitio. :doc:sismocaracas:
+* TODO [#C] Cambiar todas las plantillas de python y format para que usen índices explícitos
+  Ejemplo: Cambiar '{} {}' por '{0} {1}'
 * Pedir confirmación de correo electrónico
