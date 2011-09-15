@@ -679,84 +679,84 @@ class Bridge(models.Model):
             app_name=__name__.split('.')[-2],
             model_name='Bridge'))
 
-    # __. Threat Index
-    caracas = models.BooleanField(
-        verbose_name=u'¿Es en Caracas?',
-        help_text='Solo para el revisor o el supervisor')
-    national_level_zonification = models.IntegerField(
-        verbose_name=u'Nivel nacional_zonificación',
-        null=True, blank=True,
-        help_text='Solo para el revisor o el supervisor',
-        choices=((1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7)))
+#    # __. Threat Index
+#    caracas = models.BooleanField(
+#        verbose_name=u'¿Es en Caracas?',
+#        help_text='Solo para el revisor o el supervisor')
+#    national_level_zonification = models.IntegerField(
+#        verbose_name=u'Nivel nacional_zonificación',
+#        null=True, blank=True,
+#        help_text='Solo para el revisor o el supervisor',
+#        choices=((1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7)))
 
-    macrozone_ccs = models.CharField(
-        max_length=20, blank=True,
-        verbose_name=u'CCS_Macrozona',
-        help_text='Solo para el revisor o el supervisor',
-        choices=(
-            ('sur', 'Sur'),
-            ('centro_sur', 'Centro Sur'),
-            ('centro_norte', 'Centro Norte'),
-            ('norte', 'Norte')))
-    microzone_ccs = models.CharField(
-        max_length=3, blank=True,
-        verbose_name=u'CCS_Microzona',
-        help_text='Solo para el revisor o el supervisor',
-        choices=(
-            ('1-1', '1-1'),
-            ('1-2', '1-2'),
-            ('2-1', '2-1'),
-            ('2-2', '2-2'),
-            ('3-1', '3-1'),
-            ('3-2', '3-2'),
-            ('3-3', '3-3'),
-            ('4-1', '4-1'),
-            ('4-2', '4-2'),
-            ('5', '5'),
-            ('6', '6'),
-            ('7-1', '7-1')))
+#    macrozone_ccs = models.CharField(
+#        max_length=20, blank=True,
+#        verbose_name=u'CCS_Macrozona',
+#        help_text='Solo para el revisor o el supervisor',
+#        choices=(
+#            ('sur', 'Sur'),
+#            ('centro_sur', 'Centro Sur'),
+#            ('centro_norte', 'Centro Norte'),
+#            ('norte', 'Norte')))
+#    microzone_ccs = models.CharField(
+#        max_length=3, blank=True,
+#        verbose_name=u'CCS_Microzona',
+#        help_text='Solo para el revisor o el supervisor',
+#        choices=(
+#            ('1-1', '1-1'),
+#            ('1-2', '1-2'),
+#            ('2-1', '2-1'),
+#            ('2-2', '2-2'),
+#            ('3-1', '3-1'),
+#            ('3-2', '3-2'),
+#            ('3-3', '3-3'),
+#            ('4-1', '4-1'),
+#            ('4-2', '4-2'),
+#            ('5', '5'),
+#            ('6', '6'),
+#            ('7-1', '7-1')))
 
-    def __unicode__(self):
-        return "{}:{}:{}".format(
-            ' '.join(
-                (self.inspector.first_name, self.inspector.last_name)).strip()
-            or
-            self.inspector, self.date, self.id)
+#    def __unicode__(self):
+#        return "{}:{}:{}".format(
+#            ' '.join(
+#                (self.inspector.first_name, self.inspector.last_name)).strip()
+#            or
+#            self.inspector, self.date, self.id)
 
-    def has_topographic_effects(self):
-        return \
-            self.building_at == 'cima' \
-            or \
-            self.building_at == 'ladera' and self.ground_over
+#    def has_topographic_effects(self):
+#        return \
+#            self.building_at == 'cima' \
+#            or \
+#            self.building_at == 'ladera' and self.ground_over
 
-    def threat_index(self):
-        '''[0.23, 1.0]'''
-        from .analysis import \
-            threat_index_by_macro_zones_caracas, \
-            threat_index_by_macro_zones_national
-        macro_zone_table = \
-            threat_index_by_macro_zones_caracas \
-            if self.caracas \
-            else threat_index_by_macro_zones_national
-        macro_zone_self_value = \
-            self.macrozone_ccs \
-            if self.caracas \
-            else self.national_level_zonification
+#    def threat_index(self):
+#        '''[0.23, 1.0]'''
+#        from .analysis import \
+#            threat_index_by_macro_zones_caracas, \
+#            threat_index_by_macro_zones_national
+#        macro_zone_table = \
+#            threat_index_by_macro_zones_caracas \
+#            if self.caracas \
+#            else threat_index_by_macro_zones_national
+#        macro_zone_self_value = \
+#            self.macrozone_ccs \
+#            if self.caracas \
+#            else self.national_level_zonification
 
-        try:
-            return macro_zone_table[macro_zone_self_value][
-                0 if not self.has_topographic_effects() else 1]
-        except KeyError:
-            return None
+#        try:
+#            return macro_zone_table[macro_zone_self_value][
+#                0 if not self.has_topographic_effects() else 1]
+#        except KeyError:
+#            return None
 
-    def vulnerability_index(self):
-        '''[6.5, 100.0]'''
-        return 6.5
+#    def vulnerability_index(self):
+#        '''[6.5, 100.0]'''
+#        return 6.5
 
-    def importance_index(self):
-        '''[0.8, 1.0]'''
-        return 0.8
+#    def importance_index(self):
+#        '''[0.8, 1.0]'''
+#        return 0.8
 
-    def priorization_index(self):
-        return self.threat_index() * self.vulnerability_index() * \
-            importance_index()
+#    def priorization_index(self):
+#        return self.threat_index() * self.vulnerability_index() * \
+#            importance_index()
