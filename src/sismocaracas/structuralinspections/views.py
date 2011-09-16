@@ -19,15 +19,15 @@ def csv_view(request, models_url='edificaciones'):
 
     model = model_url_dict[models_url]
 
-    field_names = model._meta.get_all_field_names()
+    fields = model._meta._fields()
 
     writer.writerow([
-            model._meta.get_field(field_name).verbose_name.encode('utf-8')
-            for field_name in field_names])
+            field.verbose_name.encode('utf-8')
+            for field in fields])
 
     for element in model.objects.all():
         writer.writerow([
-                unicode(getattr(element, field_name)).encode('utf-8')
-                for field_name in field_names])
+                unicode(getattr(element, field.name)).encode('utf-8')
+                for field in fields])
 
     return response
