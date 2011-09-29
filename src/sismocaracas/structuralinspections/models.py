@@ -149,7 +149,9 @@ class Building(models.Model):
         verbose_name=u'8.4 Pendiente del talud',
         choices=(
             (32.5, '20º - 45º'),
-            (67.5, 'Mayor a 45º'),),
+            (67.5, 'Mayor a 45º'),), # Al limpiar la base de datos,
+                                     # cambiar el promedio por los
+                                     # rangos adecuados.
         null=True, blank=True)
     talus_separation_gt_H = models.BooleanField(
         verbose_name=u'8.5 Separación al talud',
@@ -218,13 +220,19 @@ class Building(models.Model):
             ('rectangular', u'\u25AF'),
             (u'pirámide invertida', u'Pirámide invertida'),
             ('piramidal', 'Piramidal'),
-            ('esveltez vertical', 'Esveltez, vertical'),
+            ('esveltez vertical', 'Esbeltez, vertical'), # Limpiar la
+                                                         # base de
+                                                         # datos para
+                                                         # cambiar
+                                                         # esveltez
+                                                         # por
+                                                         # esbeltez
             ('ninguno', 'Ninguno'),),
         blank=False)
     # 12. Irregularities
 
     no_high_beams_on_one_or_two_directions = models.BooleanField(
-        verbose_name=u'12.1 Ausencia de vigías altas en una o dos direcciones')
+        verbose_name=u'12.1 Ausencia de vigas altas en una o dos direcciones')
     presence_of_at_least_one_soft_or_weak_mezzanine = models.BooleanField(
         verbose_name=u'12.2 Presencia de al menos un entrepiso débil o blando')
     presence_of_short_columns = models.BooleanField(
@@ -250,7 +258,10 @@ class Building(models.Model):
         verbose_name=u'12.8 Tipo de adosamiento',
         choices=(
             ('ninguno', 'Ninguno'),
-            ('slab_slab', 'Losa contra losa'),
+            ('slab_slab', 'Losa contra losa'), # Limpiar la base de
+                                               # datos para cambiar
+                                               # slab_slab a losa
+                                               # contra losa
             ('column_slab', 'Columna contra losa'),))
 
     # 13. Degree of degradation
