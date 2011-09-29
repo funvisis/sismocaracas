@@ -406,11 +406,25 @@ class Bridge(models.Model):
 
     # 2. Participants
     inspector = models.ForeignKey(
-        FVISUser, related_name='bridge_inspector', verbose_name='2.1 Inspector')
+        FVISUser, related_name=u'bridge_inspector',
+        verbose_name=u'2.1 Inspector')
     reviewer = models.ForeignKey(
-        FVISUser, related_name='bridge_reviewer', verbose_name='2.2 Revisor')
+        FVISUser,
+        related_name=u'bridge_reviewer',
+        verbose_name=u'2.2 Revisor',
+        limit_choices_to={'user__groups__name': u'revisores'})
     supervisor = models.ForeignKey(
-        FVISUser, related_name='bridge_supervisor', verbose_name='2.3 Supervisor')
+        FVISUser, related_name=u'bridge_supervisor',
+        verbose_name=u'2.3 Supervisor',
+                limit_choices_to={'user__groups__name': u'supervisores'})
+
+
+#    inspector = models.ForeignKey(
+#        FVISUser, related_name='bridge_inspector', verbose_name='2.1 Inspector')
+#    reviewer = models.ForeignKey(
+#        FVISUser, related_name='bridge_reviewer', verbose_name='2.2 Revisor')
+#    supervisor = models.ForeignKey(
+#        FVISUser, related_name='bridge_supervisor', verbose_name='2.3 Supervisor')
 
     # 3. General data and set location
     bridge_distributor_highway_name = models.CharField(
@@ -423,9 +437,9 @@ class Bridge(models.Model):
             ('elevado', 'Tramo elevado'),
             ('distribuidor', 'Distribuidor'),),)
     state = models.CharField(
-		max_length=25, verbose_name='3.3 Estado',  blank=True)
+		max_length=25, verbose_name='3.3 Estado')
     city = models.CharField(
-		max_length=25, verbose_name='3.4 Ciudad',  blank=True)
+		max_length=25, verbose_name='3.4 Ciudad')
     municipality = models.CharField(
         max_length=100, verbose_name='3.5 Municipio')
     parish = models.CharField(
@@ -439,17 +453,22 @@ class Bridge(models.Model):
 		verbose_name=u'4.1 Nombre o identificación de sentidos')
     name_of_road_on_bridge = models.CharField(
 		max_length=40,
-		verbose_name=u'4.2.1 Nombre de vía sobre el puente')
+		verbose_name=u'4.2.1 Nombre de vía sobre el puente',
+        blank=True)
     road_type = models.CharField(
-		max_length = 40, verbose_name='4.2.2 Tipo',
+		max_length = 40,
+        blank=True,
+        verbose_name='4.2.2 Tipo',
 		choices=(
 			('autopista', 'Autopista'),
 			('calle_o_avenida', 'Calle o Avenida'),),)
     under_bridge_element_name = models.CharField(
 		max_length=50, 
+        blank=True,
 		verbose_name=u'4.3.1 Nombres de vías, ríos u otros elementos bajo el puente')
     under_bridge_element_type = models.CharField(
-		max_length=30, 
+		max_length=30,
+        blank=True, 
 		verbose_name='4.3.2 Tipos de elementos bajo el puente',
 		choices=(
 			('autopista', 'Autopista'),
@@ -459,21 +478,23 @@ class Bridge(models.Model):
 			('instalacion_importante', u'Instalación importante'),
 			('otros', 'Otros'),),)
     access_to_important_facility = models.BooleanField(
+            blank=False,
 			verbose_name=u'4.4.1 ¿El puente da acceso a inst. importante?',
 			choices=(
 			    (True, 'Sí'),
 			    (False, 'No'),),)
     name_of_important_facility = models.CharField(
-		max_length=100, 
+		max_length=100,
+        blank=True,
 		verbose_name='4.4.2 Nombre de la inst. importante')
     coord_pins = models.FloatField(
-        verbose_name='4.5.1 Coord. P.I. N-S', null=True, blank=True)
+        verbose_name='4.5.1 Coord. P.I. N-S')
     coord_pieo = models.FloatField(
-        verbose_name='4.5.2 Coord. P.I. E-O', null=True, blank=True)
+        verbose_name='4.5.2 Coord. P.I. E-O')
     coord_pfns = models.FloatField(
-        verbose_name='4.6.1 Coord. P.F. N-S', null=True, blank=True)
+        verbose_name='4.6.1 Coord. P.F. N-S')
     coord_pfeo = models.FloatField(
-        verbose_name='4.6.2 Coord. P.F. E-O', null=True, blank=True)
+        verbose_name='4.6.2 Coord. P.F. E-O')
 
    	# 5. Bridge age
     year = models.IntegerField(
@@ -481,7 +502,8 @@ class Bridge(models.Model):
     source = models.CharField(
 		max_length=50, verbose_name='5.2 Fuente')
     year_range = models.CharField(
-        max_length=20, verbose_name = '5.3 Rango del año de construcción',
+        max_length=20, 
+        verbose_name = '5.3 Rango del año de construcción',
         choices=(
             ('<1968', 'Antes de 1968'),
             ('[1968, 1985]', 'Entre 1968 y 1985'),
@@ -500,10 +522,10 @@ class Bridge(models.Model):
         choices=(
             ('<20', 'Menor a 20°(36%))'),
             ('>20', 'Mayor a 20°(36%))'),),
-        blank=True)
+        )
     soil_weakness = models.CharField(
 		max_length=20, 
-		verbose_name=u'Susceptibilidad de licuación del suelo',
+		verbose_name=u'6.3 Susceptibilidad de licuación del suelo',
         choices=(
 			('baja', 'Baja'),
 			('moderada', 'Moderada'),
@@ -537,15 +559,16 @@ class Bridge(models.Model):
             ('>2', '>2.0'),),)
     straight_bridge = models.BooleanField(
         verbose_name='7.9 Alineamiento del puente',
+        blank=False,
         choices=(
 		    (True, 'Recto'),
 		    (False, 'Curvo'),),)
     subtended_angle = models.IntegerField(
         verbose_name=u'7.10 Ángulo Subtendido',
-        null=True, blank=True)
+        )
     bridge_deviation = models.IntegerField(
         verbose_name=u'7.11 Esviaje del puente',
-        null=True, blank=True)
+        )
     structure_continuity = models.CharField(
         max_length=40,
         verbose_name=u'7.12 Continuidad de la estructura',
@@ -571,17 +594,19 @@ class Bridge(models.Model):
             ('COLG', 'Puente colgante (COLG)'),
             ('ATIR', 'Puente atirantado (ATIR)'),
             ('MAMP', 'Puente de mamposteria (MAMP)'),
-            ('MAD', 'Puente de madera (MAD)'),),)
+            ('MAD', 'Puente de madera (MAD)'),
+            ('OTRO', 'Otro'),),)
     superstructural_type_other = models.CharField(
         max_length=40,
-        verbose_name='OTRO - Otro, indique', 
+        verbose_name='Otro, indique', 
         null=True, blank=True)
     column_material_type = models.CharField(
         max_length=40,
         verbose_name=u'7.14.1 Tipo de pilas. Material',
         choices=(
             ('concreto', 'Concreto'),
-            ('acero', 'Acero'),),)
+            ('acero', 'Acero'),
+            ('otro', 'Otro'),),)
     column_material_type_other = models.CharField(
         max_length=100,
         verbose_name=u'Otro. Indique',
@@ -593,18 +618,21 @@ class Bridge(models.Model):
             ('monocolumnas', 'Pilas monocolumnas'),
             ('multicolumnas', 'Pilas multicolumnas'),
             ('muros', 'Pilas de muros'),
-            ('estribos', 'Solo estribos'),),)
+            ('estribos', 'Solo estribos'),
+            ('otro', 'Otro'),),)
     column_geometry_type_other = models.CharField(
         max_length=100,
         verbose_name='Otro. Indique',
         null=True, blank=True)
     is_any_column_a_pergola = models.BooleanField(
         verbose_name=u'7.14.3 ¿Alguna de las pilas es de tipo pérgola?',
+        blank=False,
         choices=(
 		    (True, 'Sí'),
 		    (False, 'No'),),)
     does_columns_had_side_capitals_tops = models.CharField(
         max_length=40,
+        blank=False,
         verbose_name=u'7.15 ¿Las pilas tienen topes laterales en el capitel?',
         choices=(
             ('si', 'Sí'),
@@ -612,6 +640,7 @@ class Bridge(models.Model):
             ('algunas', 'Sólo algunas') ,),)
     does_board_has_individuals_beams = models.BooleanField(
         verbose_name=u'7.16 ¿El tablero posee vigas individuales y esta soportado por columnas o pedestales individuales sin capitel?',
+        blank=False,
         choices=(
 		    (True, 'Sí'),
 		    (False, 'No'),),)
@@ -622,10 +651,10 @@ class Bridge(models.Model):
 		    (False, 'No'),),)
     superstructure_number_of_discontinuities = models.IntegerField(
         verbose_name='7.18 Nro. de discontinuidades en la superestructura',
-        null=True, blank=True)
+        )
     typical_joint_length = models.FloatField(
         verbose_name=u'7.19 Longitud de apoyo típica en las juntas',
-        null=True, blank=True)
+        )
     does_bridge_horizontally_linked_to_others_structures = models.BooleanField(
         verbose_name=u'7.20.1 ¿La estructura del puente esta vinculada horizontalmente a otras estructuras?',
             choices=(
@@ -637,6 +666,7 @@ class Bridge(models.Model):
         blank=True,)
     does_bridge_vertically_linked_to_others_structures = models.BooleanField(
         verbose_name=u'7.21.1 ¿La estructura del puente esta vinculada verticalmente a otras estructuras?',
+        blank=False,
             choices=(
 		    (True, 'Sí'),
 		    (False, 'No'),))
@@ -648,36 +678,22 @@ class Bridge(models.Model):
     # 8. Damage Observed and Mantainment state of the bridge
     observations = models.TextField(
         verbose_name='8. Daños Observados y Estado General de Mantenimiento del Puente',
-        blank=True)
+        )
 
     # 9. Additional Observations
-    observations = models.TextField(
+    additional_observations = models.TextField(
         verbose_name='9. Observaciones Adicionales',
+        )
+
+    # 10 Image Backup
+    image_backup = models.FileField(
+        verbose_name='10. Respaldo escaneado',
+        upload_to=get_path_to_app_repo(
+            project_name=settings.SETTINGS_MODULE.split('.')[0],
+            app_name=__name__.split('.')[-2],
+            model_name='Bridge'),
+        null=True,
         blank=True)
-
-    # 10. Sketch - Typical transversal sections of Columns and Boards
-    typical_transversal_sections_sketch = models.FileField(
-        verbose_name='10. Croquis - Secciones Transversales Típicas de Pilas y Tableros',
-        upload_to=get_path_to_app_repo(
-            project_name=settings.SETTINGS_MODULE.split('.')[0],
-            app_name=__name__.split('.')[-2],
-            model_name='Bridge'))
-
-    # 11. Sketch - Location of bridge's base
-    brige_base_location_sketch = models.FileField(
-        verbose_name='11. Croquis - Planta de Ubicación del Puente',
-        upload_to=get_path_to_app_repo(
-            project_name=settings.SETTINGS_MODULE.split('.')[0],
-            app_name=__name__.split('.')[-2],
-            model_name='Bridge'))
-
-    # 12. Sketch - Bridge longitudinal profile
-    bridge_longitudinal_profile = models.FileField(
-        verbose_name='12. Croquis - Perfil Longitudinal del Puente',
-        upload_to=get_path_to_app_repo(
-            project_name=settings.SETTINGS_MODULE.split('.')[0],
-            app_name=__name__.split('.')[-2],
-            model_name='Bridge'))
 
     class Meta:
         verbose_name = u"Puente"
