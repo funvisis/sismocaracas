@@ -165,4 +165,4 @@ LOGGING = {
     }
 }
 
-#AUTH_PROFILE_MODULE = 'sismocaracas.inspections.Participant'
+AUTH_PROFILE_MODULE = 'sismocaracas.inspections.Participant'
