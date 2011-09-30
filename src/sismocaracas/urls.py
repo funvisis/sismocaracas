@@ -13,6 +13,5 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^inspecciones/', include('sismocaracas.structuralinspections.urls')),
-#    url(r'^puentes/', include('sismocaracas.bridges.urls')),
     (r'^admin/', include(admin.site.urls)),
     )
