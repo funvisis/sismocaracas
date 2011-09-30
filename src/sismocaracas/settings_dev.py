@@ -27,7 +27,11 @@ TEMPLATE_DIRS = (os.path.join(os.getcwd(), 'templates'))
 
 INSTALLED_APPS += (
     'django_extensions',
-    'debug_toolbar')
+    'debug_toolbar',
+# branch databrowse
+    'django.contrib.databrowse',
+# END branch databrowse
+    )
 
 MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
