@@ -150,7 +150,12 @@ class BuildingAdmin(admin.ModelAdmin):
             u'16. Respaldo de la planilla',
             {
                 'fields': (
-                    'image_backup',)}),)
+                    'image_backup',)}),
+            
+        (   u'17. Imagenes',
+            {
+                'fields': (
+                    'building_gallery',)}),)
 
     fieldsets_super = (
         (

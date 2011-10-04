@@ -135,12 +135,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'sismocaracas.structuralinspections',
     'funvisis.django.fvisusers',
-
+    'photologue',
+    'tagging',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'photologue',
 )
 
 # A sample logging configuration. The only tangible logging

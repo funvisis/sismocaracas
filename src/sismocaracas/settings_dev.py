@@ -15,16 +15,26 @@ DATABASES = {
         'PORT': '',}}
 
 MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, '..', 'media', 'sismocaracas')
-DJANGO_PROJECTS_PATH = '/home/danielmaxx/work/FUNVISIS'
+DJANGO_PROJECTS_PATH = os.getcwd()
 MY_PROJECT_PATH = os.path.join(DJANGO_PROJECTS_PATH, PROJECT_NAME)
 
 MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, 'media/')
-MEDIA_URL = '/media/' 
+MEDIA_URL = '/static/media/' 
 ADMIN_MEDIA_PREFIX='/static/admin/'
 
 STATIC_ROOT = ''#'"os.path.join(MY_PROJECT_PATH, 'media/')
 STATIC_URL = '/static/'
 ADMIN_STATIC_PREFIX='/static/admin/'
-STATICFILES_DIRS = ()
+STATICFILES_DIRS = (
+    MY_PROJECT_PATH,
+)
 
 TEMPLATE_DIRS = (os.path.join(os.getcwd(), 'templates'))
+
+#from sismocaracas.structuralinspections.utils import get_image_path
+#PHOTOLOGUE_PATH = get_image_path
+
+#from sismocaracas.structuralinspections.utils import get_sample_image_path
+SAMPLE_IMAGE_PATH = os.path.join(MEDIA_ROOT, 'photologue/samples/sample.jpg')
+
+

@@ -3,6 +3,8 @@ from django.db import models
 from django.conf import settings
 #from django.contrib.auth.models import User
 from funvisis.django.fvisusers.models import FVISUser
+from photologue.models import Gallery
+from photologue.models import GalleryUpload
 
 from funvisis.utils.djangorelated \
     import get_path_to_app_repo_ as get_path_to_app_repo
@@ -299,6 +301,12 @@ class Building(models.Model):
             model_name='Inspection'),
         null=True,
         blank=True)
+
+    # 16 Building Pictures
+    building_gallery = models.OneToOneField(
+        GalleryUpload, related_name=u'building_gallery',
+        verbose_name=u'16 Fotos',
+        blank=True,)
 
     # __. Threat Index
     caracas = models.BooleanField(
@@ -683,7 +691,7 @@ class Bridge(models.Model):
     # 9. Additional Observations
     additional_observations = models.TextField(
         verbose_name='9. Observaciones Adicionales',
-        )
+        blank=True,)
 
     # 10 Image Backup
     image_backup = models.FileField(
@@ -695,6 +703,13 @@ class Bridge(models.Model):
         null=True,
         blank=True)
 
+    # 11 Bridge Pictures
+    bridge_gallery = models.OneToOneField(
+        GalleryUpload, related_name=u'bridge_gallery',
+        verbose_name=u'11 Fotos',
+        blank=True,)
+
     class Meta:
         verbose_name = u"Puente"
         verbose_name_plural = u"Puentes"
+
