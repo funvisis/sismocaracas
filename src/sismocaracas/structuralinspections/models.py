@@ -3,8 +3,9 @@ from django.db import models
 from django.conf import settings
 #from django.contrib.auth.models import User
 from funvisis.django.fvisusers.models import FVISUser
+#from funvisis.django.fvisgallery.models import FVISGallery
 from photologue.models import Gallery
-from photologue.models import GalleryUpload
+#from photologue.models import GalleryUpload
 
 from funvisis.utils.djangorelated \
     import get_path_to_app_repo_ as get_path_to_app_repo
@@ -304,7 +305,7 @@ class Building(models.Model):
 
     # 16 Building Pictures
     building_gallery = models.OneToOneField(
-        GalleryUpload, related_name=u'building_gallery',
+        Gallery, related_name=u'building_gallery',
         verbose_name=u'16 Fotos',
         blank=True,)
 
@@ -353,7 +354,7 @@ class Building(models.Model):
         verbose_name_plural = u"Edificaciones"
 
     def __unicode__(self):
-        return u"{}:{}:{}".format(
+        return u"{0}:{1}:{2}".format(
             u' '.join(
                 (
                     self.inspector.user.first_name,
@@ -705,9 +706,18 @@ class Bridge(models.Model):
 
     # 11 Bridge Pictures
     bridge_gallery = models.OneToOneField(
-        GalleryUpload, related_name=u'bridge_gallery',
+        Gallery, related_name=u'bridge_gallery',
         verbose_name=u'11 Fotos',
         blank=True,)
+
+    def __unicode__(self):
+        return u"{0}:{1}:{2}".format(
+            u' '.join(
+                (
+                    self.inspector.user.first_name,
+                    self.inspector.user.last_name)).strip()
+            or
+            self.inspector, self.init_time, self.id)
 
     class Meta:
         verbose_name = u"Puente"

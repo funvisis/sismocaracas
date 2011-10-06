@@ -135,6 +135,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'sismocaracas.structuralinspections',
     'funvisis.django.fvisusers',
+#    'funvisis.django.fvisgallery',
     'photologue',
     'tagging',
     # Uncomment the next line to enable the admin:

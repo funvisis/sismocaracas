@@ -39,7 +39,7 @@ admin_site = AdminSite('admin_site')
 
 admin_site.register(Building, BuildingAdmin)
 admin_site.register(Bridge, BridgeAdmin)
-admin_site.register(GalleryUpload)
+#admin_site.register(GalleryUpload)
 admin_site.register(Gallery)
 admin_site.register(Photo)
 #admin_site.register(Bridge)
