@@ -140,6 +140,7 @@ INSTALLED_APPS = (
     'tagging',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'django.contrib.gis',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
 )
@@ -167,4 +168,4 @@ LOGGING = {
     }
 }
 
-#AUTH_PROFILE_MODULE = 'sismocaracas.inspections.Participant'
+AUTH_PROFILE_MODULE = 'sismocaracas.inspections.Participant'

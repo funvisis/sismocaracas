@@ -2,7 +2,8 @@
 
 from ..models import Building
 
-from django.contrib import admin
+# from django.contrib import admin
+from django.contrib.gis import admin
 
 class BuildingAdmin(admin.ModelAdmin):
     fieldsets_infra = (
@@ -44,9 +45,11 @@ class BuildingAdmin(admin.ModelAdmin):
                     'street',
                     'square',
                     'plot',
-                    'coord_x',
-                    'coord_y',
-                    'time_zone')}),
+                    # 'coord_x',
+                    # 'coord_y',
+                    # 'time_zone',
+                    'point',
+                    )}),
         (
             u'5. Uso de la edificación',
             {

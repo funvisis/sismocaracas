@@ -6,13 +6,21 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',}}
+     'default': {
+         'ENGINE': 'django.contrib.gis.db.backends.spatialite',
+         'NAME': 'db.sqlite3',
+         'USER': '',
+         'PASSWORD': '',
+         'HOST': '',
+         'PORT': '',}
+    #'default': {
+    #    'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    #    'NAME': 'geodjango',
+    #    'USER': 'geo',
+    #    'PASSWORD': 'geo',
+    #    'HOST': '',
+    #    'PORT': '',}
+    }
 
 MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, '..', 'media', 'sismocaracas')
 DJANGO_PROJECTS_PATH = os.getcwd()
@@ -37,4 +45,16 @@ TEMPLATE_DIRS = (os.path.join(os.getcwd(), 'templates'))
 #from sismocaracas.structuralinspections.utils import get_sample_image_path
 SAMPLE_IMAGE_PATH = os.path.join(MEDIA_ROOT, 'photologue/samples/sample.jpg')
 
+
+INSTALLED_APPS += (
+    'django_extensions',
+    'debug_toolbar',
+# branch databrowse
+    'django.contrib.databrowse',
+# END branch databrowse
+    )
+
+MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+
+INTERNAL_IPS = ('127.0.0.1',)
 
