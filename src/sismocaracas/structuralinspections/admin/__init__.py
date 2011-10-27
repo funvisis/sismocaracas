@@ -22,7 +22,7 @@ issue. How to associate an admin_site with an authorization
 evaluation...
 """
 
-from django.contrib import admin
+from django.contrib.gis import admin
 from django.contrib.admin.sites import AdminSite
 
 from photologue.models import Gallery
@@ -41,8 +41,6 @@ admin_site = AdminSite('admin_site')
 
 admin_site.register(Building, BuildingAdmin)
 admin_site.register(Bridge, BridgeAdmin)
-#admin_site.register(GalleryUpload)
 admin_site.register(Gallery, GalleryAdmin)
 admin_site.register(Photo, PhotoAdmin)
-#admin_site.register(Bridge)
 
