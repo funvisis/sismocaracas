@@ -14,4 +14,5 @@ urlpatterns = patterns(
     '',
     url(r'^inspecciones/', include('sismocaracas.structuralinspections.urls')),
     (r'^admin/', include(admin.site.urls)),
+    (r'^photologue/', include('photologue.urls')),
     )

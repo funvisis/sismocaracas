@@ -6,24 +6,45 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',}}
+     'default': {
+         'ENGINE': 'django.contrib.gis.db.backends.spatialite',
+         'NAME': 'db.sqlite3',
+         'USER': '',
+         'PASSWORD': '',
+         'HOST': '',
+         'PORT': '',}
+    #'default': {
+    #    'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    #    'NAME': 'geodjango',
+    #    'USER': 'geo',
+    #    'PASSWORD': 'geo',
+    #    'HOST': '',
+    #    'PORT': '',}
+    }
 
-# MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, '..', 'media', 'sismocaracas')
-MEDIA_ROOT = ''
-MEDIA_URL = ''
+MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, '..', 'media', 'sismocaracas')
+DJANGO_PROJECTS_PATH = os.getcwd()
+MY_PROJECT_PATH = os.path.join(DJANGO_PROJECTS_PATH, PROJECT_NAME)
+
+MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, 'media/')
+MEDIA_URL = '/static/media/' 
 ADMIN_MEDIA_PREFIX='/static/admin/'
 
-STATIC_ROOT = ''
+STATIC_ROOT = ''#'"os.path.join(MY_PROJECT_PATH, 'media/')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ()
+ADMIN_STATIC_PREFIX='/static/admin/'
+STATICFILES_DIRS = (
+    MY_PROJECT_PATH,
+)
 
 TEMPLATE_DIRS = (os.path.join(os.getcwd(), 'templates'))
+
+#from sismocaracas.structuralinspections.utils import get_image_path
+#PHOTOLOGUE_PATH = get_image_path
+
+#from sismocaracas.structuralinspections.utils import get_sample_image_path
+SAMPLE_IMAGE_PATH = os.path.join(MEDIA_ROOT, 'photologue/samples/sample.jpg')
+
 
 INSTALLED_APPS += (
     'django_extensions',

@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-from django.db import models
 from django.conf import settings
-#from django.contrib.auth.models import User
+from django.contrib.gis.db import models
 from funvisis.django.fvisusers.models import FVISUser
+#from funvisis.django.fvisgallery.models import FVISGallery
+from photologue.models import Gallery
+#from photologue.models import GalleryUpload
+
 
 from funvisis.utils.djangorelated \
     import get_path_to_app_repo_ as get_path_to_app_repo
@@ -64,12 +67,7 @@ class Building(models.Model):
         max_length=100, verbose_name=u'4.11 Manzana Nº', blank=True)
     plot = models.CharField(
         max_length=100, verbose_name=u'4.12 Nº Parcela', blank=True)
-    coord_x = models.FloatField(
-        verbose_name=u'4.13 Coord. X', null=True, blank=True)
-    coord_y = models.FloatField(
-        verbose_name=u'4.14 Coord. Y', null=True, blank=True)
-    time_zone = models.FloatField(
-        verbose_name=u'4.15 Huso', null=True, blank=True)
+    point = models.PointField(srid=4368)
 
     # 5. Building usage
     governmental = models.BooleanField(verbose_name=u'Gubernamental')
@@ -323,7 +321,6 @@ class Building(models.Model):
         null=True,
         blank=True)
 
-
     # __. Threat Index
     caracas = models.BooleanField(
         verbose_name=u'¿Es en Caracas?',
@@ -369,7 +366,7 @@ class Building(models.Model):
         verbose_name_plural = u"Edificaciones"
 
     def __unicode__(self):
-        return u"{}:{}:{}".format(
+        return u"{0}:{1}:{2}".format(
             u' '.join(
                 (
                     self.inspector.user.first_name,
@@ -430,11 +427,17 @@ class Bridge(models.Model):
 
     # 2. Participants
     inspector = models.ForeignKey(
-        FVISUser, related_name='bridge_inspector', verbose_name=u'2.1 Inspector')
+        FVISUser, related_name=u'bridge_inspector',
+        verbose_name=u'2.1 Inspector')
     reviewer = models.ForeignKey(
-        FVISUser, related_name='bridge_reviewer', verbose_name=u'2.2 Revisor')
+        FVISUser,
+        related_name=u'bridge_reviewer',
+        verbose_name=u'2.2 Revisor',
+        limit_choices_to={'user__groups__name': u'revisores'})
     supervisor = models.ForeignKey(
-        FVISUser, related_name='bridge_supervisor', verbose_name=u'2.3 Supervisor')
+        FVISUser, related_name=u'bridge_supervisor',
+        verbose_name=u'2.3 Supervisor',
+                limit_choices_to={'user__groups__name': u'supervisores'})
 
     # 3. General data and set location
     bridge_distributor_highway_name = models.CharField(
@@ -443,9 +446,9 @@ class Bridge(models.Model):
     road_function = models.CharField(
         max_length=20, verbose_name= u'3.2 Función vial',
         choices=(
-            ('puente', 'Puente'),
-            ('elevado', 'Tramo elevado'),
-            ('distribuidor', 'Distribuidor'),),)
+            (u'puente', u'Puente'),
+            (u'elevado', u'Tramo elevado'),
+            (u'distribuidor', u'Distribuidor'),),)
     state = models.CharField(
 		max_length=25, verbose_name=u'3.3 Estado',  blank=True)
     city = models.CharField(
@@ -463,32 +466,39 @@ class Bridge(models.Model):
 		verbose_name=u'4.1 Nombre o identificación de sentidos')
     name_of_road_on_bridge = models.CharField(
 		max_length=40,
-		verbose_name=u'4.2.1 Nombre de vía sobre el puente')
+		verbose_name=u'4.2.1 Nombre de vía sobre el puente',
+        blank=True)
     road_type = models.CharField(
-		max_length = 40, verbose_name=u'4.2.2 Tipo',
+		max_length = 40,
+        blank=True,
+        verbose_name=u'4.2.2 Tipo',
 		choices=(
-			('autopista', 'Autopista'),
-			('calle_o_avenida', 'Calle o Avenida'),),)
+			(u'autopista', u'Autopista'),
+			(u'calle_o_avenida', u'Calle o Avenida'),),)
     under_bridge_element_name = models.CharField(
 		max_length=50, 
+        blank=True,
 		verbose_name=u'4.3.1 Nombres de vías, ríos u otros elementos bajo el puente')
     under_bridge_element_type = models.CharField(
-		max_length=30, 
+		max_length=30,
+        blank=True, 
 		verbose_name=u'4.3.2 Tipos de elementos bajo el puente',
 		choices=(
-			('autopista', 'Autopista'),
-			('calle_o_avenida', 'Calle o Avenida'),
-			('rio', u'Río'),
-			('edificacion', u'Edificación'),
-			('instalacion_importante', u'Instalación importante'),
-			('otros', 'Otros'),),)
+			(u'autopista', u'Autopista'),
+			(u'calle_o_avenida', u'Calle o Avenida'),
+			(u'rio', u'Río'),
+			(u'edificacion', u'Edificación'),
+			(u'instalacion_importante', u'Instalación importante'),
+			(u'otros', u'Otros'),),)
     access_to_important_facility = models.BooleanField(
+            blank=False,
 			verbose_name=u'4.4.1 ¿El puente da acceso a inst. importante?',
 			choices=(
 			    (True, 'Sí'),
 			    (False, 'No'),),)
     name_of_important_facility = models.CharField(
-		max_length=100, 
+		max_length=100,
+        blank=True,
 		verbose_name=u'4.4.2 Nombre de la inst. importante')
     coord_pins = models.FloatField(
         verbose_name=u'4.5.1 Coord. P.I. N-S', null=True, blank=True)
@@ -505,7 +515,8 @@ class Bridge(models.Model):
     source = models.CharField(
 		max_length=50, verbose_name=u'5.2 Fuente')
     year_range = models.CharField(
-        max_length=20, verbose_name = '5.3 Rango del año de construcción',
+        max_length=20, 
+        verbose_name = u'5.3 Rango del año de construcción',
         choices=(
             ('<1968', 'Antes de 1968'),
             ('[1968, 1985]', 'Entre 1968 y 1985'),
@@ -524,10 +535,10 @@ class Bridge(models.Model):
         choices=(
             ('<20', 'Menor a 20°(36%))'),
             ('>20', 'Mayor a 20°(36%))'),),
-        blank=True)
+        )
     soil_weakness = models.CharField(
 		max_length=20, 
-		verbose_name=u'Susceptibilidad de licuación del suelo',
+		verbose_name=u'6.3 Susceptibilidad de licuación del suelo',
         choices=(
 			('baja', 'Baja'),
 			('moderada', 'Moderada'),
@@ -561,15 +572,14 @@ class Bridge(models.Model):
             ('>2', '>2.0'),),)
     straight_bridge = models.BooleanField(
         verbose_name=u'7.9 Alineamiento del puente',
+        blank=False,
         choices=(
 		    (True, 'Recto'),
 		    (False, 'Curvo'),),)
     subtended_angle = models.IntegerField(
-        verbose_name=u'7.10 Ángulo Subtendido',
-        null=True, blank=True)
+        verbose_name=u'7.10 Ángulo Subtendido',)
     bridge_deviation = models.IntegerField(
-        verbose_name=u'7.11 Esviaje del puente',
-        null=True, blank=True)
+        verbose_name=u'7.11 Esviaje del puente',)
     structure_continuity = models.CharField(
         max_length=40,
         verbose_name=u'7.12 Continuidad de la estructura',
@@ -581,31 +591,34 @@ class Bridge(models.Model):
         max_length=40,
         verbose_name=u'7.13 Tipo de superestructura',
         choices=(
-            ('MACIZ', 'Losa maciza de concreto (MACIZ)'),
-            ('VCON', 'Losa sobre viga de concreto (VCON)'),
-            ('VPRE', 'Losa sobre vigas prefabricadas de concreto (VPRE)'),
-            ('VCAJC', 'Losa sobre viga cajón de concreto (VCAJC)'),
-            ('ACA', 'Arco de concreto (ACA)'),
-            ('PMET', 'Losa sobre perfiles metálicos (PMET)'),
-            ('VARM', 'Losa sobre vigas de acero armadas (VARM)'),
-            ('VCAJM', 'Losa sobre viga cajón metálica (VCAJM)'),
-            ('AMI', 'Armadura metálica con arriostramiento inferior (AMI)'),
-            ('AMS', 'Armadura metálica con arriostramiento superior (AMS)'),
-            ('AAC', 'Arco de acero (ACC)'),
-            ('COLG', 'Puente colgante (COLG)'),
-            ('ATIR', 'Puente atirantado (ATIR)'),
-            ('MAMP', 'Puente de mamposteria (MAMP)'),
-            ('MAD', 'Puente de madera (MAD)'),),)
+            (u'MACIZ', u'Losa maciza de concreto (MACIZ)'),
+            (u'VCON', u'Losa sobre viga de concreto (VCON)'),
+            (u'VPRE', u'Losa sobre vigas prefabricadas de concreto (VPRE)'),
+            (u'VCAJC', u'Losa sobre viga cajón de concreto (VCAJC)'),
+            (u'ACA', u'Arco de concreto (ACA)'),
+            (u'PMET', u'Losa sobre perfiles metálicos (PMET)'),
+            (u'VARM', u'Losa sobre vigas de acero armadas (VARM)'),
+            (u'VCAJM', u'Losa sobre viga cajón metálica (VCAJM)'),
+            (u'AMI', u'Armadura metálica con arriostramiento inferior (AMI)'),
+            (u'AMS', u'Armadura metálica con arriostramiento superior (AMS)'),
+            (u'AAC', u'Arco de acero (ACC)'),
+            (u'COLG', u'Puente colgante (COLG)'),
+            (u'ATIR', u'Puente atirantado (ATIR)'),
+            (u'MAMP', u'Puente de mamposteria (MAMP)'),
+            (u'MAD', u'Puente de madera (MAD)'),
+            (u'OTRO', u'Otro'),),)
     superstructural_type_other = models.CharField(
         max_length=40,
         verbose_name=u'OTRO - Otro, indique', 
-        null=True, blank=True)
+        null=True, 
+        blank=True)
     column_material_type = models.CharField(
         max_length=40,
         verbose_name=u'7.14.1 Tipo de pilas. Material',
         choices=(
-            ('concreto', 'Concreto'),
-            ('acero', 'Acero'),),)
+            (u'concreto', u'Concreto'),
+            (u'acero', u'Acero'),
+            (u'otro', u'Otro'),),)
     column_material_type_other = models.CharField(
         max_length=100,
         verbose_name=u'Otro. Indique',
@@ -614,21 +627,24 @@ class Bridge(models.Model):
         max_length=40,
         verbose_name=u'7.14.2 Tipo de pilas. Geometría',
         choices=(
-            ('monocolumnas', 'Pilas monocolumnas'),
-            ('multicolumnas', 'Pilas multicolumnas'),
-            ('muros', 'Pilas de muros'),
-            ('estribos', 'Solo estribos'),),)
+            (u'monocolumnas', u'Pilas monocolumnas'),
+            (u'multicolumnas', u'Pilas multicolumnas'),
+            (u'muros', u'Pilas de muros'),
+            (u'estribos', u'Solo estribos'),
+            (u'otro', u'Otro'),),)
     column_geometry_type_other = models.CharField(
         max_length=100,
         verbose_name=u'Otro. Indique',
         null=True, blank=True)
     is_any_column_a_pergola = models.BooleanField(
         verbose_name=u'7.14.3 ¿Alguna de las pilas es de tipo pérgola?',
+        blank=False,
         choices=(
 		    (True, 'Sí'),
 		    (False, 'No'),),)
     does_columns_had_side_capitals_tops = models.CharField(
         max_length=40,
+        blank=False,
         verbose_name=u'7.15 ¿Las pilas tienen topes laterales en el capitel?',
         choices=(
             ('si', 'Sí'),
@@ -636,6 +652,7 @@ class Bridge(models.Model):
             ('algunas', 'Sólo algunas') ,),)
     does_board_has_individuals_beams = models.BooleanField(
         verbose_name=u'7.16 ¿El tablero posee vigas individuales y esta soportado por columnas o pedestales individuales sin capitel?',
+        blank=False,
         choices=(
 		    (True, 'Sí'),
 		    (False, 'No'),),)
@@ -645,11 +662,9 @@ class Bridge(models.Model):
 		    (True, 'Sí'),
 		    (False, 'No'),),)
     superstructure_number_of_discontinuities = models.IntegerField(
-        verbose_name=u'7.18 Nro. de discontinuidades en la superestructura',
-        null=True, blank=True)
+        verbose_name=u'7.18 Nro. de discontinuidades en la superestructura',)
     typical_joint_length = models.FloatField(
-        verbose_name=u'7.19 Longitud de apoyo típica en las juntas',
-        null=True, blank=True)
+        verbose_name=u'7.19 Longitud de apoyo típica en las juntas',)
     does_bridge_horizontally_linked_to_others_structures = models.BooleanField(
         verbose_name=u'7.20.1 ¿La estructura del puente esta vinculada horizontalmente a otras estructuras?',
             choices=(
@@ -661,6 +676,7 @@ class Bridge(models.Model):
         blank=True,)
     does_bridge_vertically_linked_to_others_structures = models.BooleanField(
         verbose_name=u'7.21.1 ¿La estructura del puente esta vinculada verticalmente a otras estructuras?',
+        blank=False,
             choices=(
 		    (True, 'Sí'),
 		    (False, 'No'),))
@@ -672,12 +688,12 @@ class Bridge(models.Model):
     # 8. Damage Observed and Mantainment state of the bridge
     observations = models.TextField(
         verbose_name=u'8. Daños Observados y Estado General de Mantenimiento del Puente',
-        blank=True)
+        )
 
     # 9. Additional Observations
-    observations = models.TextField(
+    additional_observations = models.TextField(
         verbose_name=u'9. Observaciones Adicionales',
-        blank=True)
+        blank=True,)
 
     # 10 Document Backup
     image_backup = models.FileField(
@@ -702,3 +718,4 @@ class Bridge(models.Model):
     class Meta:
         verbose_name = u"Puente"
         verbose_name_plural = u"Puentes"
+

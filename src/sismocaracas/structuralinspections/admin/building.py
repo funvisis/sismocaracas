@@ -2,12 +2,13 @@
 
 from ..models import Building
 
-from django.contrib import admin
+# from django.contrib import admin
+from django.contrib.gis import admin
 
 from funvisis.django.decorators import conditional_fieldsets
 
 @conditional_fieldsets
-class BuildingAdmin(admin.ModelAdmin):
+class BuildingAdmin(admin.GeoModelAdmin):
 
     fieldsets_base = (
         (
@@ -48,9 +49,8 @@ class BuildingAdmin(admin.ModelAdmin):
                     'street',
                     'square',
                     'plot',
-                    'coord_x',
-                    'coord_y',
-                    'time_zone')}),
+                    'point',
+                    )}),
         (
             u'5. Uso de la edificación',
             {
