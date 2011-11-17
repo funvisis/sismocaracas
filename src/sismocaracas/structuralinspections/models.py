@@ -303,15 +303,26 @@ class Building(models.Model):
     observations = models.TextField(
         verbose_name=u'14. Observaciones', blank=True)
 
-    # 15 Image Backup
+    # 15 Document Backup
     image_backup = models.FileField(
         verbose_name=u'15. Respaldo escaneado',
         upload_to=get_path_to_app_repo(
             project_name=settings.SETTINGS_MODULE.split('.')[0],
             app_name=__name__.split('.')[-2],
-            model_name='Inspection'),
+            model_name='Building'),
         null=True,
         blank=True)
+
+    # 16 Photos Backup
+    photos_backup = models.FileField(
+        verbose_name=u'16. Respaldo de imágenes',
+        upload_to=get_path_to_app_repo(
+            project_name=settings.SETTINGS_MODULE.split('.')[0],
+            app_name=__name__.split('.')[-2],
+            model_name='Building'),
+        null=True,
+        blank=True)
+
 
     # __. Threat Index
     caracas = models.BooleanField(
@@ -668,29 +679,25 @@ class Bridge(models.Model):
         verbose_name=u'9. Observaciones Adicionales',
         blank=True)
 
-    # 10. Sketch - Typical transversal sections of Columns and Boards
-    typical_transversal_sections_sketch = models.FileField(
-        verbose_name=u'10. Croquis - Secciones Transversales Típicas de Pilas y Tableros',
+    # 10 Document Backup
+    image_backup = models.FileField(
+        verbose_name=u'10. Respaldo escaneado',
         upload_to=get_path_to_app_repo(
             project_name=settings.SETTINGS_MODULE.split('.')[0],
             app_name=__name__.split('.')[-2],
-            model_name='Bridge'))
+            model_name='Bridge'),
+        null=True,
+        blank=True)
 
-    # 11. Sketch - Location of bridge's base
-    brige_base_location_sketch = models.FileField(
-        verbose_name=u'11. Croquis - Planta de Ubicación del Puente',
+    # 11 Photos Backup
+    photos_backup = models.FileField(
+        verbose_name=u'11. Respaldo de imágenes',
         upload_to=get_path_to_app_repo(
             project_name=settings.SETTINGS_MODULE.split('.')[0],
             app_name=__name__.split('.')[-2],
-            model_name='Bridge'))
-
-    # 12. Sketch - Bridge longitudinal profile
-    bridge_longitudinal_profile = models.FileField(
-        verbose_name=u'12. Croquis - Perfil Longitudinal del Puente',
-        upload_to=get_path_to_app_repo(
-            project_name=settings.SETTINGS_MODULE.split('.')[0],
-            app_name=__name__.split('.')[-2],
-            model_name='Bridge'))
+            model_name='Bridge'),
+        null=True,
+        blank=True)
 
     class Meta:
         verbose_name = u"Puente"
