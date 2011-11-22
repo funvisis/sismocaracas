@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
-from django.contrib.gis.db import models
+#from django.contrib.gis.db import models
+from django.db import models
 from funvisis.django.fvisusers.models import FVISUser
 #from funvisis.django.fvisgallery.models import FVISGallery
 from photologue.models import Gallery
@@ -67,7 +68,11 @@ class Building(models.Model):
         max_length=100, verbose_name=u'4.11 Manzana Nº', blank=True)
     plot = models.CharField(
         max_length=100, verbose_name=u'4.12 Nº Parcela', blank=True)
-    point = models.PointField(srid=4368)
+    coord_x = models.FloatField(
+        verbose_name=u'4.13 Coord. X', null=True, blank=True)
+    coord_y = models.FloatField(
+        verbose_name=u'4.14 Coord. Y', null=True, blank=True)
+    #point = models.PointField(srid=4368)
 
     # 5. Building usage
     governmental = models.BooleanField(verbose_name=u'Gubernamental')

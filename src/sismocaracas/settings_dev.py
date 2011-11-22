@@ -6,20 +6,20 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.contrib.gis.db.backends.spatialite',
-         'NAME': 'db.sqlite3',
-         'USER': '',
-         'PASSWORD': '',
-         'HOST': '',
-         'PORT': '',}
-    #'default': {
-    #    'ENGINE': 'django.contrib.gis.db.backends.postgis',
-    #    'NAME': 'geodjango',
-    #    'USER': 'geo',
-    #    'PASSWORD': 'geo',
-    #    'HOST': '',
-    #    'PORT': '',}
+     #'default': {
+     #    'ENGINE': 'django.contrib.gis.db.backends.spatialite',
+     #    'NAME': 'db.sqlite3',
+     #    'USER': '',
+     #    'PASSWORD': '',
+     #    'HOST': '',
+     #    'PORT': '',}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',}
     }
 
 MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, '..', 'media', 'sismocaracas')
