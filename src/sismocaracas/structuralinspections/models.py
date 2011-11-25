@@ -15,6 +15,9 @@ import os
 import datetime
 import time
 
+class InspectionGallery(Gallery) :
+    pass
+
 class Building(models.Model):
 
     # 1. General
@@ -711,16 +714,24 @@ class Bridge(models.Model):
         blank=True)
 
     # 11 Photos Backup
-    photos_backup = models.FileField(
-        verbose_name=u'11. Respaldo de imágenes',
-        upload_to=get_path_to_app_repo(
-            project_name=settings.SETTINGS_MODULE.split('.')[0],
-            app_name=__name__.split('.')[-2],
-            model_name='Bridge'),
-        null=True,
-        blank=True)
+    #photos_backup = models.FileField(
+    #    verbose_name=u'11. Respaldo de imágenes',
+    #    upload_to=get_path_to_app_repo(
+    #        project_name=settings.SETTINGS_MODULE.split('.')[0],
+    #        app_name=__name__.split('.')[-2],
+    #        model_name='Bridge'),
+    #    null=True,
+    #    blank=True)
+
+    # 11 Gallery
+    bridge_gallery = models.OneToOneField(InspectionGallery, 
+        related_name='bridge_gallery',
+        verbose_name=u'Fotos',
+        blank=True,)
 
     class Meta:
         verbose_name = u"Puente"
         verbose_name_plural = u"Puentes"
+
+
 

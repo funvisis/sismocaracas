@@ -4,6 +4,8 @@
 import csv
 from django.http import HttpResponse
 from .models import Building, Bridge
+from .forms import InspectionGalleryForm
+from django.shortcuts import render_to_response
 
 model_url_dict = {
     'edificaciones': Building,
@@ -31,3 +33,11 @@ def csv_view(request, models_url='edificaciones'):
                 for field in fields])
 
     return response
+
+def inspection_gallery_add(request):
+    if request.method == 'POST':
+        form = InspectionGalleryForm(request.POST)
+    else:
+        form = InspectionGalleryForm()
+    return render_to_response('inspection_gallery.html', {'form': form})
+

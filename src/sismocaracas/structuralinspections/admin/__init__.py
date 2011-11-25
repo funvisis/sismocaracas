@@ -33,6 +33,7 @@ from photologue.admin  import GalleryAdmin
 
 from ..models import Building
 from ..models import Bridge
+from ..models import InspectionGallery
 
 from .building import BuildingAdmin
 from .bridge import BridgeAdmin
@@ -41,6 +42,6 @@ admin_site = AdminSite('admin_site')
 
 admin_site.register(Building, BuildingAdmin)
 admin_site.register(Bridge, BridgeAdmin)
-admin_site.register(Gallery, GalleryAdmin)
+#admin_site.register(InspectionGallery)#, GalleryAdmin)
 admin_site.register(Photo, PhotoAdmin)
 

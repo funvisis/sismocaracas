@@ -136,8 +136,8 @@ INSTALLED_APPS = (
     'sismocaracas.structuralinspections',
     'funvisis.django.fvisusers',
 #    'funvisis.django.fvisgallery',
-#    'photologue',
-#    'tagging',
+    'photologue',
+    'tagging',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
 #    'django.contrib.gis',
