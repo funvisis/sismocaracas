@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Crear galer&iacutea</title>
+</head>
+<body>
+    <h1>Crear galer&iacutea</h1>
+
+    {% if form.errors %}
+        <p style="color: red;">
+            Por favor corrija los siguientes errores:
+        </p>
+    {% endif %}
+
+    <form action="" method="post">
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+
