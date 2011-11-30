@@ -1,8 +1,23 @@
 from django import forms
-from .widgets import AdminImageWidget
+from .widgets import ImageWidget
 
 class InspectionGalleryForm(forms.Form):
-    gallery_name = forms.CharField()
+	
     zipe_file  = forms.FileField()
-    image = forms.FileField(widget=AdminImageWidget)
+    image_widget = ImageWidget()
+
+    def show_form(request) :
+        resuts = search(request)
+        if len(results) == 0 :
+            pass
+        else :
+            pass
+
+    def search(request):
+        result = []
+        return result
+        #query = request.GET.get('q', '')
+        
+    def save(self) :
+        pass
 

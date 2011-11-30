@@ -37,11 +37,14 @@ from ..models import InspectionGallery
 
 from .building import BuildingAdmin
 from .bridge import BridgeAdmin
+from .inspection_gallery import InspectionGalleryAdmin
 
 admin_site = AdminSite('admin_site')
 
 admin_site.register(Building, BuildingAdmin)
 admin_site.register(Bridge, BridgeAdmin)
-#admin_site.register(InspectionGallery)#, GalleryAdmin)
+admin_site.register(InspectionGallery, InspectionGalleryAdmin)
 admin_site.register(Photo, PhotoAdmin)
+admin_site.register(GalleryUpload)
+
 

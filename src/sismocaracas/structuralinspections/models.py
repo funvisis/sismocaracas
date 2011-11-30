@@ -5,6 +5,7 @@ from django.db import models
 from funvisis.django.fvisusers.models import FVISUser
 #from funvisis.django.fvisgallery.models import FVISGallery
 from photologue.models import Gallery
+from photologue.models import ImageModel
 #from photologue.models import GalleryUpload
 
 
@@ -15,8 +16,44 @@ import os
 import datetime
 import time
 
-class InspectionGallery(Gallery) :
-    pass
+
+
+
+## PHOTOS
+
+from django.utils.translation import ugettext_lazy as _
+from datetime import datetime
+from inspect import isclass
+
+# attempt to load the django-tagging TagField from default location,
+# otherwise we substitude a dummy TagField.
+try:
+    from tagging.fields import TagField
+    tagfield_help_text = _('Separate tags with spaces, put quotes around multiple-word tags.')
+except ImportError:
+    class TagField(models.CharField):
+        def __init__(self, **kwargs):
+            default_kwargs = {'max_length': 255, 'blank': True}
+            default_kwargs.update(kwargs)
+            super(TagField, self).__init__(**default_kwargs)
+        def get_internal_type(self):
+            return 'CharField'
+    tagfield_help_text = _('Django-tagging was not found, tags will be treated as plain text.')
+
+class InspectionPhoto(ImageModel) :
+	date_added = models.DateTimeField(_('date added'), default=datetime.now, editable=False)
+
+class InspectionGallery(models.Model) :
+    date_added = models.DateTimeField(_('date published'), default=datetime.now)
+    photos = models.ManyToManyField('InspectionPhoto', related_name='galleries', verbose_name=_('photos'),
+                                    null=True, blank=True)
+    tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
+
+## END PHOTOS
+
+
+
+
 
 class Building(models.Model):
 
