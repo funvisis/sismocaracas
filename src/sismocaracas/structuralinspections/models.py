@@ -40,14 +40,13 @@ except ImportError:
             return 'CharField'
     tagfield_help_text = _('Django-tagging was not found, tags will be treated as plain text.')
 
-class InspectionPhoto(ImageModel) :
-	date_added = models.DateTimeField(_('date added'), default=datetime.now, editable=False)
-
 class InspectionGallery(models.Model) :
     date_added = models.DateTimeField(_('date published'), default=datetime.now)
-    photos = models.ManyToManyField('InspectionPhoto', related_name='galleries', verbose_name=_('photos'),
-                                    null=True, blank=True)
+
+class InspectionPhoto(ImageModel) :
+    date_added = models.DateTimeField(_('date added'), default=datetime.now, editable=False)
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
+    gallery = models.ForeignKey(InspectionGallery, related_name=u'inspection_gallery')
 
 ## END PHOTOS
 
@@ -741,7 +740,7 @@ class Bridge(models.Model):
         blank=True,)
 
     # 10 Document Backup
-    image_backup = models.FileField(
+    document_backup = models.FileField(
         verbose_name=u'10. Respaldo escaneado',
         upload_to=get_path_to_app_repo(
             project_name=settings.SETTINGS_MODULE.split('.')[0],
@@ -751,16 +750,16 @@ class Bridge(models.Model):
         blank=True)
 
     # 11 Photos Backup
-    #photos_backup = models.FileField(
-    #    verbose_name=u'11. Respaldo de imágenes',
-    #    upload_to=get_path_to_app_repo(
-    #        project_name=settings.SETTINGS_MODULE.split('.')[0],
-    #        app_name=__name__.split('.')[-2],
-    #        model_name='Bridge'),
-    #    null=True,
-    #    blank=True)
+    photos_backup = models.FileField(
+        verbose_name=u'11. Respaldo de imágenes',
+        upload_to=get_path_to_app_repo(
+            project_name=settings.SETTINGS_MODULE.split('.')[0],
+            app_name=__name__.split('.')[-2],
+            model_name='Bridge'),
+        null=True,
+        blank=True)
 
-    # 11 Gallery
+    # 12 Gallery
     bridge_gallery = models.OneToOneField(InspectionGallery, 
         related_name='bridge_gallery',
         verbose_name=u'Fotos',
