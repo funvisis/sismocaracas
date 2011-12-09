@@ -115,7 +115,7 @@ class BridgeAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     'photos_backup',)}),)
-    
+
     fieldsets_existent = (
         (
             u'12. Fotos de la estructura',
@@ -123,7 +123,7 @@ class BridgeAdmin(admin.ModelAdmin):
                 'fields' : (
                     'bridge_gallery',),}),)
 
-    fieldsets_super = ( )
+
     #    (
     #        u'Índice de amenaza',
     #        {
@@ -132,6 +132,7 @@ class BridgeAdmin(admin.ModelAdmin):
     #                'national_level_zonification',
     #                'macrozone_ccs',
     #                'microzone_ccs'),}),)
+
 
     conditioned_fieldsets = [
         (
@@ -144,9 +145,6 @@ class BridgeAdmin(admin.ModelAdmin):
                 request.user.groups.filter(name="supervisores") or \
                 request.user.groups.filter(name="revisores"),
             fieldsets_super),
-        (
-            lambda request: True,
-            fieldsets_existent)
         ]
 
 
