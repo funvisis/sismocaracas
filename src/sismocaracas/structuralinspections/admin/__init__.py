@@ -33,18 +33,17 @@ from photologue.admin  import GalleryAdmin
 
 from ..models import Building
 from ..models import Bridge
-from ..models import InspectionGallery
 
 from .building import BuildingAdmin
 from .bridge import BridgeAdmin
-from .inspection_gallery import InspectionGalleryAdmin
+
+from funvisis.django.fvisgallery.admin import FvisGalleryAdmin
 
 admin_site = AdminSite('admin_site')
 
 admin_site.register(Building, BuildingAdmin)
 admin_site.register(Bridge, BridgeAdmin)
-admin_site.register(InspectionGallery, InspectionGalleryAdmin)
+admin_site.register(Gallery, FvisGalleryAdmin)
 admin_site.register(Photo, PhotoAdmin)
-admin_site.register(GalleryUpload)
 
 

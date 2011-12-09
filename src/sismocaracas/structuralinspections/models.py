@@ -5,9 +5,6 @@ from django.db import models
 from funvisis.django.fvisusers.models import FVISUser
 #from funvisis.django.fvisgallery.models import FVISGallery
 from photologue.models import Gallery
-from photologue.models import ImageModel
-#from photologue.models import GalleryUpload
-
 
 from funvisis.utils.djangorelated \
     import get_path_to_app_repo_ as get_path_to_app_repo
@@ -15,44 +12,6 @@ from funvisis.utils.djangorelated \
 import os
 import datetime
 import time
-
-
-
-
-## PHOTOS
-
-from django.utils.translation import ugettext_lazy as _
-from datetime import datetime
-from inspect import isclass
-
-# attempt to load the django-tagging TagField from default location,
-# otherwise we substitude a dummy TagField.
-try:
-    from tagging.fields import TagField
-    tagfield_help_text = _('Separate tags with spaces, put quotes around multiple-word tags.')
-except ImportError:
-    class TagField(models.CharField):
-        def __init__(self, **kwargs):
-            default_kwargs = {'max_length': 255, 'blank': True}
-            default_kwargs.update(kwargs)
-            super(TagField, self).__init__(**default_kwargs)
-        def get_internal_type(self):
-            return 'CharField'
-    tagfield_help_text = _('Django-tagging was not found, tags will be treated as plain text.')
-
-class InspectionGallery(models.Model) :
-    date_added = models.DateTimeField(_('date published'), default=datetime.now)
-
-class InspectionPhoto(ImageModel) :
-    date_added = models.DateTimeField(_('date added'), default=datetime.now, editable=False)
-    tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
-    gallery = models.ForeignKey(InspectionGallery, related_name=u'inspection_gallery')
-
-## END PHOTOS
-
-
-
-
 
 class Building(models.Model):
 
@@ -749,18 +708,8 @@ class Bridge(models.Model):
         null=True,
         blank=True)
 
-    # 11 Photos Backup
-    photos_backup = models.FileField(
-        verbose_name=u'11. Respaldo de imágenes',
-        upload_to=get_path_to_app_repo(
-            project_name=settings.SETTINGS_MODULE.split('.')[0],
-            app_name=__name__.split('.')[-2],
-            model_name='Bridge'),
-        null=True,
-        blank=True)
-
-    # 12 Gallery
-    bridge_gallery = models.OneToOneField(InspectionGallery, 
+    # 11 Gallery
+    bridge_gallery = models.OneToOneField(Gallery, 
         related_name='bridge_gallery',
         verbose_name=u'Fotos',
         blank=True,)
