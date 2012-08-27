@@ -5,14 +5,17 @@ from settings_base import *
 DEBUG = True
 TEMPLATE_DEBUG = True
 
+ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+    ('annonymous', 'annonymous@funvisis.gob.ve'),
+)
+
+MANAGERS = (
+    # ('Your Name', 'your_email@example.com'),
+    ('annonymous', 'annonymous@funvisis.gob.ve'),
+)
+
 DATABASES = {
-     #'default': {
-     #    'ENGINE': 'django.contrib.gis.db.backends.spatialite',
-     #    'NAME': 'db.sqlite3',
-     #    'USER': '',
-     #    'PASSWORD': '',
-     #    'HOST': '',
-     #    'PORT': '',}
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db.sqlite3',
@@ -22,38 +25,93 @@ DATABASES = {
         'PORT': '',}
     }
 
-MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, '..', 'media', 'sismocaracas')
-DJANGO_PROJECTS_PATH = os.getcwd()
-MY_PROJECT_PATH = os.path.join(DJANGO_PROJECTS_PATH, PROJECT_NAME)
 
-MEDIA_ROOT = os.path.join(MY_PROJECT_PATH, 'media/')
-MEDIA_URL = '/static/media/' 
-ADMIN_MEDIA_PREFIX='/static/admin/'
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = ''
 
-STATIC_ROOT = ''#'"os.path.join(MY_PROJECT_PATH, 'media/')
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = ''
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/home/media/media.lawrence.com/static/"
+STATIC_ROOT = ''
+
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
-ADMIN_STATIC_PREFIX='/static/admin/'
+
+# Additional locations of static files
 STATICFILES_DIRS = (
-    MY_PROJECT_PATH,
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
 )
 
-TEMPLATE_DIRS = (os.path.join(os.getcwd(), 'templates'))
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = ''
 
-#from sismocaracas.structuralinspections.utils import get_image_path
-#PHOTOLOGUE_PATH = get_image_path
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = ''
 
-#from sismocaracas.structuralinspections.utils import get_sample_image_path
-SAMPLE_IMAGE_PATH = os.path.join(MEDIA_ROOT, 'photologue/samples/sample.jpg')
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/home/media/media.lawrence.com/static/"
+STATIC_ROOT = ''
 
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/static/'
 
-INSTALLED_APPS += (
-    'django_extensions',
-    'debug_toolbar',
-# branch databrowse
-    'django.contrib.databrowse',
-# END branch databrowse
-    )
+# URL prefix for admin static files -- CSS, JavaScript and images.
+# Make sure to use a trailing slash.
+# Examples: "http://foo.com/static/admin/", "/static/admin/".
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+)
+
+TEMPLATE_DIRS = ()
 
 MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
-INTERNAL_IPS = ('127.0.0.1',)
+INSTALLED_APPS += (
+    'django_extensions',
+    'debug_toolbar', # https://github.com/django-debug-toolbar/django-debug-toolbar#readme
+    )
+
+INTERNAL_IPS = ('127.0.0.1') # Cómo lo exige la aplicación debug_toolbar
+
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}

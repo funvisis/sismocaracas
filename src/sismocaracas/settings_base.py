@@ -1,40 +1,9 @@
 # -*- coding: utf-8 -*-
 # Django settings for sismocaracas project.
 
-from settings import *
-
 import os
 import sys
 import logging
-
-DJANGO_PROJECTS_PATH = '/usr/lib/django-projects'
-
-PROJECT_NAME = 'sismocaracas'
-MY_PROJECT_PATH = os.path.join(DJANGO_PROJECTS_PATH, PROJECT_NAME)
-
-DEBUG = True
-TEMPLATE_DEBUG = True
-
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-    ('annonymous', 'annonymous@funvisis.gob.ve'),
-)
-
-MANAGERS = (
-    # ('Your Name', 'your_email@example.com'),
-    ('annonymous', 'annonymous@funvisis.gob.ve'),
-)
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sismocaracas',
-        'USER': 'sismocaracas',
-        'PASSWORD': 'jojoto',
-        # 'HOST': 'db.funvisis.gob.ve',
-        # 'PORT': '5432',
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -58,37 +27,6 @@ USE_I18N = True
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
 USE_L10N = True
-
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join('/', 'var', 'www', PROJECT_NAME, 'media')
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://static.funvisis.gob.ve/' + PROJECT_NAME + '/media/'
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join('/var/www/', PROJECT_NAME)
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'http://static.funvisis.gob.ve/' + PROJECT_NAME + '/'
-
-# URL prefix for admin static files -- CSS, JavaScript and images.
-# Make sure to use a trailing slash.
-# Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = 'http://static.funvisis.gob.ve/' + PROJECT_NAME + '/admin/'
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -119,13 +57,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'sismocaracas.urls'
 
 
-TEMPLATE_DIRS = (
-    #os.path.join(MY_PROJECT_PATH, 'templates'),
-    #os.path.join('/usr/lib/django-projects/sismocaracas', 'templates')
-    os.path.join(DJANGO_PROJECTS_PATH, PROJECT_NAME, 'templates')
-    #os.path.join(DJANGO_PROJECTS_PATH, 'base-templates'),
-)
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -135,37 +66,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'sismocaracas.structuralinspections',
     'funvisis.django.fvisusers',
-#    'funvisis.django.fvisgallery',
-#    'photologue',
-#    'tagging',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-#    'django.contrib.gis',
-    # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
 )
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
-}
-
-AUTH_PROFILE_MODULE = 'sismocaracas.inspections.Participant'
+# AUTH_PROFILE_MODULE = 'sismocaracas.inspections.Participant'
+# Documentar si esto es por fvisauth
