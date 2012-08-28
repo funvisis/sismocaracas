@@ -243,33 +243,6 @@
         }
     }, 
     {
-        "pk": 28, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_bridge", 
-            "name": "Can add bridge", 
-            "content_type": 10
-        }
-    }, 
-    {
-        "pk": 29, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_bridge", 
-            "name": "Can change bridge", 
-            "content_type": 10
-        }
-    }, 
-    {
-        "pk": 30, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_bridge", 
-            "name": "Can delete bridge", 
-            "content_type": 10
-        }
-    }, 
-    {
         "pk": 25, 
         "model": "auth.permission", 
         "fields": {
@@ -355,7 +328,7 @@
     }, 
     {
         "pk": 1, 
-        "model": "fvisusers.fvisuser", 
+        "model": "users.fvisuser", 
         "fields": {
             "phone": "", 
             "ci": 0, 

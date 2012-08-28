@@ -1,6 +1,35 @@
 # -*- coding: utf-8 -*-
 # Django settings for sismocaracas project.
 
+"""
+La configuración de un proyecto Django en Fvis esta dividida en tres
+archivos inicialmente, sin que esto limite al autor a utilizar otro
+esquema de organización de la configuración.
+
+Los tres archivos iniciales son:
+
+* settings_base.py
+* settings_dev.py
+* settings_prod.py
+
+En un momento determinado, se usa o settings_dev.py (*dev*) o
+settings_prod.py (*prod*), y nunca settings_base.py (*base*). La idea
+es que *dev* y *prod* importan todo lo que está en *base*.
+
+Para evitar problemas en cuanto a encontrar una configuración
+determinada, evitaremos la sobreescritura de variables de base siempre
+que se pueda. Es decir, si la intención es tener un valor para una
+variable en *prod* y otro en *dev*, es mejor colocar esos valores
+explícitamente en *prod* y *dev* respectivamente y quitar la
+declaración de esa variable de *base*. Como se tratan de archivos de
+configuración, no queremos que un administrador de sistemas se confíe
+al ver un valor en *base* para una variable y resulte que en *prod* la
+cambiaron. Sería deseable que al momento de desplegar el proyecto, se
+cree un solo archivo settings.py con el contenido de *base* y *prod*
+fusionados (TODO), y así, la administración del proyecto se haga en un
+solo archivo.
+"""
+
 import os
 import sys
 import logging
@@ -65,7 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sismocaracas.structuralinspections',
-    'funvisis.django.fvisusers',
+    'funvisis.users',
     'django.contrib.admin',
     'django.contrib.admindocs',
 )

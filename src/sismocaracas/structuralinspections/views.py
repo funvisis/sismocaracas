@@ -3,11 +3,11 @@
 
 import csv
 from django.http import HttpResponse
-from .models import Building, Bridge
+from .models import Building
 
 model_url_dict = {
     'edificaciones': Building,
-    'puentes':Bridge}
+    }
 
 def csv_view(request, models_url='edificaciones'):
     # Create the HttpResponse object with the appropriate CSV header.
