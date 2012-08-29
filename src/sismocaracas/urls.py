@@ -5,10 +5,8 @@ from django.contrib import admin
 
 from funvisis.users.models import FVISUser
 
-
 admin.site.register(FVISUser)
 admin.autodiscover()
-
 
 urlpatterns = patterns(
     '',
