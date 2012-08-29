@@ -29,3 +29,12 @@ Thumbs.db
 *.pdf
 *.ps
 *.dvi
+
+# Convenio de configuración de Django #
+#######################################
+
+# No se mantendrá control de settings.py #
+# Se mantiene control de versiones de plantillas de archivos de
+#  configuración.
+
+settings.py
