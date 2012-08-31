@@ -198,34 +198,28 @@ class Building(models.Model):
     floor_scheme = models.CharField(
         verbose_name=u'', max_length='20',
         choices=(
-            ('H', 'H'),
-            ('L', 'L'),
-            ('T', 'T'),
-            ('O', 'O'),
-            ('U', 'U'),
-            ('rectangular', u'\u25AD o \u25AB'),
-            ('esbeltez horizontal', 'Esbeltez horizontal'),
-            ('ninguno', 'Ninguno'),),
+            (u'H', u'H'),
+            (u'T', u'T'),
+            (u'U', u'U ó C'),
+            (u'L', u'L'),
+            (u'cajon', u'Cajón'),
+            (u'regular', u'Regular'),
+            (u'esbeltez horizontal', u'Esbeltez horizontal'),
+            (u'ninguno', u'Ninguno'),),
         blank=False)
 
     # 11. Lifting scheme
     lifting_scheme = models.CharField(
         verbose_name=u'', max_length=20,
         choices=(
-            ('T', 'T'),
-            ('U', 'U'),
-            ('L', 'L'),
-            ('rectangular', u'\u25AF'),
+            (u'T', u'T'),
             (u'pirámide invertida', u'Pirámide invertida'),
-            ('piramidal', 'Piramidal'),
-            ('esveltez vertical', 'Esbeltez, vertical'), # Limpiar la
-                                                         # base de
-                                                         # datos para
-                                                         # cambiar
-                                                         # esveltez
-                                                         # por
-                                                         # esbeltez
-            ('ninguno', 'Ninguno'),),
+            (u'piramidal', u'Piramidal'),
+            (u'U', u'U'),
+            (u'L', u'L'),
+            (u'rectangular', u'\u25AF'),
+            (u'esbeltez vertical', u'Esbeltez, vertical'),
+            (u'ninguno', u'Ninguno'),),
         blank=False)
     # 12. Irregularities
 
