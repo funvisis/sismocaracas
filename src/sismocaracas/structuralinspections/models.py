@@ -174,7 +174,7 @@ class Building(models.Model):
         verbose_name=u'Pórticos de concreto armado rellenos con paredes' \
             ' de bloques de arcilla de concreto')
     diagonalized_steel_frames = models.BooleanField(
-        verbose_name=u'Pórticos diagonalizados')
+        verbose_name=u'Pórticos de acero diagonalizados')
     gates_of_steel_trusses = models.BooleanField(
         verbose_name=u'Pórticos de acero con cerchas')
     reinforced_concrete_walls_in_two_horizontal_directions = \
@@ -188,15 +188,41 @@ class Building(models.Model):
     pre_built_systems_based_on_large_panels_or_frames = models.BooleanField(
         verbose_name=u'Sistemas pre-fabricados a base de' \
             u' grandes paneles o de pórticos')
-    confined_load_bearing_mosonry = models.BooleanField(
+    confined_load_bearing_mosonry_wall = models.BooleanField(
         verbose_name=u'Sistemas cuyos elementos portantes' \
-            u'sean mampostería confinada')
-    not_confined_load_bearing_masonry = models.BooleanField(
+            u' sean muros de mampostería confinada')
+    confined_load_bearing_mosonry_wall_floors = models.IntegerField(
+        verbose_name=u'Pisos',
+        null=True,
+        blank=True)
+    # confined_load_bearing_mosonry = models.BooleanField(
+    #     verbose_name=u'Sistemas cuyos elementos portantes' \
+    #         u'sean mampostería confinada')
+    not_confined_load_bearing_masonry_wall = models.BooleanField(
         verbose_name=u'Sistemas cuyos elementos portantos' \
-            u' sean mampostería no confinada')
+            u' sean muros de mampostería no confinada')
+    not_confined_load_bearing_masonry_wall_floors = models.IntegerField(
+        verbose_name=u'Pisos',
+        null=True,
+        blank=True)
+    # not_confined_load_bearing_masonry = models.BooleanField(
+    #     verbose_name=u'Sistemas cuyos elementos portantos' \
+    #         u' sean mampostería no confinada')
+    frames_and_low_quality_masonry_mixed = models.BooleanField(
+        verbose_name=u'Sistemas mixtos de pórticos y de mampostería' \
+            u' de baja calidad de construcción')
+    frames_and_low_quality_masonry_mixed_floors = models.IntegerField(
+        verbose_name=u'Pisos',
+        null=True,
+        blank=True)
     steel_frames = models.BooleanField(verbose_name=u'Pórticos de acero')
     steel_frames_with_hollow = models.BooleanField(
         verbose_name=u'Pórticos de acero con perfiles tabulares')
+    one_floor_bahareque = models.BooleanField(
+        verbose_name=u'Viviendas de bahareque de un piso')
+    precorious = models.BooleanField(
+        verbose_name=u'Viviendas de construcción precaria' \
+            ' (tierra, madera, zinc, etc.)')
 
     # 10. Floor scheme
     floor_scheme = models.CharField(
@@ -234,31 +260,35 @@ class Building(models.Model):
     presence_of_short_columns = models.BooleanField(
         verbose_name=u'12.3 Presencia de columnas cortas')
     discontinuity_lines_of_columns = models.BooleanField(
-        verbose_name=u'12.4 Discontinuidad de ejes de columnas')
+        verbose_name=u'12.4 Discontinuidad de ejes de columnas o paredes portantes')
     significant_openings_in_slabs = models.BooleanField(
         verbose_name=u'12.5 Aberturas significativas en losas')
     strong_asymmetry_in_plant_mass_or_stiffness = models.BooleanField(
         verbose_name=u'12.6 Fuerte asimetría de masas o rigideces en planta')
+    one_direction_wall_absence = models.BooleanField(
+        verbose_name=u'12.7 Ausencia de muros en una dirección')
+    attaching_slab_slab = models.BooleanField(
+        verbose_name='12.8 Adosamiento: Losa contra losa')
+    attaching_slab_column = models.BooleanField(
+        verbose_name='12.9 Adosamiento: Columna contra losa')
+    # attaching_slab_slab_column = models.CharField(
+    #     max_length=15,
+    #     verbose_name=u'12.8 Tipo de adosamiento',
+    #     choices=(
+    #         ('ninguno', 'Ninguno'),
+    #         ('slab_slab', 'Losa contra losa'), # Limpiar la base de
+    #                                            # datos para cambiar
+    #                                            # slab_slab a losa
+    #                                            # contra losa
+    #         ('column_slab', 'Columna contra losa'),))
     separation_between_buildings = models.IntegerField(
-        verbose_name=u'12.7 Separación entre edificios (cm)',
+        verbose_name=u'12.10 Separación entre edificios (cm)',
         help_text='Colocar algun valor, así sea cero (0)',
         null=True,
         blank=True
         )
-    # attaching_slab_slab = models.BooleanField(
-    #     verbose_name='12.8 Adosamiento: Losa contra losa')
-    # attaching_slab_column = models.BooleanField(
-    #     verbose_name='12.9 Adosamiento: Columna contra losa')
-    attaching_slab_slab_column = models.CharField(
-        max_length=15,
-        verbose_name=u'12.8 Tipo de adosamiento',
-        choices=(
-            ('ninguno', 'Ninguno'),
-            ('slab_slab', 'Losa contra losa'), # Limpiar la base de
-                                               # datos para cambiar
-                                               # slab_slab a losa
-                                               # contra losa
-            ('column_slab', 'Columna contra losa'),))
+
+
 
     # 13. Degree of degradation
 

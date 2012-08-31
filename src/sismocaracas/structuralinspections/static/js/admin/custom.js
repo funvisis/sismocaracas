@@ -37,23 +37,23 @@ function set_visibility(d, v)
 	    set_visibility(d, v);
 	});
 
-	d2 = {};
-	d2[''] = [
-	    [$('.separation_between_buildings'), 'hide']
-	];
-	d2['ninguno'] = d2[''];
-	d2['slab_slab'] = [
-	    [$('.separation_between_buildings'), 'show']
-	];
-	d2['column_slab'] = d2['slab_slab']
+	// d2 = {};
+	// d2[''] = [
+	//     [$('.separation_between_buildings'), 'hide']
+	// ];
+	// d2['ninguno'] = d2[''];
+	// d2['slab_slab'] = [
+	//     [$('.separation_between_buildings'), 'show']
+	// ];
+	// d2['column_slab'] = d2['slab_slab']
 
-	v2 = $('#id_attaching_slab_slab_column').val();
-	set_visibility(d2, v2);
+	// v2 = $('#id_attaching_slab_slab_column').val();
+	// set_visibility(d2, v2);
 
-	$('#id_attaching_slab_slab_column').change(function(event){
-	    v2 = $(this).val();
-	    set_visibility(d2, v2);
-	});
+	// $('#id_attaching_slab_slab_column').change(function(event){
+	//     v2 = $(this).val();
+	//     set_visibility(d2, v2);
+	// });
 	
     });
 })(django.jQuery);
