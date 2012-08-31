@@ -21,11 +21,11 @@ TEMPLATE_DEBUG = False
 
 
 ADMINS = (
-    ('admunix', 'admunix@funvisis.gob.ve'),
+    # ('usuario', 'email@example.com'),
 )
 
 MANAGERS = (
-    ('admunix', 'admunix@funvisis.gob.ve'),
+    # ('admunix', 'admunix@funvisis.gob.ve'),
 )
 
 DATABASES = {
@@ -33,7 +33,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'db_sismocaracas',
         'USER': 'sismocaracas_user',
-        'PASSWORD': 'jojoto',
+        'PASSWORD': 'sismocaracas_user',
         'HOST': 'db.funvisis.gob.ve',
         'PORT': '5432',
     }
