@@ -56,18 +56,22 @@ class Building(models.Model):
     municipality = models.CharField(
         max_length=100, verbose_name=u'4.7 Municipio')
     parish = models.CharField(max_length=100, verbose_name=u'4.8 Parroquia')
-    urbanization = models.CharField(
-        max_length=100, verbose_name=u'4.9 Urb, Sector, Barrio')
+    # urbanization = models.CharField(
+    #     max_length=100, verbose_name=u'4.9 Urb, Sector, Barrio')
+    urbanization_neighborhood = models.CharField(
+        max_length=100, verbose_name=u'4.9 Urb., Barrio')
+    sector = models.CharField(
+        max_length=100, verbose_name=u'4.10 Sector')
     street = models.CharField(
-        max_length=100, verbose_name=u'4.10 Calle, Vereda, otro', blank=True)
+        max_length=100, verbose_name=u'4.11 Calle, Vereda, otro', blank=True)
     square = models.CharField(
-        max_length=100, verbose_name=u'4.11 Manzana Nº', blank=True)
+        max_length=100, verbose_name=u'4.12 Manzana Nº', blank=True)
     plot = models.CharField(
-        max_length=100, verbose_name=u'4.12 Nº Parcela', blank=True)
+        max_length=100, verbose_name=u'4.13 Nº Parcela', blank=True)
     coord_x = models.FloatField(
-        verbose_name=u'4.13 Coord. X', null=True, blank=True)
+        verbose_name=u'4.14 Coord. X', null=True, blank=True)
     coord_y = models.FloatField(
-        verbose_name=u'4.14 Coord. Y', null=True, blank=True)
+        verbose_name=u'4.15 Coord. Y', null=True, blank=True)
 
     # 5. Building usage
     governmental = models.BooleanField(verbose_name=u'Gubernamental')

@@ -44,7 +44,9 @@ class BuildingAdmin(admin.ModelAdmin):
                     'city',
                     'municipality',
                     'parish',
-                    'urbanization',
+                    # 'urbanization',
+                    'urbanization_neighborhood',
+                    'sector',
                     'street',
                     'square',
                     'plot',
@@ -214,7 +216,9 @@ class BuildingAdmin(admin.ModelAdmin):
         'inspector',
         'init_time',
         'city',
-        'urbanization',
+        # 'urbanization',
+        'urbanization_neighborhood',
+        'sector',
         'usage_list_display',
         )
 
@@ -227,7 +231,9 @@ class BuildingAdmin(admin.ModelAdmin):
         '^inspector__user__first_name',
         '^inspector__user__last_name',
         '=city',
-        'urbanization']
+        # 'urbanization',
+        'urbanization_neighborhood',
+        'sector',]
 
 
     # def get_form(self, request, obj=None, **kwargs):
