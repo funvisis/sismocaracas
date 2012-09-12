@@ -199,7 +199,7 @@ class Building(models.Model):
     #     verbose_name=u'Sistemas cuyos elementos portantes' \
     #         u'sean mampostería confinada')
     not_confined_load_bearing_masonry_wall = models.BooleanField(
-        verbose_name=u'Sistemas cuyos elementos portantos' \
+        verbose_name=u'Sistemas cuyos elementos portantes' \
             u' sean muros de mampostería no confinada')
     not_confined_load_bearing_masonry_wall_floors = models.IntegerField(
         verbose_name=u'Pisos',
@@ -217,7 +217,7 @@ class Building(models.Model):
         blank=True)
     steel_frames = models.BooleanField(verbose_name=u'Pórticos de acero')
     steel_frames_with_hollow = models.BooleanField(
-        verbose_name=u'Pórticos de acero con perfiles tabulares')
+        verbose_name=u'Pórticos de acero con perfiles tubulares')
     one_floor_bahareque = models.BooleanField(
         verbose_name=u'Viviendas de bahareque de un piso')
     precorious = models.BooleanField(
