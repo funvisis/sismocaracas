@@ -1,5 +1,5 @@
 Django==1.3.1
-git+http://github.com/funvisis/fvisusers#egg=fvisuser
+git+http://github.com/funvisis/fvisusers#egg=fvisusers
 git+http://github.com/funvisis/fvislib#egg=fvislib
 
 # developement
